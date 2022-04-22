@@ -1,0 +1,3 @@
+[submodule "MorrisGame.wiki"]
+	path = wiki
+	url = git@github.com:Billy-freespace/MorrisGame.wiki.git
