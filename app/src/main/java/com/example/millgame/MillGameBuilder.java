@@ -1,5 +1,6 @@
 package com.example.millgame;
 
+import java.util.ArrayList;
 import java.util.List;
 
 interface MillGameBuilderInterface {
@@ -15,10 +16,11 @@ public class MillGameBuilder implements MillGameBuilderInterface {
     private Board board;
     private GameMode mode;
     private RobotPlayerLevel robotDifficulty = RobotPlayerLevel.EASY;
-    private List<Player> players;
+    private ArrayList<Player> players;
 
     public void reset(){
         game = new MillGame();
+        players = new ArrayList<Player>();
     }
 
     public void setGameMode(GameMode mode){
@@ -34,6 +36,19 @@ public class MillGameBuilder implements MillGameBuilderInterface {
         game.setBoard(board);
     }
 
+    /*
+    public void createPlayers(GameMode mode)
+    {
+        players.add(new HumanPlayer(PieceColor.WHITE, board));
+        if (mode == GameMode.HUMAN_HUMAN){
+
+        }
+        else {
+
+        }
+
+    }
+     */
 
     public void addPlayer(PieceColor color, PlayerType type)
     {
@@ -45,13 +60,12 @@ public class MillGameBuilder implements MillGameBuilderInterface {
             player = new RobotPlayer(color, board, robotDifficulty);
 
         players.add(player);
-        game.addPlayer(player);
     }
 
     public MillGame getResult(){
         TurnIterator itr = new TurnIterator(players);
         game.setTurnIterator(itr);
-
+        game.setPlayers(players);
         return game;
     }
 }
