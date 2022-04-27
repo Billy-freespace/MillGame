@@ -5,16 +5,16 @@ import java.util.List;
 interface MillGameBuilderInterface {
     public void reset();
     public void setGameMode(GameMode mode);
-    public void setRobotPlayerDificulty(RobotPlayerLevel level);
+    public void setRobotPlayerDifficulty(RobotPlayerLevel level);
     public void addPlayer(PieceColor color, PlayerType type);
     public void buildBoard(GameVariant variant);
 }
 
-public class MillGameBuild implements MillGameBuilderInterface {
+public class MillGameBuilder implements MillGameBuilderInterface {
     private MillGame game;
     private Board board;
     private GameMode mode;
-    private RobotPlayerLevel robotDificulty;
+    private RobotPlayerLevel robotDifficulty = RobotPlayerLevel.EASY;
     private List<Player> players;
 
     public void reset(){
@@ -25,8 +25,8 @@ public class MillGameBuild implements MillGameBuilderInterface {
         this.mode = mode;
     }
 
-    public void setRobotPlayerDificulty(RobotPlayerLevel level){
-        this.robotDificulty = level;
+    public void setRobotPlayerDifficulty(RobotPlayerLevel level){
+        this.robotDifficulty = level;
     }
 
     public void buildBoard(GameVariant variant){
@@ -42,15 +42,15 @@ public class MillGameBuild implements MillGameBuilderInterface {
         if(type == PlayerType.HUMAN)
             player = new HumanPlayer(color, board);
         else
-            player = new RobotPlayer(color, board, robotDificulty);
+            player = new RobotPlayer(color, board, robotDifficulty);
 
         players.add(player);
         game.addPlayer(player);
     }
 
     public MillGame getResult(){
-        TurnIterator turniter = new TurnIterator(players);
-        game.setTurnIterator(turniter);
+        TurnIterator itr = new TurnIterator(players);
+        game.setTurnIterator(itr);
 
         return game;
     }

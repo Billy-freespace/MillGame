@@ -1,7 +1,7 @@
 package com.example.millgame;
 
 enum GameVariant {
-
+    NINE_MEN_MORRIS
 };
 
 enum GameMode {

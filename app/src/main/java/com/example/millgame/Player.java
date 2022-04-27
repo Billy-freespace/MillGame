@@ -64,6 +64,11 @@ class HumanPlayer extends Player {
 class RobotPlayer extends Player {
     private RobotPlayerLevel level;
 
+    RobotPlayer(PieceColor color, Board board)
+    {
+        super(color, board);
+        level = RobotPlayerLevel.EASY;
+    }
     RobotPlayer(PieceColor color, Board board, RobotPlayerLevel level)
     {
         super(color, board);
