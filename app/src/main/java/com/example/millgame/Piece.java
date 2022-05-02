@@ -1,14 +1,10 @@
 package com.example.millgame;
 
 import java.util.ArrayList;
-import java.util.List;
+import javax.swing.JButton;
 
 
-public class Piece {
-    public enum PieceColor {
-        WHITE,
-        BLACK
-    }
+public class Piece extends  JButton{
     private PieceColor color;
     private Position position;
 
@@ -21,7 +17,7 @@ public class Piece {
         this.color = color;
         this.position = position;
     }
-    public List<Position> getEmptyNeighbours(){
+    public ArrayList<Position> getEmptyNeighbours(){
         ArrayList<Position> emptyNeighbours = new ArrayList<Position>();
 
         for(Position position : position.getNeighbours()){
@@ -34,4 +30,21 @@ public class Piece {
     }
     public void setPosition(Position position){this.position = position;}
     public Position getPosition(){return position;}
+
+    /*
+     * Inner enumeration
+     */
+    public enum PieceColor {
+        WHITE,
+        BLACK
+    }
+}
+
+
+class WritePiece extends Piece {
+
+}
+
+class BlackPiece extends Piece {
+
 }

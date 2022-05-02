@@ -1,7 +1,9 @@
 package com.example.millgame;
+
+import javax.swing.JButton;
 import java.util.ArrayList;
 
-public class Position {
+public class Position extends JButton {
     private char x;
     private char y;
     private Piece piece;

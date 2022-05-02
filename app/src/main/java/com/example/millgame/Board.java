@@ -1,8 +1,11 @@
 package com.example.millgame;
 
+import com.example.millgame.MillGame.GameVariant;
+
 import java.util.HashMap;
 
-public abstract class Board implements BoardBuilder {
+
+public abstract class Board {
     private Position origin;
     private GameVariant variant;
     private HashMap mills;
