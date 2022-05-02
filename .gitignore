@@ -1,3 +1,6 @@
 .gradle
 .idea
+
+app/build
+app/target
 tmp
