@@ -3,14 +3,11 @@ package com.example.millgame;
 import java.util.ArrayList;
 import java.util.List;
 
-enum PieceColor {
-    WHITE,
-    BLACK
-}
 
 public class Piece {
     private PieceColor color;
     private Position position;
+
 
     public Piece(PieceColor color){ // piece has no defined position
         this.color = color;

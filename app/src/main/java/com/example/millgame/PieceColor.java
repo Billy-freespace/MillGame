@@ -1,2 +1,6 @@
-package com.example.millgame;public enum PieceColor {
+package com.example.millgame;
+
+public enum PieceColor {
+    WHITE,
+    BLACK
 }
