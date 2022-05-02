@@ -4,16 +4,6 @@ package com.example.millgame;
 import java.util.ArrayList;
 import java.util.List;
 
-enum PlayerType {
-    HUMAN,
-    ROBOT
-}
-
-enum RobotPlayerLevel {
-    EASY,
-    MEDIUM
-}
-
 public abstract class Player {
     private List<Piece> pieces;
     private int npieces;
@@ -52,26 +42,17 @@ public abstract class Player {
 
         return piece;
     }
-}
 
-
-class HumanPlayer extends Player {
-    HumanPlayer(PieceColor color, Board board) {
-        super(color, board);
+    /*
+     * inner enumerations
+     */
+    public enum PlayerType {
+        HUMAN,
+        ROBOT
     }
-}
 
-class RobotPlayer extends Player {
-    private RobotPlayerLevel level;
-
-    RobotPlayer(PieceColor color, Board board)
-    {
-        super(color, board);
-        level = RobotPlayerLevel.EASY;
-    }
-    RobotPlayer(PieceColor color, Board board, RobotPlayerLevel level)
-    {
-        super(color, board);
-        this.level = level;
+    public enum PlayerLevel {
+        NOOB,
+        NINJA
     }
 }

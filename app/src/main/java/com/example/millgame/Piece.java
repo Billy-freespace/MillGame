@@ -5,6 +5,10 @@ import java.util.List;
 
 
 public class Piece {
+    public enum PieceColor {
+        WHITE,
+        BLACK
+    }
     private PieceColor color;
     private Position position;
 

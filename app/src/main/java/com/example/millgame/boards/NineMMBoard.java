@@ -1,6 +1,7 @@
-package com.example.millgame;
+package com.example.millgame.boards;
 
 import java.util.HashMap;
+import com.example.millgame.MillGame.GameVariant;
 
 public class NineMMBoard extends Board {
 
