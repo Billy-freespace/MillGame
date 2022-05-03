@@ -1,0 +1,24 @@
+name: Coverage-Workflow
+on: [push]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 11
+      - uses: gradle/gradle-build-action@v2
+      - uses: actions/checkout@v3
+      
+      - name: Build
+        run: ./gradlew build
+      
+      - name: Coverage
+        run: ./gradlew jacocoTestReport
+      
+      - uses: codecov/codecov-action@v2
+        with:
+          files: build/reports/jacoco/test/jacocoTestReport.xml
