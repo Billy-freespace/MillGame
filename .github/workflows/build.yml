@@ -1,7 +1,7 @@
-name: Building-Workflow
+name: build
 on: [push]
 jobs:
-  buid-test-coverage:
+  buid:
     runs-on: ubuntu-latest
   
 
@@ -15,6 +15,3 @@ jobs:
       
       - name: Build
         run: ./gradlew build
-
-      - name: Tests
-        run: ./gradlew test
