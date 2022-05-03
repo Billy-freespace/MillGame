@@ -10,8 +10,6 @@ import java.util.HashMap;
 public class NineMMBoard extends Board {
     public NineMMBoard() {
         super(GameVariant.NINE_MEN_MORRIS);
-
-        positions = new HashMap<Character, HashMap<Integer, Position>>();
     }
 
     @Override

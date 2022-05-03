@@ -4,7 +4,7 @@ import com.example.millgame.MillGame.GameMode;
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.Player.PlayerLevel;
 import com.example.millgame.Player.PlayerType;
-import com.example.millgame.Piece.PieceColor;
+import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.players.HumanPlayer;
 import com.example.millgame.players.RobotPlayer;

@@ -1,7 +1,8 @@
 package com.example.millgame;
 
-import com.example.millgame.Piece.PieceColor;
+import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.MillGame.GameVariant;
+import com.example.millgame.pieces.PieceFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public abstract class Player {
         pieces = new ArrayList<Piece>(); // no pieces were placed to board
     }
     public void placePiece(char x, char y){
-        Piece piece = new Piece(pieceColor);
+        Piece piece = PieceFactory.create(pieceColor);
         board.placePiece(piece, x, y);
     }
     public void movePiece(Piece piece, char x, char y){

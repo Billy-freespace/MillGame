@@ -1,7 +1,7 @@
 package com.example.millgame.players;
 
 import com.example.millgame.Board;
-import com.example.millgame.Piece.PieceColor;
+import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.Player;
 import com.example.millgame.Player.PlayerLevel;
 

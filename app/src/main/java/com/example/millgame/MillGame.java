@@ -18,7 +18,7 @@ public class MillGame {
     public boolean isGameOver(){return false;}
 
 
-    public void setTurnIterator(TurnIterator itr){}
+    public void setTurnIterator(TurnIterator itr){ this.turniter = itr; }
     public void setPlayers(ArrayList<Player> players){}
     public void setBoard(Board board){}
 
