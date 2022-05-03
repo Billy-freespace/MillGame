@@ -6,9 +6,9 @@ import java.util.HashMap;
 
 
 public abstract class Board {
-    private Position origin;
-    private GameVariant variant;
-    private HashMap mills;
+    protected Position origin;
+    protected GameVariant variant;
+    protected HashMap mills;
 
     public Board (GameVariant variant) {
         this.variant = variant;
@@ -23,5 +23,9 @@ public abstract class Board {
     public void placePiece(Piece piece, char x, char y){}
     public void removePiece(Position position){};
     public Position getPosition(char x, char y){return null;}
+
+    public abstract boolean isValidMill(Mill mill);
+
+    public void setOrigin(Position origin){ this.origin = origin;}
 
 }

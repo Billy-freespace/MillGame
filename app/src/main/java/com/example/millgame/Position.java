@@ -4,16 +4,19 @@ import javax.swing.JButton;
 import java.util.ArrayList;
 
 public class Position extends JButton {
-    private char x;
-    private char y;
+    private char xLabel;
+    private int yLabel;
     private Piece piece;
     //private Position[] neighbours;
     private ArrayList<Position> neighbours;
-    boolean mark = false;
+    public boolean mark = false;
 
-    public Position(char x, char y) {
-        this.x = x;
-        this.y = y;
+    public Position(char xLabel, int yLabel) {
+        this.xLabel = xLabel;
+        this.yLabel = yLabel;
+        neighbours = new ArrayList<Position>();
+        piece = null;
+        mark = false;
     }
 
     public void setPiece(Piece piece) {
@@ -24,5 +27,10 @@ public class Position extends JButton {
     }
     public ArrayList<Position> getNeighbours(){
         return neighbours;
+    }
+
+    public void addNeighbour(Position position){
+        neighbours.add(position);
+        position.addNeighbour(this);
     }
 }

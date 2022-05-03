@@ -1,12 +1,21 @@
 package com.example.millgame;
 
+import com.example.millgame.MillGame.GameMode;
+import com.example.millgame.MillGame.GameVariant;
+import com.example.millgame.Player.PlayerLevel;
+import com.example.millgame.Player.PlayerType;
+import com.example.millgame.Piece.PieceColor;
+import com.example.millgame.boards.BoardCreatorDirector;
+import com.example.millgame.players.HumanPlayer;
+import com.example.millgame.players.RobotPlayer;
+
 import java.util.ArrayList;
 import java.util.List;
 
 interface MillGameBuilderInterface {
     public void reset();
     public void setGameMode(GameMode mode);
-    public void setRobotPlayerDifficulty(RobotPlayerLevel level);
+    public void setRobotPlayerDifficulty(PlayerLevel level);
     public void addPlayer(PieceColor color, PlayerType type);
     public void buildBoard(GameVariant variant);
 }
@@ -15,7 +24,7 @@ public class MillGameBuilder implements MillGameBuilderInterface {
     private MillGame game;
     private Board board;
     private GameMode mode;
-    private RobotPlayerLevel robotDifficulty = RobotPlayerLevel.EASY;
+    private PlayerLevel robotDifficulty = PlayerLevel.NOOB;
     private ArrayList<Player> players;
 
     public void reset(){
@@ -27,7 +36,7 @@ public class MillGameBuilder implements MillGameBuilderInterface {
         this.mode = mode;
     }
 
-    public void setRobotPlayerDifficulty(RobotPlayerLevel level){
+    public void setRobotPlayerDifficulty(PlayerLevel level){
         this.robotDifficulty = level;
     }
 
