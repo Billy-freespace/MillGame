@@ -1,8 +1,23 @@
 package com.example.millgame;
 
+import com.example.millgame.logging.GameLogger;
+
 import java.util.ArrayList;
 
 public class MillGame {
+    private TurnIterator turniter;
+    private ArrayList<Player> players;
+    private Board board;
+    private GameLogger logger;
+
+    public MillGame(){}
+    public Player nextTurn(){return null;}
+    public Player getActivePlayer(){
+        return turniter.getIterationState();
+    }
+    public boolean isGameOver(){return false;}
+
+
     public void setTurnIterator(TurnIterator itr){}
     public void setPlayers(ArrayList<Player> players){}
     public void setBoard(Board board){}

@@ -1,5 +1,7 @@
 package com.example.millgame;
 
+import com.example.millgame.Piece.PieceColor;
+import com.example.millgame.MillGame.GameVariant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,7 @@ public abstract class Player {
     private PieceColor pieceColor;
     private Board board;
 
-    Player(PieceColor color, Board board){
+    public Player(PieceColor color, Board board){
         this.board = board;
         GameVariant variant = board.getGameVariant();
         npieces = Board.getNumberPieces(variant);

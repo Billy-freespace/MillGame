@@ -1,12 +1,12 @@
 package com.example.millgame;
 
 import java.util.ArrayList;
-import javax.swing.JButton;
+import javax.swing.*;
 
 
-public class Piece extends  JButton{
-    private PieceColor color;
-    private Position position;
+public class Piece extends JButton {
+    protected PieceColor color;
+    protected Position position;
 
 
     public Piece(PieceColor color){ // piece has no defined position
@@ -41,10 +41,25 @@ public class Piece extends  JButton{
 }
 
 
-class WritePiece extends Piece {
-
+class WhitePiece extends Piece {
+    public static Icon pieceIcon = new ImageIcon("resources/SOMTHING-WHITE.jpg");
+    public static  Icon selectedPieceIcon = new ImageIcon("resources/SOMTHING-WHITE.jpg");
+    public WhitePiece(){
+        super(PieceColor.WHITE);
+    }
+    public WhitePiece(Position position){
+        super(PieceColor.WHITE, position);
+    }
 }
 
 class BlackPiece extends Piece {
 
+    public static Icon pieceIcon = new ImageIcon("resources/SOMTHING-BLACK.jpg");
+    public static  Icon selectedPieceIcon = new ImageIcon("resources/SOMTHING-BLACK.jpg");
+    public BlackPiece(){
+        super(PieceColor.BLACK);
+    }
+    public BlackPiece(Position position){
+        super(PieceColor.BLACK, position);
+    }
 }
