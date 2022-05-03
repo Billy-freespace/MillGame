@@ -14,7 +14,7 @@ plugins {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'com.example.millgame.MillGameGUI'
+        attributes 'Main-Class': 'com.example.millgame.App'
     }
 }
 

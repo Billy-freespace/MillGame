@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Random;
 
 abstract class CircularIterator<T> implements Cloneable {
-    private List<T> collection;
-    private int iterationIndex;
-    private T iterationState = null;
+    protected List<T> collection;
+    protected int iterationIndex;
+    protected T iterationState = null;
 
     CircularIterator(List<T> collection, boolean randomPosition){
         iterationIndex = 0;
