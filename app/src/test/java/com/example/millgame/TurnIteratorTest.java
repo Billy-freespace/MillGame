@@ -8,7 +8,7 @@ import com.example.millgame.players.HumanPlayer;
 
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -20,13 +20,13 @@ public class TurnIteratorTest {
     private ArrayList<Player> players;
     private NineMMBoard board; // default board
 
-    @BeforeAll
+    @BeforeEach
     public void createPlayers(){
         board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(GameVariant.NINE_MEN_MORRIS);
         player0 = new HumanPlayer(PieceColor.WHITE, board);
         player1 = new HumanPlayer(PieceColor.BLACK, board);
 
-        players = new ArrayList<Player>();
+        players = new ArrayList<Player>(2);
         players.add(player0);
         players.add(player1);
     }
