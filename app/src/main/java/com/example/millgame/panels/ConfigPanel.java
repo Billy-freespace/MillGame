@@ -1,16 +1,18 @@
 package com.example.millgame.panels;
 
 import com.example.millgame.GameLayout;
+import com.example.millgame.gameObjects.Constants;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class ConfigPanel extends JPanel {
 
-    private JLabel message;
+    private final JLabel message;
 
     public ConfigPanel(){
         super();
+        message = new JLabel(Constants.title);
         add(message);
     }
 

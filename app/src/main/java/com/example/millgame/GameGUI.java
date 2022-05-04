@@ -1,7 +1,8 @@
 package com.example.millgame;
 
+import com.example.millgame.gameObjects.Constants;
 import com.example.millgame.panels.ConfigPanel;
-import com.example.millgame.panels.GamePanel;
+//import com.example.millgame.panels.GamePanel;
 import com.example.millgame.panels.WelcomePanel;
 
 import javax.swing.*;
@@ -14,18 +15,22 @@ public class GameGUI extends JFrame {
     public GameGUI(){
         super();
 
+        setTitle(Constants.title);
+        setSize(Constants.WIDTH, Constants.HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        setLocationRelativeTo(null);
 
         gameLayout = new GameLayout();
         controlPanel = new JPanel(gameLayout);
 
         WelcomePanel welcomePanel = new WelcomePanel();
         ConfigPanel configPanel = new ConfigPanel();
-        GamePanel gamePanel = new GamePanel();
+//        GamePanel gamePanel = new GamePanel();
 
         controlPanel.add(welcomePanel);
         controlPanel.add(configPanel);
-        controlPanel.add(gamePanel);
+//        controlPanel.add(gamePanel);
 
         gameLayout.setControlPanel(controlPanel);
         GameLayout.GameLayoutAction gameLayoutAction = gameLayout.getGameLayoutAction();
@@ -36,7 +41,7 @@ public class GameGUI extends JFrame {
         configPanel.addActionStartButton(gameLayoutAction);
         configPanel.addActionStartButton(configPanel.getBuildMillGameAction());
 
-        gamePanel.addActionResetButton(gameLayoutAction);
+//        gamePanel.addActionResetButton(gameLayoutAction);
 
         Container mainPanel = this.getContentPane();
         mainPanel.add(configPanel, BorderLayout.CENTER);

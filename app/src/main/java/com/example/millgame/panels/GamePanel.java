@@ -12,7 +12,7 @@ public class GamePanel extends JPanel {
     private JPanel msg;
     private MillGame game;
 
-    GamePanel() {
+    public GamePanel() {
         super();
         add(msg);
         setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
@@ -20,6 +20,7 @@ public class GamePanel extends JPanel {
         setMinimumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         setFocusable(true);
     }
+
     public void addActionResetButton(AbstractAction action){
 
     }
