@@ -84,7 +84,12 @@ public abstract class Board{
         if(!positions.containsKey(xLabel)){
             throw new InvalidPositionCoordinate(xLabel, yLabel);
         }
+
         HashMap<Integer, Position> inner = positions.get(xLabel);
+        if(!inner.containsKey(yLabel)){
+            throw new InvalidPositionCoordinate(xLabel, yLabel);
+        }
+
         return inner.get(yLabel);
     }
 
