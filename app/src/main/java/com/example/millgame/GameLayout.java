@@ -8,8 +8,10 @@ import java.awt.event.ActionListener;
 public class GameLayout extends CardLayout{
     private JComponent component;
 
-    public class ControlGameLayout implements ActionListener {
+    public static class ControlGameLayout implements ActionListener {
         @Override
-        public void actionPerformed(ActionEvent actionEvent){}
+        public void actionPerformed(ActionEvent actionEvent){
+
+        }
     }
 }

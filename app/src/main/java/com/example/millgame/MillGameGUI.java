@@ -21,7 +21,7 @@ public class MillGameGUI extends JFrame implements Runnable {
     public MillGameGUI() {
         setTitle(Constants.title);
         setSize(Constants.WIDTH, Constants.HEIGHT);
-        setLayout(new BorderLayout());
+        setLayout(new GameLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -31,7 +31,7 @@ public class MillGameGUI extends JFrame implements Runnable {
         jPanelMain.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         jPanelMain.setFocusable(true);
 
-        add(jPanelMain, BorderLayout.CENTER);
+        add(jPanelMain);
         pack();
 
         setVisible(true);
