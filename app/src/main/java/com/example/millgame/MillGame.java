@@ -10,17 +10,23 @@ public class MillGame {
     private Board board;
     private GameLogger logger;
 
-    public MillGame(){}
-    public Player nextTurn(){return null;}
+    public MillGame(){ // useless constructor, to create a MillGame object use MillGameBuilder class
+        turniter = null;
+        players = null;
+        board = null;
+
+        // INITIALIZING GameLogger
+    }
+    public Player nextTurn(){ return turniter.next(); }
     public Player getActivePlayer(){
         return turniter.getIterationState();
     }
-    public boolean isGameOver(){return false;}
+    public boolean isGameOver(){ return false; }
 
 
-    public void setTurnIterator(TurnIterator itr){}
-    public void setPlayers(ArrayList<Player> players){}
-    public void setBoard(Board board){}
+    public void setTurnIterator(TurnIterator itr){ turniter = itr; }
+    public void setPlayers(ArrayList<Player> players){ this.players = players; }
+    public void setBoard(Board board){ this.board = board; }
 
     /*
      * Inner enumerations
