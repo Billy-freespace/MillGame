@@ -13,30 +13,23 @@ import java.util.ArrayList;
 
 interface MillGameBuilderInterface {
     public void reset();
-    public void setGameMode(GameMode mode);
-    public void setRobotPlayerDifficulty(PlayerLevel level);
-    public void addPlayer(PieceColor color, PlayerType type);
     public void buildBoard(GameVariant variant);
+    public void setGameMode(GameMode mode);
+    public void setRobotLevel(PlayerLevel level);
+    public void addPlayer(PieceColor color, PlayerType type);
 }
 
 public class MillGameBuilder implements MillGameBuilderInterface {
     private MillGame game;
     private Board board;
     private GameMode mode;
-    private PlayerLevel robotDifficulty = PlayerLevel.NOOB;
+    private PlayerLevel robotLevel = PlayerLevel.NOOB;
     private ArrayList<Player> players;
 
     public void reset(){
         game = new MillGame();
         players = new ArrayList<Player>();
-    }
-
-    public void setGameMode(GameMode mode){
-        this.mode = mode;
-    }
-
-    public void setRobotPlayerDifficulty(PlayerLevel level){
-        this.robotDifficulty = level;
+        board = null;
     }
 
     public void buildBoard(GameVariant variant){
@@ -44,19 +37,13 @@ public class MillGameBuilder implements MillGameBuilderInterface {
         game.setBoard(board);
     }
 
-    /*
-    public void createPlayers(GameMode mode)
-    {
-        players.add(new HumanPlayer(PieceColor.WHITE, board));
-        if (mode == GameMode.HUMAN_HUMAN){
-
-        }
-        else {
-
-        }
-
+    public void setGameMode(GameMode mode){
+        this.mode = mode;
     }
-     */
+
+    public void setRobotLevel(PlayerLevel level){
+        robotLevel = level;
+    }
 
     public void addPlayer(PieceColor color, PlayerType type)
     {
@@ -65,15 +52,30 @@ public class MillGameBuilder implements MillGameBuilderInterface {
         if(type == PlayerType.HUMAN)
             player = new HumanPlayer(color, board);
         else
-            player = new RobotPlayer(color, board, robotDifficulty);
+            player = new RobotPlayer(color, board, robotLevel);
 
         players.add(player);
     }
 
-    public MillGame getResult(){
+    public MillGame build(GameVariant variant){
+        reset();
+        buildBoard(variant);
+
+        // create 2 players
+        addPlayer(PieceColor.WHITE, PlayerType.HUMAN);
+        PieceColor opponentColor = PieceColor.BLACK;
+
+        if(mode == GameMode.HUMAN_ROBOT){
+            addPlayer(opponentColor, PlayerType.ROBOT);
+        }
+        else{
+            addPlayer(opponentColor, PlayerType.HUMAN);
+        }
+
         TurnIterator itr = new TurnIterator(players);
         game.setTurnIterator(itr);
         game.setPlayers(players);
+
         return game;
     }
 }
