@@ -2,12 +2,11 @@ package com.example.millgame;
 
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.pieces.PieceFactory;
+
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
