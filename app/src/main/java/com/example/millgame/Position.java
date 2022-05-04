@@ -22,7 +22,6 @@ public class Position extends JButton {
     public Position(Point point, char xLabel, int yLabel){}
     public void addNeighbour(Position position){
         neighbours.add(position);
-        position.addNeighbour(this);
     }
     public ArrayList<Position> getNeighbours(){
         return neighbours;
