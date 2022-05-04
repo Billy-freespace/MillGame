@@ -29,6 +29,7 @@ public abstract class Board{
     public ArrayList<Position> getEmptyPositions(){
         return null;
     }
+    public abstract ArrayList<Position> getPossibleMovements(char xLabel, int yLabel);
     public void placePiece(Piece piece, char xLabel, int yLabel) throws InvalidPositionCoordinate{
         Position position = this.getPosition(xLabel, yLabel);
         Piece positionPiece = position.getPiece();

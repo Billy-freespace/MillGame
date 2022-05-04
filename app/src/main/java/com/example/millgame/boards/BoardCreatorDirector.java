@@ -12,6 +12,9 @@ public class BoardCreatorDirector {
             case NINE_MEN_MORRIS:
                 board = new NineMMBoardBuilder().build();
                 break;
+            case TWELVE_MEN_MORRIS:
+                board = new TwelveMMBoardBuilder().build();
+                break;
             default:
                 board = null;
         }
@@ -21,7 +24,11 @@ public class BoardCreatorDirector {
 
     public NineMMBoard makeNineMMBoard(NineMMBoardBuilder builder){
         NineMMBoard board = builder.build();
+        return board;
+    }
 
+    public TwelveMMBoard makeTwelveMMBoard(TwelveMMBoardBuilder builder){
+        TwelveMMBoard board = builder.build();
         return board;
     }
 }
