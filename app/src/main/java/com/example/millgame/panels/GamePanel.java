@@ -1,10 +1,16 @@
 package com.example.millgame.panels;
 
-import com.example.millgame.Board;
+import com.example.millgame.GameLayout;
+import com.example.millgame.MillGame;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
-public class GamePanel extends JPanel{
+public class GamePanel extends JPanel {
+    private JPanel msg;
+    private MillGame game;
 
-    GamePanel(Board board){}
+    public GamePanel(){
+        super();
+        add(msg);
+    }
 }

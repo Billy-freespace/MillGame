@@ -1,6 +1,14 @@
 package com.example.millgame.panels;
 
-import javax.swing.JPanel;
+import com.example.millgame.GameLayout;
 
-public class WelcomePanel extends JPanel {
+import javax.swing.*;
+
+public class WelcomePanel extends JPanel{
+    private JLabel title;
+
+    public WelcomePanel(){
+        super();
+        add(title);
+    }
 }
