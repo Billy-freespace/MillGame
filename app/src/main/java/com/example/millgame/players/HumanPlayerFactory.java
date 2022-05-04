@@ -8,5 +8,5 @@ import com.example.millgame.pieces.PieceColor;
 
 public class HumanPlayerFactory implements PlayerFactory{
     public Player create(PieceColor color, Board board){return null;}
-    public Player createByLevel(PieceColor color, Board board, Player.PlayerLevel level){return null;}
+    public Player createByLevel(PieceColor color, Board board, PlayerLevel level){return null;}
 }

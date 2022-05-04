@@ -2,15 +2,14 @@ package com.example.millgame;
 
 import com.example.millgame.MillGame.GameMode;
 import com.example.millgame.MillGame.GameVariant;
-import com.example.millgame.Player.PlayerLevel;
-import com.example.millgame.Player.PlayerType;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.players.HumanPlayer;
+import com.example.millgame.players.PlayerLevel;
+import com.example.millgame.players.PlayerType;
 import com.example.millgame.players.RobotPlayer;
 
 import java.util.ArrayList;
-import java.util.List;
 
 interface MillGameBuilderInterface {
     public void reset();

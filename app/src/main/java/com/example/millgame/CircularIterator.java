@@ -3,7 +3,7 @@ package com.example.millgame;
 import java.util.List;
 import java.util.Random;
 
-abstract class CircularIterator<T> implements Cloneable {
+public abstract class CircularIterator<T> implements Cloneable {
     protected List<T> collection;
     protected int iterationIndex;
     protected T iterationState = null;

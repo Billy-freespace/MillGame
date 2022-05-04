@@ -38,25 +38,12 @@ public abstract class Player {
     public List<Mill> getMills(){return null;}
     public Piece getPiece(char x, char y) throws InvalidPositionCoordinate {
         Position position = board.getPosition(x, y);
-        Piece piece;
-        if(position == null)
-            piece = null;
-        else
+        Piece piece = null;
+
+        if(position != null){
             piece = position.getPiece();
+        }
 
         return piece;
-    }
-
-    /*
-     * inner enumerations
-     */
-    public enum PlayerType {
-        HUMAN,
-        ROBOT
-    }
-
-    public enum PlayerLevel {
-        NOOB,
-        NINJA
     }
 }
