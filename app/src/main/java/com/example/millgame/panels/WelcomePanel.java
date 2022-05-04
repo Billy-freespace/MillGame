@@ -11,4 +11,8 @@ public class WelcomePanel extends JPanel{
         super();
         add(title);
     }
+
+    public void addActionInitButton(AbstractAction action){
+
+    }
 }

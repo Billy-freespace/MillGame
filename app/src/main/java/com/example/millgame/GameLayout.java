@@ -8,20 +8,12 @@ import java.awt.event.ActionListener;
 public class GameLayout extends CardLayout{
     private JPanel controlPanel;
 
-    GameLayout(){
-        super();
-    }
-
     public void setControlPanel(JPanel panel){ controlPanel = panel; }
     public GameLayoutAction getGameLayoutAction(){
-        return null;
+        return new GameLayoutAction();
     }
 
     public class GameLayoutAction extends AbstractAction {
-
-        GameLayoutAction(JPanel controlPanel){
-            super();
-        }
         @Override
         public void actionPerformed(ActionEvent actionEvent){
             next(controlPanel);

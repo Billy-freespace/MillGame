@@ -13,4 +13,8 @@ public class GamePanel extends JPanel {
         super();
         add(msg);
     }
+
+    public void addActionResetButton(AbstractAction action){
+
+    }
 }

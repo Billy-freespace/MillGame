@@ -10,12 +10,12 @@ public class MillGame {
     private Board board;
     private GameLogger logger;
 
-    public MillGame(){ // useless constructor, to create a MillGame object using MillGameBuilder class
+    public MillGame(){ // useless constructor, to create a MillGame object use MillGameBuilder class
         turniter = null;
         players = null;
         board = null;
 
-        // ONLY INITIALIZING GameLogger
+        // INITIALIZING GameLogger
     }
     public Player nextTurn(){ return turniter.next(); }
     public Player getActivePlayer(){
