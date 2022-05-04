@@ -10,7 +10,7 @@ public class MillGame {
     private Board board;
     private GameLogger logger;
 
-    public MillGame(){ // useless constructor, create a MillGame object using MillGameBuilder class
+    public MillGame(){ // useless constructor, to create a MillGame object using MillGameBuilder class
         turniter = null;
         players = null;
         board = null;
@@ -25,7 +25,7 @@ public class MillGame {
 
 
     public void setTurnIterator(TurnIterator itr){ turniter = itr; }
-    public void setPlayers(ArrayList<Player> players){ this.players = players}
+    public void setPlayers(ArrayList<Player> players){ this.players = players; }
     public void setBoard(Board board){ this.board = board; }
 
     /*
