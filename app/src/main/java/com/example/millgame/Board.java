@@ -1,12 +1,12 @@
 package com.example.millgame;
 
 import com.example.millgame.MillGame.GameVariant;
+import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.logging.GameLogger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 
 public abstract class Board{
     protected Position origin;
@@ -17,18 +17,19 @@ public abstract class Board{
 
     public Board (GameVariant variant) {
         this.variant = variant;
+        this.positions = null;
+        this.origin = null;
 
         mills =  new HashMap<PieceColor, ArrayList<Mill>>();
         mills.put(PieceColor.BLACK, new ArrayList<Mill>());
         mills.put(PieceColor.WHITE, new ArrayList<Mill>());
 
-        positions = new HashMap<Character, HashMap<Integer, Position>>();
     }
 
     public ArrayList<Position> getEmptyPositions(){
         return null;
     }
-    public void placePiece(Piece piece, char xLabel, int yLabel){
+    public void placePiece(Piece piece, char xLabel, int yLabel) throws InvalidPositionCoordinate{
         Position position = this.getPosition(xLabel, yLabel);
         Piece positionPiece = position.getPiece();
 
@@ -41,7 +42,7 @@ public abstract class Board{
         piece.setPosition(position);
     }
 
-    public void removePiece(char xLabel, int yLabel) {
+    public void removePiece(char xLabel, int yLabel) throws InvalidPositionCoordinate{
         Position position = this.getPosition(xLabel, yLabel);
         this.removePiece(position);
     }
@@ -66,7 +67,7 @@ public abstract class Board{
         return variant;
     }
     public static int getNumberPieces (GameVariant variant) {
-        int npieces;
+        int npieces = -1;
 
         switch (variant){
             case NINE_MEN_MORRIS:
@@ -78,17 +79,24 @@ public abstract class Board{
         }
         return npieces;
     }
-
-    public void setPosition(char xLabel, int yLabel, Position position){
-        HashMap<Integer, Position> inner = positions.get(xLabel);
-        inner.put(yLabel, position);
-    }
-
-    public Position getPosition(char xLabel, int yLabel) {
+    public void setPositions(HashMap<Character, HashMap<Integer, Position>> positions){ this.positions = positions; }
+    public Position getPosition(char xLabel, int yLabel) throws InvalidPositionCoordinate {
+        if(!positions.containsKey(xLabel)){
+            throw new InvalidPositionCoordinate(xLabel, yLabel);
+        }
         HashMap<Integer, Position> inner = positions.get(xLabel);
         return inner.get(yLabel);
     }
 
+    public int countPositions(){
+        int count =0;
+        for(HashMap<Integer, Position> inner : positions.values()){
+            count += inner.size();
+        }
+
+        return count;
+    }
     public void setLogger(GameLogger logger){ this.logger = logger; }
     public void setOrigin(Position origin){ this.origin = origin;}
+    public Position getOrigin(){ return origin; }
 }

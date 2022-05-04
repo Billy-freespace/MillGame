@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 
-public abstract class Piece extends JButton {
+public class Piece extends JButton {
     protected PieceColor color;
     protected Position position;
     protected Icon icon;

@@ -1,5 +1,6 @@
 package com.example.millgame;
 
+import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.pieces.PieceFactory;
@@ -20,11 +21,11 @@ public abstract class Player {
         pieceColor = color;
         pieces = new ArrayList<Piece>(); // no pieces were placed to board
     }
-    public void placePiece(char x, char y){
+    public void placePiece(char x, char y) throws InvalidPositionCoordinate{
         Piece piece = PieceFactory.create(pieceColor);
         board.placePiece(piece, x, y);
     }
-    public void movePiece(Piece piece, char x, char y){
+    public void movePiece(Piece piece, char x, char y) throws InvalidPositionCoordinate{
         Position position = piece.getPosition();
         board.removePiece(position);
         board.placePiece(piece, x, y);
@@ -35,7 +36,7 @@ public abstract class Player {
         pieces.remove(piece);
     }
     public List<Mill> getMills(){return null;}
-    public Piece getPiece(char x, char y){
+    public Piece getPiece(char x, char y) throws InvalidPositionCoordinate {
         Position position = board.getPosition(x, y);
         Piece piece;
         if(position == null)

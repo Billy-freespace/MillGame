@@ -35,4 +35,7 @@ public class Position extends JButton {
     }
     public void setPoint(Point point){}
     public void setMark(boolean value){}
+
+    public char getXLabel(){ return xLabel; }
+    public int getYLabel(){ return yLabel; }
 }

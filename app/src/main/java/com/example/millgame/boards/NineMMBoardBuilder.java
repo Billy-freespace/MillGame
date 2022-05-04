@@ -15,12 +15,16 @@ public class NineMMBoardBuilder implements BoardBuilder {
 
         // board positions definition
 
+        BoardPositions boardPositions = new BoardPositions();
+
         /*
          * square : a1-g1-g7-a7
          */
 
         Position origin = new Position('a', 1);
-        board.setPosition('a', 1, origin);
+
+        board.setOrigin(origin);
+        boardPositions.setPosition('a', 1, origin);
 
         // origin (a1) neighbours
         Position d1 = new Position('d', 1);
@@ -29,8 +33,8 @@ public class NineMMBoardBuilder implements BoardBuilder {
         origin.addNeighbour(d1);
         origin.addNeighbour(a4);
 
-        board.setPosition('d', 1, d1);
-        board.setPosition('a', 4, a4);
+        boardPositions.setPosition('d', 1, d1);
+        boardPositions.setPosition('a', 4, a4);
 
         // d1 neighbours
         Position d2 = new Position('d', 2);
@@ -39,15 +43,15 @@ public class NineMMBoardBuilder implements BoardBuilder {
         d1.addNeighbour(d2);
         d1.addNeighbour(g1);
 
-        board.setPosition('d', 2, d2);
-        board.setPosition('g', 1, g1);
+        boardPositions.setPosition('d', 2, d2);
+        boardPositions.setPosition('g', 1, g1);
 
         // g1 neighbours
         Position g4 = new Position('g', 4);
 
         g1.addNeighbour(g4);
 
-        board.setPosition('g', 4, g4);
+        boardPositions.setPosition('g', 4, g4);
 
         // g4 neighbours
         Position f4 = new Position('f', 4);
@@ -56,15 +60,15 @@ public class NineMMBoardBuilder implements BoardBuilder {
         g4.addNeighbour(f4);
         g4.addNeighbour(g7);
 
-        board.setPosition('f', 4, f4);
-        board.setPosition('g', 7, g7);
+        boardPositions.setPosition('f', 4, f4);
+        boardPositions.setPosition('g', 7, g7);
 
         // g7 neighbours
         Position d7 = new Position('d', 7);
 
         g7.addNeighbour(d7);
 
-        board.setPosition('d', 7, d7);
+        boardPositions.setPosition('d', 7, d7);
 
         // d7 neighbours
         Position a7 = new Position('a', 7);
@@ -73,8 +77,8 @@ public class NineMMBoardBuilder implements BoardBuilder {
         d7.addNeighbour(a7);
         d7.addNeighbour(d6);
 
-        board.setPosition('a', 7, a7);
-        board.setPosition('d', 6, d6);
+        boardPositions.setPosition('a', 7, a7);
+        boardPositions.setPosition('d', 6, d6);
 
         // a7 neighbours
         a7.addNeighbour(a4);
@@ -83,7 +87,7 @@ public class NineMMBoardBuilder implements BoardBuilder {
         Position b4 = new Position('b', 4);
         a4.addNeighbour(b4);
 
-        board.setPosition('b', 4, b4);
+        boardPositions.setPosition('b', 4, b4);
 
 
         /*
@@ -96,7 +100,7 @@ public class NineMMBoardBuilder implements BoardBuilder {
         b2.addNeighbour(b4);
         b2.addNeighbour(d2);
 
-        board.setPosition('b', 2, b2);
+        boardPositions.setPosition('b', 2, b2);
 
         // d2 neighbours
         Position f2 = new Position('f', 2);
@@ -105,8 +109,8 @@ public class NineMMBoardBuilder implements BoardBuilder {
         d2.addNeighbour(f2);
         d2.addNeighbour(d3);
 
-        board.setPosition('f', 2, f2);
-        board.setPosition('d', 3, d3);
+        boardPositions.setPosition('f', 2, f2);
+        boardPositions.setPosition('d', 3, d3);
 
         // f2 neighbours
         f2.addNeighbour(f4);
@@ -118,8 +122,8 @@ public class NineMMBoardBuilder implements BoardBuilder {
         f4.addNeighbour(e4);
         f4.addNeighbour(f6);
 
-        board.setPosition('e', 4, e4);
-        board.setPosition('f', 6, f6);
+        boardPositions.setPosition('e', 4, e4);
+        boardPositions.setPosition('f', 6, f6);
 
         // f6 neighbours
         f6.addNeighbour(d6);
@@ -131,8 +135,8 @@ public class NineMMBoardBuilder implements BoardBuilder {
         d6.addNeighbour(b6);
         d6.addNeighbour(d5);
 
-        board.setPosition('b', 6, b6);
-        board.setPosition('d', 5, d5);
+        boardPositions.setPosition('b', 6, b6);
+        boardPositions.setPosition('d', 5, d5);
 
         // b6 neighbours
         b6.addNeighbour(b4);
@@ -142,7 +146,7 @@ public class NineMMBoardBuilder implements BoardBuilder {
 
         b4.addNeighbour(c4);
 
-        board.setPosition('c', 4, c4);
+        boardPositions.setPosition('c', 4, c4);
 
         /*
          * square : c3-e3-e5-c5
@@ -154,14 +158,14 @@ public class NineMMBoardBuilder implements BoardBuilder {
         c3.addNeighbour(d3);
         c3.addNeighbour(c4);
 
-        board.setPosition('c', 3, c3);
+        boardPositions.setPosition('c', 3, c3);
 
         // d3 neighbours
         Position e3 = new Position('e', 3);
 
         d3.addNeighbour(e3);
 
-        board.setPosition('e', 3, e3);
+        boardPositions.setPosition('e', 3, e3);
 
         // e3 neighbours
         e3.addNeighbour(e4);
@@ -170,7 +174,7 @@ public class NineMMBoardBuilder implements BoardBuilder {
         Position e5 = new Position('e', 5);
         e4.addNeighbour(e5);
 
-        board.setPosition('e', 5, e5);
+        boardPositions.setPosition('e', 5, e5);
 
         // e5 neighbours
         e5.addNeighbour(d5);
@@ -181,9 +185,9 @@ public class NineMMBoardBuilder implements BoardBuilder {
         d5.addNeighbour(c5);
         c5.addNeighbour(c4);
 
-        board.setPosition('c', 5, c5);
+        boardPositions.setPosition('c', 5, c5);
 
-        board.setOrigin(origin);
+        board.setPositions(boardPositions.getPositions());
 
         return board;
     }
