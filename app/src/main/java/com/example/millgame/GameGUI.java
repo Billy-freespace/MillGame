@@ -14,10 +14,10 @@ public class GameGUI extends JFrame {
         super();
 
         setTitle(Constants.title);
-        //setSize(Constants.WIDTH, Constants.HEIGHT);
+        setSize(Constants.WIDTH, Constants.HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //setResizable(false);
-        //setLocationRelativeTo(null);
+        setResizable(false);
+        setLocationRelativeTo(null);
 
         gameLayout = new GameLayout();
         controlPanel = new JPanel(gameLayout);

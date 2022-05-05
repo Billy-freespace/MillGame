@@ -14,7 +14,7 @@ public class App implements Runnable {
 
     @Override
     public void run() {
-        Assets.init();
+//        Assets.init();
         GameGUI gameGUI = new GameGUI();
         gameGUI.setVisible(true);
     }
