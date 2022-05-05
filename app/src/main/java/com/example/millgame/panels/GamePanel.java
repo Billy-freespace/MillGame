@@ -22,7 +22,7 @@ public class GamePanel extends JPanel {
         setMinimumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         setFocusable(true);
 
-        JPanel msg = new MyPanel();
+        BoardPanel msg = new BoardPanel();
 //        title = new JLabel(Constants.title);
         add(msg);
 //        add(title);
@@ -33,14 +33,14 @@ public class GamePanel extends JPanel {
     }
 }
 
-class MyPanel extends JPanel {
+class BoardPanel extends JPanel {
 
-    public MyPanel() {
+    public BoardPanel() {
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
     public Dimension getPreferredSize() {
-        return new Dimension(400,400);
+        return new Dimension(600,600);
     }
 
     public void paintComponent(Graphics g) {

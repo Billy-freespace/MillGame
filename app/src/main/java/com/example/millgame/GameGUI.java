@@ -22,6 +22,8 @@ public class GameGUI extends JFrame {
         gameLayout = new GameLayout();
         controlPanel = new JPanel(gameLayout);
 
+        controlPanel.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+
         WelcomePanel welcomePanel = new WelcomePanel();
         ConfigPanel configPanel = new ConfigPanel();
         GamePanel gamePanel = new GamePanel();
@@ -29,6 +31,8 @@ public class GameGUI extends JFrame {
         controlPanel.add(gamePanel);
         controlPanel.add(welcomePanel);
         controlPanel.add(configPanel);
+
+        controlPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
 
         gameLayout.setControlPanel(controlPanel);
         GameLayout.GameLayoutAction gameLayoutAction = gameLayout.getGameLayoutAction();
