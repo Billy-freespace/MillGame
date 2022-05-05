@@ -1,5 +1,7 @@
 package com.example.millgame;
 
+import com.example.millgame.graphicsAndSounds.Assets;
+
 public class App implements Runnable {
 
     private Thread threadGUI;
@@ -12,6 +14,7 @@ public class App implements Runnable {
 
     @Override
     public void run() {
+        Assets.init();
         GameGUI gameGUI = new GameGUI();
         gameGUI.setVisible(true);
     }

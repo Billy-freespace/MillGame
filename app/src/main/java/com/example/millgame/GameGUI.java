@@ -1,9 +1,7 @@
 package com.example.millgame;
 
 import com.example.millgame.gameObjects.Constants;
-import com.example.millgame.panels.ConfigPanel;
-import com.example.millgame.panels.GamePanel;
-import com.example.millgame.panels.WelcomePanel;
+import com.example.millgame.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,27 +13,30 @@ public class GameGUI extends JFrame {
     public GameGUI(){
         super();
 
+        MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS);
+
         setTitle(Constants.title);
-        //setSize(Constants.WIDTH, Constants.HEIGHT);
+        setSize(Constants.WIDTH, Constants.HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //setResizable(false);
-        //setLocationRelativeTo(null);
+        setResizable(false);
+        setLocationRelativeTo(null);
 
         gameLayout = new GameLayout();
         controlPanel = new JPanel(gameLayout);
 
+//        controlPanel.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+
         WelcomePanel welcomePanel = new WelcomePanel();
         ConfigPanel configPanel = new ConfigPanel();
-        GamePanel gamePanel = new GamePanel();
+        GamePanel gamePanel = new GamePanel(game);
 
+        controlPanel.add(gamePanel);
         controlPanel.add(welcomePanel);
         controlPanel.add(configPanel);
-        controlPanel.add(gamePanel);
 
         gameLayout.setControlPanel(controlPanel);
         GameLayout.GameLayoutAction gameLayoutAction = gameLayout.getGameLayoutAction();
 
-        // ADD gameLayoutAction AbstractAction to each panel of controlPanel (welcomePanel, configPanel, gamePanel)
         welcomePanel.addActionInitButton(gameLayoutAction);
 
         configPanel.addActionStartButton(gameLayoutAction);
