@@ -12,7 +12,6 @@ import javax.swing.*;
 
 public class GamePanel extends JPanel {
     private MillGame game;
-//    private final JLabel title;
 
     public GamePanel() {
         super();
@@ -20,6 +19,7 @@ public class GamePanel extends JPanel {
         setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         setMaximumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         setMinimumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+//        setLayout(new GridBagLayout());
         setFocusable(true);
 
         BoardPanel board = new BoardPanel();
@@ -37,10 +37,12 @@ public class GamePanel extends JPanel {
     }
 }
 
+
 class BoardPanel extends JPanel {
 
     public BoardPanel() {
-        setBorder(BorderFactory.createLineBorder(Color.black));
+        setOpaque(false);
+//        setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
     public Dimension getPreferredSize() {
