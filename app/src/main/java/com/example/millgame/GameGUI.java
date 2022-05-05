@@ -22,7 +22,7 @@ public class GameGUI extends JFrame {
         gameLayout = new GameLayout();
         controlPanel = new JPanel(gameLayout);
 
-        controlPanel.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+//        controlPanel.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
 
         WelcomePanel welcomePanel = new WelcomePanel();
         ConfigPanel configPanel = new ConfigPanel();
@@ -32,12 +32,9 @@ public class GameGUI extends JFrame {
         controlPanel.add(welcomePanel);
         controlPanel.add(configPanel);
 
-        controlPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
-
         gameLayout.setControlPanel(controlPanel);
         GameLayout.GameLayoutAction gameLayoutAction = gameLayout.getGameLayoutAction();
 
-        // ADD gameLayoutAction AbstractAction to each panel of controlPanel (welcomePanel, configPanel, gamePanel)
         welcomePanel.addActionInitButton(gameLayoutAction);
 
         configPanel.addActionStartButton(gameLayoutAction);

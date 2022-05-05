@@ -22,10 +22,14 @@ public class GamePanel extends JPanel {
         setMinimumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         setFocusable(true);
 
-        BoardPanel msg = new BoardPanel();
-//        title = new JLabel(Constants.title);
-        add(msg);
-//        add(title);
+        BoardPanel board = new BoardPanel();
+        add(board);
+    }
+
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        g.drawImage(Assets.background, 0, 0, null);
     }
 
     public void addActionResetButton(AbstractAction action){
@@ -40,14 +44,13 @@ class BoardPanel extends JPanel {
     }
 
     public Dimension getPreferredSize() {
-        return new Dimension(600,600);
+        return new Dimension(400,400);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Draw Text
-        g.drawImage(Assets.background, 0, 0, null);
-//        g.drawString("This is my custom Panel!",10,20);
+        g.drawImage(Assets.board, 0, 0, null);
     }
+
 }
