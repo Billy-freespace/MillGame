@@ -1,23 +1,23 @@
 package com.example.millgame.panels;
 
-import com.example.millgame.GameLayout;
-import com.example.millgame.gameObjects.Constants;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class ConfigPanel extends JPanel {
-
-    private final JLabel message;
+    private JButton start;
+    private JLabel message;
 
     public ConfigPanel(){
         super();
-        message = new JLabel(Constants.title);
+        message = new JLabel("CONFIG PANEL");
         add(message);
+
+        start = new JButton("Start");
+        add(start);
     }
 
     public void addActionStartButton(AbstractAction action){
-
+        start.addActionListener(action);
     }
 
     public BuildMillGameAction getBuildMillGameAction(){

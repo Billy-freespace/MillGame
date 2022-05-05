@@ -30,9 +30,9 @@ public class GameGUI extends JFrame {
         ConfigPanel configPanel = new ConfigPanel();
         GamePanel gamePanel = new GamePanel(game);
 
-        controlPanel.add(gamePanel);
         controlPanel.add(welcomePanel);
         controlPanel.add(configPanel);
+        controlPanel.add(gamePanel);
 
         gameLayout.setControlPanel(controlPanel);
         GameLayout.GameLayoutAction gameLayoutAction = gameLayout.getGameLayoutAction();
