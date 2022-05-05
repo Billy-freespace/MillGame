@@ -1,9 +1,0 @@
-.gradle
-.idea
-
-app/build
-<<<<<<< HEAD
-=======
-app/target
->>>>>>> test
-tmp
