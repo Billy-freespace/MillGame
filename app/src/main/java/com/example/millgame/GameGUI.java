@@ -1,9 +1,7 @@
 package com.example.millgame;
 
 import com.example.millgame.gameObjects.Constants;
-import com.example.millgame.panels.ConfigPanel;
-import com.example.millgame.panels.GamePanel;
-import com.example.millgame.panels.WelcomePanel;
+import com.example.millgame.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,9 +26,9 @@ public class GameGUI extends JFrame {
         ConfigPanel configPanel = new ConfigPanel();
         GamePanel gamePanel = new GamePanel();
 
+        controlPanel.add(gamePanel);
         controlPanel.add(welcomePanel);
         controlPanel.add(configPanel);
-        controlPanel.add(gamePanel);
 
         gameLayout.setControlPanel(controlPanel);
         GameLayout.GameLayoutAction gameLayoutAction = gameLayout.getGameLayoutAction();
@@ -44,6 +42,6 @@ public class GameGUI extends JFrame {
         gamePanel.addActionResetButton(gameLayoutAction);
 
         Container mainPanel = this.getContentPane();
-        mainPanel.add(configPanel, BorderLayout.CENTER);
+        mainPanel.add(controlPanel, BorderLayout.CENTER);
     }
 }

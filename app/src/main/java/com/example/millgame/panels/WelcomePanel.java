@@ -11,6 +11,9 @@ public class WelcomePanel extends JPanel{
 
     public WelcomePanel(){
         super();
+        setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+        setFocusable(true);
+
         title = new JLabel(Constants.title);
         add(title);
     }

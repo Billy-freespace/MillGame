@@ -5,7 +5,7 @@ public class Constants {
     public static final String title = "Mill Game";
 
     //     JFrame Dimensions
-    public static final int WIDTH = 800;
+    public static final int WIDTH = 600;
     public static final int HEIGHT = 600;
 
     //     Timing
