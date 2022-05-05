@@ -28,6 +28,9 @@ public class MillGame {
     public void setPlayers(ArrayList<Player> players){ this.players = players; }
     public void setBoard(Board board){ this.board = board; }
 
+    public Board getBoard() {
+        return board;
+    }
     /*
      * Inner enumerations
      */

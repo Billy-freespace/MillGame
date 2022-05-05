@@ -13,6 +13,8 @@ public class GameGUI extends JFrame {
     public GameGUI(){
         super();
 
+        MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS);
+
         setTitle(Constants.title);
         setSize(Constants.WIDTH, Constants.HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,7 +28,7 @@ public class GameGUI extends JFrame {
 
         WelcomePanel welcomePanel = new WelcomePanel();
         ConfigPanel configPanel = new ConfigPanel();
-        GamePanel gamePanel = new GamePanel();
+        GamePanel gamePanel = new GamePanel(game);
 
         controlPanel.add(gamePanel);
         controlPanel.add(welcomePanel);

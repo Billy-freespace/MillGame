@@ -1,5 +1,7 @@
 package com.example.millgame.panels;
 
+import com.example.millgame.Board;
+import com.example.millgame.Mill;
 import com.example.millgame.gameObjects.Constants;
 
 import javax.swing.JPanel;
@@ -13,7 +15,7 @@ import javax.swing.*;
 public class GamePanel extends JPanel {
     private MillGame game;
 
-    public GamePanel() {
+    public GamePanel(MillGame game) {
         super();
 
         setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
@@ -22,7 +24,8 @@ public class GamePanel extends JPanel {
 //        setLayout(new GridBagLayout());
         setFocusable(true);
 
-        BoardPanel board = new BoardPanel();
+        Board board = game.getBoard();
+//        BoardPanel board = new BoardPanel();
         add(board);
     }
 

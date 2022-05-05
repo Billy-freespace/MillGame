@@ -5,10 +5,11 @@ import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.logging.GameLogger;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Board{
+public abstract class Board extends JPanel {
     protected Position origin;
     protected HashMap<Character, HashMap<Integer, Position>> positions;
     public final GameVariant variant;
