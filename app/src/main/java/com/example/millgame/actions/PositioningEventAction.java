@@ -1,0 +1,23 @@
+package com.example.millgame.actions;
+
+import com.example.millgame.Player;
+import com.example.millgame.Position;
+
+import java.awt.event.ActionEvent;
+
+public class PositioningEventAction extends EventAction {
+    @Override
+    public void performAction(ActionEvent event){
+        Position position = (Position) event.getSource();
+
+        if(!position.hasPiece()){
+            Player player = game.getActivePlayer();
+            player.placePiece(position); // LOG EXCEPTION
+        }
+
+        // CHECK IF A MILL WAS FORMED
+        // HIGHLIGHT POSIBLE POSITIONS TO DELETE
+        // IF A MILL WAS FORMED CHANGE OF EVENT ACTION TO REMOVING
+        game.changeEventAction(new RemovingEventAction());
+    }
+}

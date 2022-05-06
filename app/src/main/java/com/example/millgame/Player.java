@@ -21,14 +21,29 @@ public abstract class Player {
         pieceColor = color;
         pieces = new ArrayList<Piece>(); // no pieces were placed to board
     }
-    public void placePiece(char x, char y) throws InvalidPositionCoordinate{
+    public void placePiece(char x, int y) throws InvalidPositionCoordinate{
         Piece piece = PieceFactory.create(pieceColor);
         board.placePiece(piece, x, y);
     }
-    public void movePiece(Piece piece, char x, char y) throws InvalidPositionCoordinate{
+
+    public void placePiece(Position position) throws InvalidPositionCoordinate{
+        char xLabel = position.getXLabel();
+        int yLabel = position.getYLabel();
+
+        placePiece(xLabel, yLabel);
+    }
+
+    public void movePiece(Piece piece, char x, int y) throws InvalidPositionCoordinate{
         Position position = piece.getPosition();
         board.removePiece(position);
         board.placePiece(piece, x, y);
+    }
+
+    public void movePiece(Piece piece, Position position) throws InvalidPositionCoordinate{
+        char xLabel = position.getXLabel();
+        int yLabel = position.getYLabel();
+
+        movePiece(piece, xLabel, yLabel);
     }
     public void removePiece(Piece piece){
         Position position = piece.getPosition();

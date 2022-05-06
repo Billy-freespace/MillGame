@@ -9,6 +9,7 @@ public class App implements Runnable {
     public static void main(String[] args){
         System.out.println("HELLO WORLD!");
         // COMMAND LINE PARSER - TO ENABLE LOG TO CONSOLE
+        System.out.println("Arguments: " + String.join(" ", args));
         new App().start();
     }
 

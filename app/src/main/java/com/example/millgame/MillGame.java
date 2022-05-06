@@ -1,5 +1,6 @@
 package com.example.millgame;
 
+import com.example.millgame.actions.EventAction;
 import com.example.millgame.logging.GameLogger;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ public class MillGame {
     private ArrayList<Player> players;
     private Board board;
     private GameLogger logger;
+    private EventAction eventAction;
 
     public MillGame(){ // useless constructor, to create a MillGame object use MillGameBuilder class
         turniter = null;
@@ -21,6 +23,7 @@ public class MillGame {
     public Player getActivePlayer(){
         return turniter.getIterationState();
     }
+    public Player getOpponentPlayer(){ return turniter.getOpponent(); }
     public boolean isGameOver(){ return false; }
 
 
@@ -30,6 +33,15 @@ public class MillGame {
 
     public Board getBoard() {
         return board;
+    }
+
+    public void changeEventAction(EventAction eventAction){
+        this.eventAction = eventAction;
+        eventAction.setGame(this);
+
+        board.unmark();
+        Position origin = board.getOrigin();
+        origin.setEventAction(eventAction);
     }
     /*
      * Inner enumerations

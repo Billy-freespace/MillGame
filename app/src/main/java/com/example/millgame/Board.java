@@ -106,4 +106,5 @@ public abstract class Board extends JPanel {
     public void setLogger(GameLogger logger){ this.logger = logger; }
     public void setOrigin(Position origin){ this.origin = origin;}
     public Position getOrigin(){ return origin; }
+    public void unmark(){} // unmark all positions of board
 }

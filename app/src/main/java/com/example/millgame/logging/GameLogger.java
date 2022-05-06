@@ -1,4 +1,10 @@
 package com.example.millgame.logging;
 
-public class GameLogger {
+import com.example.millgame.panels.GamePanel;
+
+import java.util.logging.Logger;
+
+public class GameLogger extends Logger {
+
+    GamePanel(String name)
 }
