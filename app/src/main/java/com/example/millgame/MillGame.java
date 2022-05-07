@@ -1,6 +1,7 @@
 package com.example.millgame;
 
 import com.example.millgame.actions.EventAction;
+import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.logging.GameLogger;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class MillGame {
     public Player getActivePlayer(){
         return turniter.getIterationState();
     }
-    public Player getOpponentPlayer(){ return turniter.getOpponent(); }
+    public Player getOpponentPlayer() throws CloneNotSupportedException { return turniter.getOpponent(); }
     public boolean isGameOver(){ return false; }
 
 
@@ -31,9 +32,7 @@ public class MillGame {
     public void setPlayers(ArrayList<Player> players){ this.players = players; }
     public void setBoard(Board board){ this.board = board; }
 
-    public Board getBoard() {
-        return board;
-    }
+    public BoardPanel getBoardPanel() { return board.getPanel(); }
 
     public void changeEventAction(EventAction eventAction){
         this.eventAction = eventAction;

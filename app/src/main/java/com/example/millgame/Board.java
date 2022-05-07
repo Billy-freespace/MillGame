@@ -1,6 +1,7 @@
 package com.example.millgame;
 
 import com.example.millgame.MillGame.GameVariant;
+import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.logging.GameLogger;
@@ -15,6 +16,7 @@ public abstract class Board extends JPanel {
     public final GameVariant variant;
     protected HashMap<PieceColor, ArrayList<Mill>> mills;
     protected GameLogger logger;
+    protected BoardPanel boardPanel;
 
     public Board (GameVariant variant) {
         this.variant = variant;
@@ -81,7 +83,7 @@ public abstract class Board extends JPanel {
         }
         return npieces;
     }
-    public void setPositions(HashMap<Character, HashMap<Integer, Position>> positions){ this.positions = positions; }
+
     public Position getPosition(char xLabel, int yLabel) throws InvalidPositionCoordinate {
         if(!positions.containsKey(xLabel)){
             throw new InvalidPositionCoordinate(xLabel, yLabel);
@@ -107,4 +109,10 @@ public abstract class Board extends JPanel {
     public void setOrigin(Position origin){ this.origin = origin;}
     public Position getOrigin(){ return origin; }
     public void unmark(){} // unmark all positions of board
+    public void setBoardPanel(BoardPanel boardPanel){
+        this.boardPanel = boardPanel;
+        positions = boardPanel.getPositions();
+    }
+
+    public BoardPanel getPanel() { return boardPanel; }
 }

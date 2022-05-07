@@ -7,6 +7,7 @@ import static com.example.millgame.MillGame.GameVariant.*;
 
 public class BoardCreatorDirector {
     public static Board makeMMBoard(GameVariant variant){
+        System.out.println("Building " + variant.toString() + " board variant");
         Board board;
         switch (variant){
             case NINE_MEN_MORRIS:
