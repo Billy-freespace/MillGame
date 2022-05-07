@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class WelcomePanel extends JPanel{
     private final JLabel title;
-    private JButton init;
+    private final JButton start;
 
     public WelcomePanel(){
         super();
@@ -19,11 +19,12 @@ public class WelcomePanel extends JPanel{
         title = new JLabel("WELCOME PANEL");
         add(title);
 
-        init = new JButton("Init");
-        this.add(init);
+        Icon btnIcon = new ImageIcon("app/src/main/resources/textures/nmm_button-normal.png");
+        start = new JButton(btnIcon);
+        this.add(start);
     }
 
     public void addActionInitButton(AbstractAction action){
-        init.addActionListener(action);
+        start.addActionListener(action);
     }
 }
