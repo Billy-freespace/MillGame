@@ -5,8 +5,7 @@ import com.example.millgame.Player;
 import com.example.millgame.pieces.PieceColor;
 
 public class HumanPlayer extends Player {
-    public HumanPlayer(PieceColor color, Board board) {
-        super(color, board);
+    public HumanPlayer( PieceColor color, Board board) {
+        super(PlayerType.HUMAN, color, board);
     }
 }
-

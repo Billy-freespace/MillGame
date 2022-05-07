@@ -9,12 +9,12 @@ public class RobotPlayer extends Player {
 
     public RobotPlayer(PieceColor color, Board board)
     {
-        super(color, board);
+        super(PlayerType.ROBOT, color, board);
         level = PlayerLevel.NOOB;
     }
     public RobotPlayer(PieceColor color, Board board, PlayerLevel level)
     {
-        super(color, board);
+        super(PlayerType.ROBOT, color, board);
         this.level = level;
     }
 }
