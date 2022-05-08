@@ -16,8 +16,9 @@ public class GameGUI extends JFrame {
         MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS);
 
         setTitle(Constants.title);
-        setSize(Constants.WIDTH, Constants.HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+        pack();
         setResizable(false);
         setLocationRelativeTo(null);
 
