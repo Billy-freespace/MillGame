@@ -2,27 +2,33 @@ package com.example.millgame;
 
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NoPiecesError;
+import com.example.millgame.players.PlayerType;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.pieces.PieceFactory;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
     private List<Piece> pieces;
-    public final int npieces;
+    public int npieces;
     private int placedPieces;
+
+    private PlayerType playerType;
+
     private PieceColor pieceColor;
     protected MillGame game;
 
     private Board board;
 
-    public Player(PieceColor color, MillGame game){
+
+    public Player(PlayerType playerType, PieceColor color, MillGame game){
         this.game = game;
         board = game.getBoard();
+
         GameVariant variant = board.getGameVariant();
         npieces = Board.getNumberPieces(variant);
+        this.playerType = playerType;
         pieceColor = color;
         pieces = new ArrayList<Piece>(); // no pieces were placed to board
         placedPieces = 0;
