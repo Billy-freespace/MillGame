@@ -12,10 +12,11 @@ import org.junit.jupiter.api.Test;
 
 public class HumanPlayerFactoryTest {
     @Test
-    public void createTest () {
-        Board board = new NineMMBoard();
-        Player esperado = new HumanPlayer(PieceColor.WHITE, board);
-        Player real = (new HumanPlayerFactory()).create(PieceColor.WHITE, board);
+    public void createTest () { // NOTE: Change board by game (ASAP)
+        //Board board = new NineMMBoard();
+        MillGame game = null; // initialize MillGame with MillGameBuilder
+        Player esperado = new HumanPlayer(PieceColor.WHITE, game);
+        Player real = (new HumanPlayerFactory()).create(PieceColor.WHITE, game);
         //assertEquals(esperado, real);
     }
 }

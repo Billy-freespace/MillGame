@@ -1,6 +1,6 @@
 package com.example.millgame.players;
 
-import com.example.millgame.Board;
+import com.example.millgame.MillGame;
 import com.example.millgame.Player;
 
 import com.example.millgame.pieces.PieceColor;
@@ -12,12 +12,12 @@ public class HumanPlayerFactory implements PlayerFactory {
     //private PlayerLevel level;
 
     @Override
-    public Player create(PieceColor color, Board board) {
-        return new HumanPlayer(color, board);
+    public Player create(PieceColor color, MillGame game) {
+        return new HumanPlayer(color, game);
     }
     
     @Override
-    public Player createByLevel(PieceColor color, Board board, PlayerLevel level) {
+    public Player createByLevel(PieceColor color, MillGame game, PlayerLevel level) {
         return null;
     }
 }
