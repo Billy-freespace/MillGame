@@ -1,9 +1,7 @@
 package com.example.millgame;
 
 import com.example.millgame.MillGame.GameVariant;
-import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.pieces.PieceColor;
-import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.players.HumanPlayer;
 
 
