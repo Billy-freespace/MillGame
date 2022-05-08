@@ -18,13 +18,13 @@ public class TurnIteratorTest {
     private Player player0;
     private Player player1;
     private ArrayList<Player> players;
-    private NineMMBoard board; // default board
+    private MillGame game;
 
     @BeforeEach
     public void createPlayers(){
-        board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(GameVariant.NINE_MEN_MORRIS);
-        player0 = new HumanPlayer(PieceColor.WHITE, board);
-        player1 = new HumanPlayer(PieceColor.BLACK, board);
+        game = new MillGameBuilder().build(GameVariant.NINE_MEN_MORRIS, MillGame.GameMode.HUMAN_HUMAN);
+        player0 = new HumanPlayer(PieceColor.WHITE, game);
+        player1 = new HumanPlayer(PieceColor.BLACK, game);
 
         players = new ArrayList<Player>(2);
         players.add(player0);
