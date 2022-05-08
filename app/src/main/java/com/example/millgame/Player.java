@@ -45,10 +45,10 @@ public abstract class Player {
         }
 
         Piece piece = PieceFactory.create(pieceColor);
-        piece.add(piece);
+        pieces.add(piece);
         board.placePiece(piece, x, y);
         placedPieces += 1;
-        TraceLogger.log(Level.INFO, this + " placed a piece in position (" + x + ", " + y + ")");
+        TraceLogger.log(Level.INFO, this + " placed a piece in (" + x + ", " + y + ") position");
     }
 
     public void placePiece(Position position) throws InvalidPositionCoordinate, NoPiecesError{
@@ -60,24 +60,24 @@ public abstract class Player {
         placePiece(xLabel, yLabel);
     }
 
-    public void movePiece(Piece piece, char x, int y) throws InvalidPositionCoordinate{
+    public void movePiece(Piece piece, char x, int y) throws InvalidPositionCoordinate{ // sprint 2 - RECHECK
         Position position = piece.getPosition();
         board.removePiece(position);
         board.placePiece(piece, x, y);
     }
 
-    public void movePiece(Piece piece, Position position) throws InvalidPositionCoordinate{
+    public void movePiece(Piece piece, Position position) throws InvalidPositionCoordinate{ // sprint 2 - RECHECK
         char xLabel = position.getXLabel();
         int yLabel = position.getYLabel();
 
         movePiece(piece, xLabel, yLabel);
     }
-    public void removePiece(Piece piece){
+    public void removePiece(Piece piece){ // sprint 2 - RECHECK
         Position position = piece.getPosition();
         board.removePiece(position);
         pieces.remove(piece);
     }
-    public List<Mill> getMills(){return null;}
+    public List<Mill> getMills(){ return null; } //sprint 2
     public Piece getPiece(char x, char y) throws InvalidPositionCoordinate {
         Position position = board.getPosition(x, y);
         Piece piece = null;

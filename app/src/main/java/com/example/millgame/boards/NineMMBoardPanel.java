@@ -12,32 +12,38 @@ public class NineMMBoardPanel extends BoardPanel{
     static final int MIN_YLABEL = 1;
     static final int MAX_YLABEL = 7;
 
-    private void unmark(){ // unmark positions
-
-    }
+    private GridBagLayout layoutManager;
 
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
+        unmark();
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.CENTER;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
 
         for(Character xLabel : positions.keySet()){
             HashMap<Integer, Position> inner = positions.get(xLabel);
             for(Integer yLabel : inner.keySet()){
                 Position position = inner.get(yLabel);
                 if(position != null){
-                    gbc.gridx = (int) position.getXLabel() - (int) MIN_XLABEL;
-                    gbc.gridy = MAX_YLABEL - position.getYLabel();
+                    int x = (int) position.getXLabel() - (int) MIN_XLABEL;
+                    int y = MAX_YLABEL - position.getYLabel();
+                    gbc.gridx = x;
+                    gbc.gridy = y;
 
                     add(position, gbc);
 
                     for(Position neighbour : position.getNeighbours()){
                         if(!neighbour.mark){
-                            char xNeighbour = neighbour.getXLabel();
-                            int yNeighbour = neighbour.getYLabel();
+                            int xNeighbour = (int) neighbour.getXLabel() - (int) MIN_XLABEL;
+                            int yNeighbour = MAX_YLABEL - neighbour.getYLabel();
+
                             // DRAW A CONNECTION - (xLabel, yLabel) -> (xNeighbour, yNeighbour)
+                            //g.setColor(new Color(0, 0, 0));
+                            //g.drawLine(x, y, xNeighbour, yNeighbour);
                         }
                     }
                 }
@@ -47,7 +53,8 @@ public class NineMMBoardPanel extends BoardPanel{
 
     NineMMBoardPanel(){
         super();
-        setLayout(new GridBagLayout());
+        layoutManager = new GridBagLayout();
+        setLayout(layoutManager);
         System.out.println("NineMMBoardPanel creation");
         //board positions definition
         /*

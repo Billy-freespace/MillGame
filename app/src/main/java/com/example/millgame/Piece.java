@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 
-public class Piece extends JButton {
+public abstract class Piece extends JButton implements ObjectIcon {
     protected PieceColor color;
     protected Position position;
     protected ImageIcon icon;
@@ -43,4 +43,7 @@ public class Piece extends JButton {
     }
     public void setPosition(Position position){this.position = position;}
     public Position getPosition(){return position;}
+
+    abstract public ImageIcon getNormalIcon();
+    abstract public ImageIcon getPressedIcon();
 }

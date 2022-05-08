@@ -6,7 +6,7 @@ import com.example.millgame.logging.TraceMessage;
 
 import javax.swing.*;
 import javax.swing.event.EventListenerList;
-import java.awt.Point;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -21,9 +21,9 @@ interface PositionEventAction{
     public void setEventAction(EventAction eventAction);
 }
 
-public class Position extends JButton implements PositionEventAction {
-    public static ImageIcon NORMAL_ICON = new ImageIcon("src/main/resources/textures/nmm_point-normal.png");
-    public static ImageIcon PRESSED_ICON = new ImageIcon("src/main/resources/textures/nmm_point-pressed.png");
+public class Position extends JButton implements PositionEventAction, ObjectIcon {
+    public static final ImageIcon NORMAL_ICON = new ImageIcon("src/main/resources/textures/nmm_point-normal.png");
+    public static final ImageIcon PRESSED_ICON = new ImageIcon("src/main/resources/textures/nmm_point-pressed.png");
 
     private char xLabel;
     private int yLabel;
@@ -47,8 +47,23 @@ public class Position extends JButton implements PositionEventAction {
                 eventAction.actionPerformed(actionEvent);
             }
         };
-
         addActionListener(eventActionListener);
+
+        // this event check if a piece was placed in a position
+        // if it was, then change the position icons with the piece icons
+        /*
+        PropertyChangeListener pieceChangeListener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                Position position = (Position) propertyChangeEvent.getSource();
+                Piece piece = position.getPiece();
+                if(piece != null){
+                    changePositionIcons(position);
+                }
+            }
+        };
+        addPropertyChangeListener(pieceChangeListener);
+         */
 
         TraceLogger.log(Level.INFO, "Position created: " + this, Position.class);
     }
@@ -56,7 +71,8 @@ public class Position extends JButton implements PositionEventAction {
     public Position(Point point, char xLabel, int yLabel){}
     public void addNeighbour(Position position){
         neighbours.add(position);
-        TraceLogger.log(Level.INFO, position + "added as " + this + " neighbour");
+        // REAL LEVEL: FINE
+        TraceLogger.log(Level.INFO, position + " was added as " + this + " neighbour");
     }
     public ArrayList<Position> getNeighbours(){
         return neighbours;
@@ -94,6 +110,16 @@ public class Position extends JButton implements PositionEventAction {
             }
         }
     }
+
+    public ImageIcon getNormalIcon(){ return NORMAL_ICON; }
+    public ImageIcon getPressedIcon(){ return PRESSED_ICON; }
+
+    /*
+    private void changePositionIcons(ObjectIcon objectIcon){
+        setIcon(objectIcon.getNormalIcon());
+        setPressedIcon(objectIcon.getPressedIcon());
+    }
+     */
 
     @Override
     public String toString() {

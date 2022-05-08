@@ -55,4 +55,14 @@ public abstract class BoardPanel extends JPanel {
 
         return position;
     }
+
+    public void unmark(){
+        for(Character xLabel : positions.keySet()){
+            HashMap<Integer, Position> inner = positions.get(xLabel);
+            for(Integer yLabel : inner.keySet()){
+                Position position = inner.get(yLabel);
+                position.mark = false;
+            }
+        }
+    } // unmark all positions of board
 }
