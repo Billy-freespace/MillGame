@@ -83,16 +83,7 @@ public abstract class Board extends JPanel {
     }
 
     public Position getPosition(char xLabel, int yLabel) throws InvalidPositionCoordinate {
-        if(!positions.containsKey(xLabel)){
-            throw new InvalidPositionCoordinate(xLabel, yLabel);
-        }
-
-        HashMap<Integer, Position> inner = positions.get(xLabel);
-        if(!inner.containsKey(yLabel)){
-            throw new InvalidPositionCoordinate(xLabel, yLabel);
-        }
-
-        return inner.get(yLabel);
+        return boardPanel.getPosition(xLabel, yLabel);
     }
 
     public int countPositions(){

@@ -4,13 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.*;
 
+import com.example.millgame.exceptions.NullTraceLoggerInstance;
 import com.example.millgame.exceptions.RankedException;
-
-class NullTraceLoggerInstance extends RankedException{
-    public NullTraceLoggerInstance(){
-        super("TraceLogger instance was not initialized", Level.WARNING);
-    }
-}
 
 public class TraceLogger {
     private static Logger logger;
@@ -50,12 +45,13 @@ public class TraceLogger {
     }
 
     public static void log(Level level, String message){
-        try{
-            checkTraceLoggerInstance();
-            logger.log(level, message);
-        } catch (NullTraceLoggerInstance error){
-            System.err.println(error); // no logger was initialized
-        }
+        TraceMessage traceMessage = new TraceMessage(level, message);
+        log(traceMessage);
+    }
+
+    public static void log(Level level, String message, Class cls){
+        TraceMessage traceMessage = new TraceMessage(level, message, cls);
+        log(traceMessage);
     }
 
     public static void log(TraceMessage message) {

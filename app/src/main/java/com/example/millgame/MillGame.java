@@ -2,22 +2,26 @@ package com.example.millgame;
 
 import com.example.millgame.actions.EventAction;
 import com.example.millgame.boards.BoardPanel;
+import com.example.millgame.logging.TraceLogger;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class MillGame {
     private TurnIterator turniter;
     private ArrayList<Player> players;
     private Board board;
     private EventAction eventAction;
+    private GameStageIterator stageIterator;
 
     public MillGame(){ // useless constructor, to create a MillGame object use MillGameBuilder class
         turniter = null;
         players = null;
         board = null;
-
-        // INITIALIZING GameLogger
+        stageIterator = GameStageIterator.init();
     }
+
+    public GameStage nextStage(){ return stageIterator.next(); }
     public Player nextTurn(){ return turniter.next(); }
     public Player getActivePlayer(){
         return turniter.getIterationState();
@@ -37,10 +41,13 @@ public class MillGame {
         this.eventAction = eventAction;
         eventAction.setGame(this);
 
+        TraceLogger.log(Level.INFO, "Game event action changed to " + eventAction, MillGame.class);
+
         board.unmark();
         Position origin = board.getOrigin();
         origin.setEventAction(eventAction);
     }
+
     /*
      * Inner enumerations
      */
@@ -57,9 +64,8 @@ public class MillGame {
     }
 
     public enum GameStage {
-        UNINITIATED, // the game is uninitialized (welcome or config panels)
-        POSITIONING, // place pieces stage
-        PLAYING, // move, remove pieces stages
+        POSITIONING, // positioning pieces stage
+        PLAYING, // moving, removing pieces stages
         GAMEOVER // end of game
     }
 }

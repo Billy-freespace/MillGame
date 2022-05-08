@@ -20,7 +20,7 @@ public class GameGUI extends JFrame {
         super();
         TraceLogger.log(Level.INFO, "Initializing GameGUI");
 
-        MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS);
+        MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS, MillGame.GameMode.HUMAN_HUMAN);
 
         setTitle(Constants.title);
         setSize(Constants.WIDTH, Constants.HEIGHT);
@@ -72,7 +72,7 @@ public class GameGUI extends JFrame {
         //gamePanel.addActionResetButton(gameLayoutAction);
 
         Container mainPanel = this.getContentPane();
-        TraceLogger.log(Level.INFO, "Adding controlPanel in Frame Panel");
+        TraceLogger.log(Level.FINE, "Adding controlPanel in Frame Panel");
         mainPanel.add(controlPanel, BorderLayout.CENTER);
     }
 

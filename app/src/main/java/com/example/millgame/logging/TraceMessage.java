@@ -7,9 +7,28 @@ public class TraceMessage {
     private Class cls;
     private String message;
 
-    public TraceMessage(String message){}
-    public TraceMessage(String message, Class cls){}
-    public TraceMessage(String message, Level level){}
+    public static final Level DEFAULT_RANK = Level.WARNING;
+
+    public TraceMessage(String message){
+        this.cls = null;
+        this.message = message;
+        this.rank = DEFAULT_RANK;
+    }
+    public TraceMessage(String message, Class cls){
+        this.cls = cls;
+        this.message = message;
+        rank = DEFAULT_RANK;
+    }
+    public TraceMessage(Level level, String message){
+        cls = null;
+        this.message = message;
+        rank = level;
+    }
+    public TraceMessage(Level level, String message, Class cls){
+        this.cls = cls;
+        this.message = message;
+        this.rank = level;
+    }
 
     public void setClass(Class cls){ this.cls = cls; }
 

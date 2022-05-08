@@ -1,6 +1,8 @@
 package com.example.millgame;
 
 import com.example.millgame.actions.EventAction;
+import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.logging.TraceMessage;
 
 import javax.swing.*;
 import java.awt.Point;
@@ -9,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class Position extends JButton {
     public static ImageIcon NORMAL_ICON = new ImageIcon("textures/nmm_point-normal.png");
@@ -35,6 +38,7 @@ public class Position extends JButton {
             public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
                 String property = propertyChangeEvent.getPropertyName();
                 if(property.equals("eventAction")){
+                    //TraceLogger.log(Level.FINE, "neighbour positions");
                     for(Position position : neighbours){
                         if(!position.mark){
                             position.setEventAction(eventAction);
@@ -45,11 +49,13 @@ public class Position extends JButton {
         };
 
         addPropertyChangeListener(eventActionChangeListener);
+        TraceLogger.log(Level.INFO, "Position created: " + this, Position.class);
     }
 
     public Position(Point point, char xLabel, int yLabel){}
     public void addNeighbour(Position position){
         neighbours.add(position);
+        TraceLogger.log(Level.INFO, position + "added as " + this + " neighbour");
     }
     public ArrayList<Position> getNeighbours(){
         return neighbours;
@@ -69,6 +75,14 @@ public class Position extends JButton {
     public int getYLabel(){ return yLabel; }
 
     public void setEventAction(EventAction eventAction){
+        TraceLogger.log(Level.FINE,
+                "Event action changed to " + eventAction + "(Position " + this + ")",
+                Position.class);
         this.eventAction = eventAction;
+    }
+
+    @Override
+    public String toString() {
+        return "Position(x:" + xLabel + ", y:" + yLabel + ")";
     }
 }

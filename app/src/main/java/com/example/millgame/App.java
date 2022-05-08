@@ -24,7 +24,7 @@ public class App {
                 parser.addArgument("--log-file")
                         .dest("logfile")
                         .setDefault("millgame.log")
-                        .help("Output logging file (location: app/millgame.log)");
+                        .help("Output logging file (default location: app/millgame.log)");
                 parser.addArgument("-n", "--logger-name")
                         .dest("traceLoggerName")
                         .setDefault("millgame")
@@ -50,7 +50,7 @@ public class App {
                     String logfile = ns.getString("logfile");
                     boolean debug = ns.getBoolean("debug");
 
-                    TraceMode traceMode = null;
+                    TraceMode traceMode;
                     int verboseLevel = ns.getInt("verbose");
                     switch (verboseLevel){
                         case 2:
@@ -88,36 +88,3 @@ public class App {
         EventQueue.invokeLater(runner);
     }
 }
-
-/*
-public class App implements Runnable {
-    private Thread threadGUI;
-
-    public static void main(String[] args){
-        System.out.println("HELLO WORLD!");
-        // COMMAND LINE PARSER - TO ENABLE LOG TO CONSOLE
-        System.out.println("Arguments: " + String.join(" ", args));
-        new App().start();
-    }
-
-    @Override
-    public void run() {
-        Assets.init();
-        GameGUI gameGUI = new GameGUI();
-        gameGUI.setVisible(true);
-    }
-
-    private void start() {
-        threadGUI = new Thread(this);
-        threadGUI.start();
-    }
-
-    public void stop() {
-        try {
-            threadGUI.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-}
-*/
