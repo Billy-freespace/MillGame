@@ -5,15 +5,23 @@ import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.logging.TraceMessage;
 
 import javax.swing.*;
+import javax.swing.event.EventListenerList;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.logging.Level;
 
-public class Position extends JButton {
+interface PositionEventAction{
+    public void setEventAction(EventAction eventAction);
+}
+
+public class Position extends JButton implements PositionEventAction {
     public static ImageIcon NORMAL_ICON = new ImageIcon("textures/nmm_point-normal.png");
     public static ImageIcon PRESSED_ICON = new ImageIcon("textures/nmm_point-pressed.png");
 
@@ -33,22 +41,15 @@ public class Position extends JButton {
         piece = null;
         mark = false;
 
-        PropertyChangeListener eventActionChangeListener = new PropertyChangeListener() {
+        ActionListener eventActionListener = new ActionListener() {
             @Override
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                String property = propertyChangeEvent.getPropertyName();
-                if(property.equals("eventAction")){
-                    //TraceLogger.log(Level.FINE, "neighbour positions");
-                    for(Position position : neighbours){
-                        if(!position.mark){
-                            position.setEventAction(eventAction);
-                        }
-                    }
-                }
+            public void actionPerformed(ActionEvent actionEvent) {
+                eventAction.actionPerformed(actionEvent);
             }
         };
 
-        addPropertyChangeListener(eventActionChangeListener);
+        addActionListener(eventActionListener);
+
         TraceLogger.log(Level.INFO, "Position created: " + this, Position.class);
     }
 
@@ -76,9 +77,22 @@ public class Position extends JButton {
 
     public void setEventAction(EventAction eventAction){
         TraceLogger.log(Level.FINE,
-                "Event action changed to " + eventAction + "(Position " + this + ")",
+                "(" + this + ") Event action changed to " + eventAction,
                 Position.class);
+
         this.eventAction = eventAction;
+        mark = true;
+
+
+        TraceLogger.log(Level.FINE,
+                "(" + this + ") Propagate event action to neighbours positions",
+                Position.class);
+
+        for(Position neighbour : neighbours){
+            if(!neighbour.mark){
+                neighbour.setEventAction(eventAction);
+            }
+        }
     }
 
     @Override

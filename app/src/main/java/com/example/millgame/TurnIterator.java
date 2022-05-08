@@ -1,16 +1,27 @@
 package com.example.millgame;
 
+import com.example.millgame.exceptions.RankedException;
+import com.example.millgame.logging.TraceLogger;
+
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
 
 public class TurnIterator extends CircularIterator<Player>{
 
     TurnIterator(List<Player> collection) {
         super(collection, false);
     }
-    public Player getOpponent() throws CloneNotSupportedException {
-        TurnIterator itr = (TurnIterator) this.clone();
+    public Player getOpponent(){
+        Player opponent = null;
+        try{
+            TurnIterator itr = (TurnIterator) this.clone();
+            opponent = itr.next();
+        }catch (CloneNotSupportedException error){
+            RankedException exception = new RankedException(Level.SEVERE, error);
+            TraceLogger.log(exception, TurnIterator.class);
+        }
 
-        return itr.next();
+        return opponent;
     }
 }

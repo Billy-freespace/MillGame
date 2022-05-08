@@ -11,7 +11,8 @@ import java.util.List;
 
 public abstract class Player {
     private List<Piece> pieces;
-    private int npieces;
+    public final int npieces;
+    private int placedPieces;
     private PieceColor pieceColor;
     protected MillGame game;
 
@@ -24,15 +25,18 @@ public abstract class Player {
         npieces = Board.getNumberPieces(variant);
         pieceColor = color;
         pieces = new ArrayList<Piece>(); // no pieces were placed to board
+        placedPieces = 0;
     }
-    public void placePiece(char x, int y) throws InvalidPositionCoordinate{
+
+    public int getPlacedPieces(){ return placedPieces; }
+    public void placePiece(char x, int y) throws InvalidPositionCoordinate, NoPiecesError{
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
         Piece piece = PieceFactory.create(pieceColor);
         board.placePiece(piece, x, y);
     }
 
-    public void placePiece(Position position) throws InvalidPositionCoordinate{
+    public void placePiece(Position position) throws InvalidPositionCoordinate, NoPiecesError{
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
         char xLabel = position.getXLabel();
