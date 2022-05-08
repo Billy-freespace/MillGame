@@ -22,6 +22,7 @@ public class MillGame {
     }
 
     public GameStage nextStage(){ return stageIterator.next(); }
+    public GameStage getStage(){ return  stageIterator.getIterationState(); }
     public Player nextTurn(){ return turniter.next(); }
     public Player getActivePlayer(){
         return turniter.getIterationState();

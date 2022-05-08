@@ -4,7 +4,6 @@ import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 
 public class TurnIterator extends CircularIterator<Player>{
@@ -23,5 +22,12 @@ public class TurnIterator extends CircularIterator<Player>{
         }
 
         return opponent;
+    }
+
+    @Override
+    public Player next(){
+        Player player = super.next();
+        TraceLogger.log(Level.INFO, "Active turn: " + player);
+        return player;
     }
 }

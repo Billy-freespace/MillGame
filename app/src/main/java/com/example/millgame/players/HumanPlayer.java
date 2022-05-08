@@ -7,6 +7,5 @@ import com.example.millgame.pieces.PieceColor;
 public class HumanPlayer extends Player {
     public HumanPlayer(PieceColor color, MillGame game) {
         super(PlayerType.HUMAN, color, game);
-
     }
 }

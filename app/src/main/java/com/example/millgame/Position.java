@@ -22,8 +22,8 @@ interface PositionEventAction{
 }
 
 public class Position extends JButton implements PositionEventAction {
-    public static ImageIcon NORMAL_ICON = new ImageIcon("textures/nmm_point-normal.png");
-    public static ImageIcon PRESSED_ICON = new ImageIcon("textures/nmm_point-pressed.png");
+    public static ImageIcon NORMAL_ICON = new ImageIcon("src/main/resources/textures/nmm_point-normal.png");
+    public static ImageIcon PRESSED_ICON = new ImageIcon("src/main/resources/textures/nmm_point-pressed.png");
 
     private char xLabel;
     private int yLabel;
@@ -34,7 +34,7 @@ public class Position extends JButton implements PositionEventAction {
     private EventAction eventAction = null;
 
     public Position(char xLabel, int yLabel) {
-        super(xLabel + Integer.toString(yLabel), Position.NORMAL_ICON);
+        super(NORMAL_ICON);
         this.xLabel = xLabel;
         this.yLabel = yLabel;
         neighbours = new ArrayList<Position>();

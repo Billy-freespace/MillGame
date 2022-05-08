@@ -1,18 +1,14 @@
 package com.example.millgame.pieces;
 
 import com.example.millgame.Piece;
-import com.example.millgame.Position;
 
 import javax.swing.*;
 
 class BlackPiece extends Piece {
 
-    public static Icon pieceIcon = new ImageIcon("resources/SOMTHING-BLACK.jpg");
-    public static  Icon selectedPieceIcon = new ImageIcon("resources/SOMTHING-BLACK.jpg");
+    public static final ImageIcon DEFAULT_ICON = new ImageIcon("src/main/resources/textures/nmm_coin-black-normal.png");
+
     public BlackPiece(){
-        super(PieceColor.BLACK);
-    }
-    public BlackPiece(Position position){
-        super(PieceColor.BLACK, position);
+        super(PieceColor.BLACK, DEFAULT_ICON);
     }
 }

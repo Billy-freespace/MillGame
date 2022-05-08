@@ -2,12 +2,14 @@ package com.example.millgame;
 
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NoPiecesError;
+import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.players.PlayerType;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.pieces.PieceFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public abstract class Player {
     private List<Piece> pieces;
@@ -38,8 +40,15 @@ public abstract class Player {
     public void placePiece(char x, int y) throws InvalidPositionCoordinate, NoPiecesError{
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
+        if(placedPieces >= npieces){
+            throw new NoPiecesError(pieceColor, game.getStage(), Level.WARNING);
+        }
+
         Piece piece = PieceFactory.create(pieceColor);
+        piece.add(piece);
         board.placePiece(piece, x, y);
+        placedPieces += 1;
+        TraceLogger.log(Level.INFO, this + " placed a piece in position (" + x + ", " + y + ")");
     }
 
     public void placePiece(Position position) throws InvalidPositionCoordinate, NoPiecesError{
@@ -78,5 +87,12 @@ public abstract class Player {
         }
 
         return piece;
+    }
+
+    @Override
+    public String toString() {
+        String out = "Player(color:" + pieceColor + ", type: " + playerType +
+                ", placedPieces: " + placedPieces + ", boardPieces: " + pieces.size() + ")";
+        return out;
     }
 }
