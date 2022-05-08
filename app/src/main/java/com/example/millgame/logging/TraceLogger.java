@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.logging.*;
 
 import com.example.millgame.exceptions.RankedException;
-import com.example.millgame.logging.TraceMode.*;
-
-import javax.sound.sampled.LineEvent;
 
 class NullTraceLoggerInstance extends RankedException{
     public NullTraceLoggerInstance(){
@@ -24,6 +21,8 @@ public class TraceLogger {
 
     private static TraceLogger instance = null;
 
+    public TraceMode getTraceMode(){ return traceMode; }
+
     private TraceLogger(String name, String logfile, boolean debugMode) throws IOException, RankedException {
         logger = Logger.getLogger(name);
         FileHandler fh = new FileHandler(logfile);
@@ -32,9 +31,9 @@ public class TraceLogger {
         handlers = new ArrayList<Handler>();
         handlers.add(fh);
         if(debugMode){
-            StreamHandler sh = new StreamHandler();
-            sh.setFormatter(new SimpleFormatter());
-            handlers.add(sh);
+            ConsoleHandler ch = new ConsoleHandler();
+            ch.setFormatter(new SimpleFormatter());
+            handlers.add(ch);
         }
         setTraceMode(DEFAULT_TRACE_MODE);
 
@@ -55,7 +54,7 @@ public class TraceLogger {
             checkTraceLoggerInstance();
             logger.log(level, message);
         } catch (NullTraceLoggerInstance error){
-            System.out.println(error.toString()); // no logger was initialized
+            System.err.println(error); // no logger was initialized
         }
     }
 
@@ -64,7 +63,7 @@ public class TraceLogger {
             checkTraceLoggerInstance();
             logger.log(message.rank, message.toString());
         } catch (NullTraceLoggerInstance error){
-            System.out.println(error.toString()); // no logger was initialized
+            System.err.println(error); // no logger was initialized
         }
     }
 
@@ -85,11 +84,11 @@ public class TraceLogger {
                     break;
             }
         } catch (NullTraceLoggerInstance error){
-            System.err.println(error.toString()); // no logger was initialized
+            System.err.println(error); // no logger was initialized
         }
     }
 
-    public static void log(RankedException exception, Class cls) throws NullTraceLoggerInstance{
+    public static void log(RankedException exception, Class cls){
         // Exception generate in cls class
         try{
             checkTraceLoggerInstance();
@@ -107,7 +106,7 @@ public class TraceLogger {
                     break;
             }
         } catch (NullTraceLoggerInstance error){
-            System.err.println(error.toString()); // no logger was initialized
+            System.err.println(error); // no logger was initialized
         }
     }
 

@@ -1,10 +1,6 @@
 package com.example.millgame;
 
-import com.example.millgame.graphicsAndSounds.Assets;
-
 import java.awt.*;
-import java.io.IOException;
-import java.util.logging.Level;
 
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.logging.TraceMode;
@@ -29,23 +25,16 @@ public class App {
                         .dest("logfile")
                         .setDefault("millgame.log")
                         .help("Output logging file (location: app/millgame.log)");
-                parser.addArgument("-n", "--trace-logger-name")
+                parser.addArgument("-n", "--logger-name")
                         .dest("traceLoggerName")
                         .setDefault("millgame")
                         .help("Trace logger name");
 
-                /*
-                 * VERBOSE MODE VALUES
-                 *  0: no verbose
-                 *  1: trace objects creation (traced logging levels: WARNING, SEVERE)
-                 *  2: trace objects interaction (traced logging levels: CONFIG, INFO + level 1)
-                 *  3: paranoid - trace events (traced logging levels: ALL)
-                 */
                 String verboseHelp = "Verbose mode\n\n" +
                         "Verbose Level (Number of 'v's):\n" +
-                        "* 1: trace objects creation (curious mode - traced logging levels: WARNING, SEVERE)\n" +
-                        "* 2: trace objects interaction (developer mode - traced logging levels: CONFIG, INFO, WARNING, SEVERE)\n" +
-                        "* 3: trace events (paranoid mode - traced logging levels: ALL)";
+                        "* 1: curious mode - traced logging levels: WARNING, SEVERE\n" +
+                        "* 2: developer mode - traced logging levels: CONFIG, INFO, WARNING, SEVERE\n" +
+                        "* 3: paranoid mode - traced logging levels: ALL";
 
                 parser.addArgument("-v")
                         .action(Arguments.count())
@@ -64,23 +53,23 @@ public class App {
                     TraceMode traceMode = null;
                     int verboseLevel = ns.getInt("verbose");
                     switch (verboseLevel){
-                        case 1:
-                            traceMode = TraceMode.CURIOUS;
-                            break;
                         case 2:
                             traceMode = TraceMode.DEVELOPER;
                             break;
                         case 3:
                             traceMode = TraceMode.PARANOID;
                             break;
+                        default:
+                            traceMode = TraceMode.CURIOUS;
                     }
+
+                    System.out.println("TraceMode: " + traceMode);
 
                     String name = ns.getString("traceLoggerName");
                     TraceLogger traceLogger = TraceLogger.getTraceLogger(name, logfile, debug);
-
-                    if(debug){
-                        traceLogger.setTraceMode(traceMode);
-                    }
+                    //System.out.println("(TraceLogger init) TraceMode: " +traceLogger.getTraceMode());
+                    traceLogger.setTraceMode(traceMode);
+                    //System.out.println("(TraceLogger after) TraceMode: " +traceLogger.getTraceMode());
 
                     GameGUI gameGUI = new GameGUI();
                     gameGUI.setTraceLogger(traceLogger);

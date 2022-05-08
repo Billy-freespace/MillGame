@@ -5,8 +5,10 @@ import com.example.millgame.Player;
 import com.example.millgame.Position;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.EventException;
+import com.example.millgame.logging.TraceLogger;
 
 import java.awt.event.ActionEvent;
+import java.util.logging.Level;
 
 public class MovingEventAction extends EventAction {
     private Position selectedPosition = null;
@@ -18,13 +20,15 @@ public class MovingEventAction extends EventAction {
         try {
             if(selectedPosition == null){
                 if(!position.hasPiece()){
-                    throw new EventException(event, "Selected a piece - empty position was selected");
+                    throw new EventException(event,
+                            "Selected a piece - empty position was selected", Level.INFO);
                 }
                 selectedPosition = position;
             }
             else {
                 if (position.hasPiece()) {
-                    throw new EventException(event, "Selected position has a piece - select an empty position");
+                    throw new EventException(event,
+                            "Selected position has a piece - select an empty position", Level.INFO);
                 }
 
                 Piece piece = position.getPiece();
@@ -42,12 +46,10 @@ public class MovingEventAction extends EventAction {
                 game.nextTurn();
             }
         } catch (InvalidPositionCoordinate error){
-            // LOG ERROR
-            System.out.println(error.getMessage());
+            TraceLogger.log(error, MovingEventAction.class);
         }
         catch (EventException error){
-            // LOG ERROR
-            System.out.println(error.getMessage());
+            TraceLogger.log(error, MovingEventAction.class);
         }
     }
 }

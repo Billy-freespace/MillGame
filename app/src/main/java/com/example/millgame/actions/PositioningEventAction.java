@@ -4,6 +4,7 @@ import com.example.millgame.Player;
 import com.example.millgame.Position;
 import com.example.millgame.exceptions.EventException;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.logging.TraceLogger;
 
 import java.awt.event.ActionEvent;
 
@@ -28,12 +29,10 @@ public class PositioningEventAction extends EventAction {
             // END ELSE-IF
 
         } catch (InvalidPositionCoordinate error){
-            // LOG ERROR
-            System.out.println(error.getMessage());
+            TraceLogger.log(error, PositioningEventAction.class);
         }
         catch (EventException error){
-            // LOG ERROR
-            System.out.println(error.getMessage());
+            TraceLogger.log(error, PositioningEventAction.class);
         }
     }
 }

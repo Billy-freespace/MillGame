@@ -18,7 +18,7 @@ public class GameGUI extends JFrame {
 
     public GameGUI(){
         super();
-        TraceLogger.log(Level.WARNING, "WARNING LOGGING (USING TraceLogger class)");
+        TraceLogger.log(Level.INFO, "Initializing GameGUI");
 
         MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS);
 
@@ -34,7 +34,10 @@ public class GameGUI extends JFrame {
 //        controlPanel.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
 
         WelcomePanel welcomePanel = new WelcomePanel();
+        TraceLogger.log(Level.FINE, "Initializing WelcomePanel");
+
         ConfigPanel configPanel = new ConfigPanel();
+        TraceLogger.log(Level.FINE, "Initializing ConfigPanel");
         //GamePanel gamePanel = new GamePanel(game);
 
         // REMOTE THIS STUFF - ONLY FOR TESTING PURPOSE
@@ -69,6 +72,7 @@ public class GameGUI extends JFrame {
         //gamePanel.addActionResetButton(gameLayoutAction);
 
         Container mainPanel = this.getContentPane();
+        TraceLogger.log(Level.INFO, "Adding controlPanel in Frame Panel");
         mainPanel.add(controlPanel, BorderLayout.CENTER);
     }
 

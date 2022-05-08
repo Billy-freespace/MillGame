@@ -5,16 +5,17 @@ import com.example.millgame.Piece;
 import com.example.millgame.Player;
 import com.example.millgame.Position;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.exceptions.RankedException;
+import com.example.millgame.logging.TraceLogger;
 
 import java.awt.event.ActionEvent;
 import java.io.PipedOutputStream;
 import java.util.ArrayList;
 import java.lang.CloneNotSupportedException;
+import java.util.logging.Level;
 
 public class RemovingEventAction extends EventAction {
-
     private ArrayList<Position> positions; // possible positions to delete
-
 
     @Override
     public void performAction(ActionEvent event){
@@ -28,9 +29,8 @@ public class RemovingEventAction extends EventAction {
                 // REDRAW GAME BOARD
             }
         } catch (CloneNotSupportedException error){
-            // LOG ERROR
-            System.out.println(error.getMessage());
+            RankedException exception = new RankedException(error, Level.WARNING);
+            TraceLogger.log(exception, RemovingEventAction.class);
         }
-
     }
 }
