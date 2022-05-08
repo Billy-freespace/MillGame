@@ -4,7 +4,6 @@ import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.pieces.PieceColor;
-import com.example.millgame.logging.GameLogger;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ public abstract class Board extends JPanel {
     protected HashMap<Character, HashMap<Integer, Position>> positions;
     public final GameVariant variant;
     protected HashMap<PieceColor, ArrayList<Mill>> mills;
-    protected GameLogger logger;
     protected BoardPanel boardPanel;
 
     public Board (GameVariant variant) {
@@ -105,7 +103,7 @@ public abstract class Board extends JPanel {
 
         return count;
     }
-    public void setLogger(GameLogger logger){ this.logger = logger; }
+
     public void setOrigin(Position origin){ this.origin = origin;}
     public Position getOrigin(){ return origin; }
     public void unmark(){} // unmark all positions of board

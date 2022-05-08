@@ -2,23 +2,24 @@ package com.example.millgame;
 
 import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.gameObjects.Constants;
-import com.example.millgame.logging.GameLogger;
+import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.panels.*;
 import com.example.millgame.pieces.PieceColor;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.logging.Level;
 
 public class GameGUI extends JFrame {
     private JPanel controlPanel;
     private GameLayout gameLayout;
 
-    private GameLogger logger;
+    private TraceLogger traceLogger;
 
     public GameGUI(){
         super();
-        logger = GameLogger.getLogger(this.getName());
-        logger.info("Initializing MillGame GUI");
+        TraceLogger.log(Level.WARNING, "WARNING LOGGING (USING TraceLogger class)");
+
         MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS);
 
         setTitle(Constants.title);
@@ -70,4 +71,6 @@ public class GameGUI extends JFrame {
         Container mainPanel = this.getContentPane();
         mainPanel.add(controlPanel, BorderLayout.CENTER);
     }
+
+    public void setTraceLogger(TraceLogger traceLogger){ this.traceLogger = traceLogger; }
 }

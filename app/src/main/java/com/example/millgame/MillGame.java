@@ -2,7 +2,6 @@ package com.example.millgame;
 
 import com.example.millgame.actions.EventAction;
 import com.example.millgame.boards.BoardPanel;
-import com.example.millgame.logging.GameLogger;
 
 import java.util.ArrayList;
 
@@ -10,7 +9,6 @@ public class MillGame {
     private TurnIterator turniter;
     private ArrayList<Player> players;
     private Board board;
-    private GameLogger logger;
     private EventAction eventAction;
 
     public MillGame(){ // useless constructor, to create a MillGame object use MillGameBuilder class
@@ -31,6 +29,7 @@ public class MillGame {
     public void setTurnIterator(TurnIterator itr){ turniter = itr; }
     public void setPlayers(ArrayList<Player> players){ this.players = players; }
     public void setBoard(Board board){ this.board = board; }
+    public Board getBoard(){ return board; }
 
     public BoardPanel getBoardPanel() { return board.getPanel(); }
 
@@ -58,8 +57,9 @@ public class MillGame {
     }
 
     public enum GameStage {
-        UNINITIATED,
-        POSITIONING,
-        PLAYING
+        UNINITIATED, // the game is uninitialized (welcome or config panels)
+        POSITIONING, // place pieces stage
+        PLAYING, // move, remove pieces stages
+        GAMEOVER // end of game
     }
 }

@@ -45,44 +45,6 @@ public class Position extends JButton {
         };
 
         addPropertyChangeListener(eventActionChangeListener);
-
-        /* DELETE - ONLY FOR TESTING PURPOSE
-        MouseListener ml = new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent mouseEvent) {
-                System.out.println(Position.NORMAL_ICON.getDescription());
-                System.out.println(Position.PRESSED_ICON.getDescription());
-
-                Position position = (Position) mouseEvent.getSource();
-                System.out.println("Position: " + position.getXLabel() + position.getYLabel());
-                System.out.println(position.getRolloverIcon().toString());
-            }
-
-            @Override
-            public void mousePressed(MouseEvent mouseEvent) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent mouseEvent) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent mouseEvent) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-
-            }
-        };
-
-        addMouseListener(ml);
-        setRolloverIcon(Position.NORMAL_ICON);
-        setPressedIcon(Position.PRESSED_ICON);
-
-         */
     }
 
     public Position(Point point, char xLabel, int yLabel){}

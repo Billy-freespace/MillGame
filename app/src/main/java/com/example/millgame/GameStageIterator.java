@@ -12,6 +12,7 @@ public class GameStageIterator extends CircularIterator<MillGame.GameStage>{
         gameStages.add(MillGame.GameStage.UNINITIATED);
         gameStages.add(MillGame.GameStage.POSITIONING);
         gameStages.add(MillGame.GameStage.PLAYING);
+        gameStages.add(MillGame.GameStage.GAMEOVER);
 
         return new GameStageIterator(gameStages);
     }

@@ -1,6 +1,7 @@
 package com.example.millgame;
 
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.exceptions.NoPiecesError;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.pieces.PieceFactory;
@@ -12,21 +13,28 @@ public abstract class Player {
     private List<Piece> pieces;
     private int npieces;
     private PieceColor pieceColor;
+    protected MillGame game;
+
     private Board board;
 
-    public Player(PieceColor color, Board board){
-        this.board = board;
+    public Player(PieceColor color, MillGame game){
+        this.game = game;
+        board = game.getBoard();
         GameVariant variant = board.getGameVariant();
         npieces = Board.getNumberPieces(variant);
         pieceColor = color;
         pieces = new ArrayList<Piece>(); // no pieces were placed to board
     }
     public void placePiece(char x, int y) throws InvalidPositionCoordinate{
+        // raise NoPiecesError exception if the player
+        // has no piece to positioning in the POSITIONING game stage
         Piece piece = PieceFactory.create(pieceColor);
         board.placePiece(piece, x, y);
     }
 
     public void placePiece(Position position) throws InvalidPositionCoordinate{
+        // raise NoPiecesError exception if the player
+        // has no piece to positioning in the POSITIONING game stage
         char xLabel = position.getXLabel();
         int yLabel = position.getYLabel();
 

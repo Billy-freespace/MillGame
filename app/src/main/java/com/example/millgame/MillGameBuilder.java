@@ -50,9 +50,9 @@ public class MillGameBuilder implements MillGameBuilderInterface {
         Player player;
 
         if(type == PlayerType.HUMAN)
-            player = new HumanPlayer(color, board);
+            player = new HumanPlayer(color, game);
         else
-            player = new RobotPlayer(color, board, robotLevel);
+            player = new RobotPlayer(color, game, robotLevel);
 
         players.add(player);
     }

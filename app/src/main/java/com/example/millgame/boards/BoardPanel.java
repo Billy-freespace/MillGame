@@ -4,10 +4,14 @@ import com.example.millgame.Position;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class BoardPanel extends JPanel {
+    public static char MIN_XLABEL;
+    public static char MAX_YLABEL;
+
     protected Position origin;
     protected HashMap<Character, HashMap<Integer, Position>> positions;
 

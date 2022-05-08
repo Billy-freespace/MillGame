@@ -7,11 +7,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NineMMBoardPanel extends BoardPanel{
-
     static final char MIN_XLABEL = 'a';
     static final char MAX_XLABEL = 'g';
-    static final char MIN_YLABEL = 1;
-    static final char MAX_YLABEL = 7;
+    static final int MIN_YLABEL = 1;
+    static final int MAX_YLABEL = 7;
+
+    private void unmark(){ // unmark positions
+
+    }
 
     @Override
     public void paintComponent(Graphics g){
@@ -40,10 +43,6 @@ public class NineMMBoardPanel extends BoardPanel{
                 }
             }
         }
-    }
-
-    private void unmark(){ // unmark positions
-
     }
 
     NineMMBoardPanel(){

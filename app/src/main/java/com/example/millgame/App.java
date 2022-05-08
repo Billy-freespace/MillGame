@@ -3,8 +3,11 @@ package com.example.millgame;
 import com.example.millgame.graphicsAndSounds.Assets;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.logging.Level;
 
+import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.logging.TraceMode;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
@@ -19,42 +22,77 @@ public class App {
                 ArgumentParser parser = ArgumentParsers.newFor("MillGame").build()
                         .defaultHelp(true)
                         .description("Mill Game - Debug options");
-                parser.addArgument("-D", "-debug")
+                parser.addArgument("-D", "--debug")
                         .action(Arguments.storeTrue())
                         .help("Enable console logger");
                 parser.addArgument("--log-file")
                         .dest("logfile")
                         .setDefault("millgame.log")
-                        .help("Output logging file");
+                        .help("Output logging file (location: app/millgame.log)");
+                parser.addArgument("-n", "--trace-logger-name")
+                        .dest("traceLoggerName")
+                        .setDefault("millgame")
+                        .help("Trace logger name");
 
-                parser.addArgument("--log-level")
-                        .dest("loglevel")
-                        .choices(Level.FINEST,
-                                Level.FINER,
-                                Level.FINE,
-                                Level.CONFIG,
-                                Level.INFO,
-                                Level.WARNING,
-                                Level.SEVERE)
-                        .setDefault(Level.INFO)
-                        .help("Logging level");
+                /*
+                 * VERBOSE MODE VALUES
+                 *  0: no verbose
+                 *  1: trace objects creation (traced logging levels: WARNING, SEVERE)
+                 *  2: trace objects interaction (traced logging levels: CONFIG, INFO + level 1)
+                 *  3: paranoid - trace events (traced logging levels: ALL)
+                 */
+                String verboseHelp = "Verbose mode\n\n" +
+                        "Verbose Level (Number of 'v's):\n" +
+                        "* 1: trace objects creation (curious mode - traced logging levels: WARNING, SEVERE)\n" +
+                        "* 2: trace objects interaction (developer mode - traced logging levels: CONFIG, INFO, WARNING, SEVERE)\n" +
+                        "* 3: trace events (paranoid mode - traced logging levels: ALL)";
 
                 parser.addArgument("-v")
                         .action(Arguments.count())
                         .setDefault(0)
+                        .dest("verbose")
                         .type(Integer.class)
-                        .help("Verbose mode");
+                        .help(verboseHelp);
 
                 try{
                     Namespace ns = parser.parseArgs(args);
                     System.out.println(ns.toString());
+
+                    String logfile = ns.getString("logfile");
+                    boolean debug = ns.getBoolean("debug");
+
+                    TraceMode traceMode = null;
+                    int verboseLevel = ns.getInt("verbose");
+                    switch (verboseLevel){
+                        case 1:
+                            traceMode = TraceMode.CURIOUS;
+                            break;
+                        case 2:
+                            traceMode = TraceMode.DEVELOPER;
+                            break;
+                        case 3:
+                            traceMode = TraceMode.PARANOID;
+                            break;
+                    }
+
+                    String name = ns.getString("traceLoggerName");
+                    TraceLogger traceLogger = TraceLogger.getTraceLogger(name, logfile, debug);
+
+                    if(debug){
+                        traceLogger.setTraceMode(traceMode);
+                    }
+
+                    GameGUI gameGUI = new GameGUI();
+                    gameGUI.setTraceLogger(traceLogger);
+                    gameGUI.setVisible(true);
+
                 } catch (ArgumentParserException error){
                     parser.handleError(error);
                     System.exit(1);
+                }catch (Exception error){
+                    System.err.println(error.getMessage());
+                    System.exit(1);
                 }
-
-                GameGUI gameGUI = new GameGUI();
-                gameGUI.setVisible(true);
             }
         };
 
