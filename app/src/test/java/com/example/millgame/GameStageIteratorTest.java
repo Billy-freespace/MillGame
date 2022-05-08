@@ -9,14 +9,14 @@ public class GameStageIteratorTest {
 
     @BeforeEach
     public void createIterator(){
-        itr = GameStageIterator.create();
+        itr = GameStageIterator.init();
     }
 
     @Test
     public void firstGameStageTest(){
         MillGame.GameStage stage = itr.next();
 
-        assertEquals(MillGame.GameStage.UNINITIATED, stage);
+        assertEquals(MillGame.GameStage.POSITIONING, stage);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class GameStageIteratorTest {
         }
 
         itr.reset(); // reset iterator
-        assertEquals(MillGame.GameStage.UNINITIATED, itr.next());
+        assertEquals(MillGame.GameStage.POSITIONING, itr.next());
     }
 
 }
