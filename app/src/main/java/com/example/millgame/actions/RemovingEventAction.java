@@ -18,8 +18,14 @@ public class RemovingEventAction extends EventAction {
     private ArrayList<Position> positions; // possible positions to delete
 
     @Override
-    public void performAction(ActionEvent event){
+    public void actionPerformed(ActionEvent event){
         Position position = (Position) event.getSource();
+
+        // REMOVE THIS CODE - ADDED FOR TESTING PURPOSES
+        // BEGIN
+        TraceLogger.log(Level.INFO, position + " was selected", RemovingEventAction.class);
+        // END
+
         try {
             if(positions.contains(position)){
                 Player opponent = game.getOpponentPlayer();
@@ -28,8 +34,8 @@ public class RemovingEventAction extends EventAction {
 
                 // REDRAW GAME BOARD
             }
-        } catch (CloneNotSupportedException error){
-            RankedException exception = new RankedException(error, Level.WARNING);
+        } catch (Exception error){
+            RankedException exception = new RankedException(Level.WARNING, error);
             TraceLogger.log(exception, RemovingEventAction.class);
         }
     }

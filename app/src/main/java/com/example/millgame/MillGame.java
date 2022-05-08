@@ -26,7 +26,7 @@ public class MillGame {
     public Player getActivePlayer(){
         return turniter.getIterationState();
     }
-    public Player getOpponentPlayer() throws CloneNotSupportedException { return turniter.getOpponent(); }
+    public Player getOpponentPlayer(){ return turniter.getOpponent(); }
     public boolean isGameOver(){ return false; }
 
 

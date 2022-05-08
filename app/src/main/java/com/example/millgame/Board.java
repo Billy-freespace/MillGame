@@ -97,7 +97,15 @@ public abstract class Board extends JPanel {
 
     public void setOrigin(Position origin){ this.origin = origin;}
     public Position getOrigin(){ return origin; }
-    public void unmark(){} // unmark all positions of board
+    public void unmark(){
+        for(Character xLabel : positions.keySet()){
+            HashMap<Integer, Position> inner = positions.get(xLabel);
+            for(Integer yLabel : inner.keySet()){
+                Position position = inner.get(yLabel);
+                position.mark = false;
+            }
+        }
+    } // unmark all positions of board
     public void setBoardPanel(BoardPanel boardPanel){
         this.boardPanel = boardPanel;
         positions = boardPanel.getPositions();

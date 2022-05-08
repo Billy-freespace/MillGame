@@ -14,8 +14,13 @@ public class MovingEventAction extends EventAction {
     private Position selectedPosition = null;
 
     @Override
-    public void performAction(ActionEvent event) {
+    public void actionPerformed(ActionEvent event) {
         Position position = (Position) event.getSource();
+
+        // REMOVE THIS CODE - ADDED FOR TESTING PURPOSES
+        // BEGIN
+        TraceLogger.log(Level.INFO, position + " was selected", MovingEventAction.class);
+        // END
 
         try {
             if(selectedPosition == null){
