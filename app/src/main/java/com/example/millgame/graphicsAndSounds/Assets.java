@@ -9,7 +9,7 @@ public class Assets {
 
     public static void init() {
 //        Images
-        background = Loader.ImageLoader("/home/billy/Documents/Desarrollo de Software/2022-I/Group Work/Asignacion/MillGame/app/src/main/resources/textures/nmm_background.png");
+        background = Loader.ImageLoader("src/main/resources/textures/nmm_background.png");
         board = Loader.ImageLoader("/textures/nmm_board.png");
         whitePiece = Loader.ImageLoader("/textures/nmm_coin-white-normal.png");
         blackPiece = Loader.ImageLoader("/textures/nmm_coin-black-normal.png");

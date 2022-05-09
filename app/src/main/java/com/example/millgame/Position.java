@@ -25,6 +25,7 @@ interface PositionEventAction{
 public class Position extends JButton implements PositionEventAction, ObjectIcon {
     public static final ImageIcon NORMAL_ICON = new ImageIcon("src/main/resources/textures/nmm_point-normal.png");
     public static final ImageIcon PRESSED_ICON = new ImageIcon("src/main/resources/textures/nmm_point-pressed.png");
+    public static final ImageIcon ROLLOVER_ICON = new ImageIcon("src/main/resources/textures/nmm_point-hover.png");
 
     private char xLabel;
     private int yLabel;
@@ -36,7 +37,7 @@ public class Position extends JButton implements PositionEventAction, ObjectIcon
 
     public Position(char xLabel, int yLabel) {
         super(NORMAL_ICON);
-        setPreferredSize(new Dimension(40, 40));
+        setPreferredSize(new Dimension(50, 50));
         setFocusPainted(false);
         setBorderPainted(false);
         setContentAreaFilled(false);
@@ -102,6 +103,7 @@ public class Position extends JButton implements PositionEventAction, ObjectIcon
 
     public ImageIcon getNormalIcon(){ return NORMAL_ICON; }
     public ImageIcon getPressedIcon(){ return PRESSED_ICON; }
+    public ImageIcon getRolloverIcon(){ return ROLLOVER_ICON; }
 
     @Override
     public void paintComponent(Graphics g){
@@ -116,6 +118,7 @@ public class Position extends JButton implements PositionEventAction, ObjectIcon
     private void changePositionIcons(ObjectIcon objectIcon){
         setIcon(objectIcon.getNormalIcon());
         setPressedIcon(objectIcon.getPressedIcon());
+        setRolloverIcon(objectIcon.getRolloverIcon());
     }
 
     @Override
