@@ -1,6 +1,7 @@
 package com.example.millgame.boards;
 
 import com.example.millgame.Position;
+import com.example.millgame.graphicsAndSounds.Assets;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -17,6 +18,8 @@ public class NineMMBoardPanel extends BoardPanel{
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+
+        g.drawImage(Assets.background, 0, 0, null);
 
         unmark();
         GridBagConstraints gbc = new GridBagConstraints();
@@ -39,8 +42,6 @@ public class NineMMBoardPanel extends BoardPanel{
                             g.setColor(new Color(0, 0, 0));
                             g.drawLine(position.getX() + position.getHeight()/2, position.getY() + position.getWidth()/2,
                                     neighbour.getX() + neighbour.getHeight()/2, neighbour.getY() + neighbour.getWidth()/2);
-//                            g.drawLine(position.getX() + position.getHeight()/2, position.getY(),
-//                                    neighbour.getX() + neighbour.getHeight()/2, neighbour.getY());
                         }
                     }
                 }
