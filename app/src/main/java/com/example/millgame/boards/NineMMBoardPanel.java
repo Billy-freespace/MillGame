@@ -29,21 +29,16 @@ public class NineMMBoardPanel extends BoardPanel{
             for(Integer yLabel : inner.keySet()){
                 Position position = inner.get(yLabel);
                 if(position != null){
-                    int x = (int) position.getXLabel() - (int) MIN_XLABEL;
-                    int y = MAX_YLABEL - position.getYLabel();
-                    gbc.gridx = x;
-                    gbc.gridy = y;
-
+                    gbc.gridx = (int) position.getXLabel() - (int) MIN_XLABEL;
+                    gbc.gridy = MAX_YLABEL - position.getYLabel();
+                    
                     add(position, gbc);
 
                     for(Position neighbour : position.getNeighbours()){
                         if(!neighbour.mark){
-                            int xNeighbour = (int) neighbour.getXLabel() - (int) MIN_XLABEL;
-                            int yNeighbour = MAX_YLABEL - neighbour.getYLabel();
-
-                            // DRAW A CONNECTION - (xLabel, yLabel) -> (xNeighbour, yNeighbour)
-                            //g.setColor(new Color(0, 0, 0));
-                            //g.drawLine(x, y, xNeighbour, yNeighbour);
+                            g.setColor(new Color(0, 0, 0));
+                            g.drawLine(position.getX(), position.getY(),
+                                    neighbour.getX(), neighbour.getY());
                         }
                     }
                 }

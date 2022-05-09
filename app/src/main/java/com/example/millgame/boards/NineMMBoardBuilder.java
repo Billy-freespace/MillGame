@@ -12,7 +12,7 @@ public class NineMMBoardBuilder implements BoardBuilder {
 
     public void buildPanel(){
         NineMMBoardPanel boardPanel = new NineMMBoardPanel();
-        Position origin = boardPanel.getOrigin();
+        origin = boardPanel.getOrigin();
         board.setBoardPanel(boardPanel);
         board.setOrigin(origin);
     }

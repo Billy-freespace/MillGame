@@ -73,6 +73,7 @@ public abstract class Board extends JPanel {
 
         switch (variant){
             case NINE_MEN_MORRIS:
+            case TWELVE_MEN_MORRIS:
                 npieces = 9;
                 break;
 

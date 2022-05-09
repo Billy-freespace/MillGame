@@ -12,7 +12,9 @@ public class TwelveMMBoardBuilder implements BoardBuilder {
 
     public void buildPanel(){
         TwelveMMBoardPanel boardPanel = new TwelveMMBoardPanel();
+        origin = boardPanel.getOrigin();
         board.setBoardPanel(boardPanel);
+        board.setOrigin(origin);
     }
 
     public TwelveMMBoard build() {
