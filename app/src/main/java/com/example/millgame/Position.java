@@ -5,6 +5,7 @@ import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.logging.TraceMessage;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.EventListenerList;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -35,6 +36,10 @@ public class Position extends JButton implements PositionEventAction, ObjectIcon
 
     public Position(char xLabel, int yLabel) {
         super(NORMAL_ICON);
+        setPreferredSize(new Dimension(40, 40));
+        setFocusPainted(false);
+        setBorderPainted(false);
+        setContentAreaFilled(false);
         this.xLabel = xLabel;
         this.yLabel = yLabel;
         neighbours = new ArrayList<Position>();

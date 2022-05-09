@@ -37,8 +37,10 @@ public class NineMMBoardPanel extends BoardPanel{
                     for(Position neighbour : position.getNeighbours()){
                         if(!neighbour.mark){
                             g.setColor(new Color(0, 0, 0));
-                            g.drawLine(position.getX(), position.getY(),
-                                    neighbour.getX(), neighbour.getY());
+                            g.drawLine(position.getX() + position.getHeight()/2, position.getY() + position.getWidth()/2,
+                                    neighbour.getX() + neighbour.getHeight()/2, neighbour.getY() + neighbour.getWidth()/2);
+//                            g.drawLine(position.getX() + position.getHeight()/2, position.getY(),
+//                                    neighbour.getX() + neighbour.getHeight()/2, neighbour.getY());
                         }
                     }
                 }
