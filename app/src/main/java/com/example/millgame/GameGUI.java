@@ -4,7 +4,6 @@ import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.gameObjects.Constants;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.panels.*;
-import com.example.millgame.pieces.PieceColor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +39,7 @@ public class GameGUI extends JFrame {
 
         ConfigPanel configPanel = new ConfigPanel();
         TraceLogger.log(Level.FINE, "Initializing ConfigPanel");
-        //GamePanel gamePanel = new GamePanel(game);
+        GamePanel gamePanel = new GamePanel(game);
 
         // REMOTE THIS STUFF - ONLY FOR TESTING PURPOSE
         // BEGIN
@@ -55,13 +54,12 @@ public class GameGUI extends JFrame {
 
         //JButton button = new JButton(Position.NORMAL_ICON);
         //board.add(button);
-
+        controlPanel.add(boardPanel);
         // END
 
-        controlPanel.add(boardPanel);
         controlPanel.add(welcomePanel);
         controlPanel.add(configPanel);
-        //controlPanel.add(gamePanel);
+        controlPanel.add(gamePanel);
 
         gameLayout.setControlPanel(controlPanel);
         GameLayout.GameLayoutAction gameLayoutAction = gameLayout.getGameLayoutAction();

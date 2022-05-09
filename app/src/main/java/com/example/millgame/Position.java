@@ -49,22 +49,6 @@ public class Position extends JButton implements PositionEventAction, ObjectIcon
         };
         addActionListener(eventActionListener);
 
-        // this event check if a piece was placed in a position
-        // if it was, then change the position icons with the piece icons
-        /*
-        PropertyChangeListener pieceChangeListener = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                Position position = (Position) propertyChangeEvent.getSource();
-                Piece piece = position.getPiece();
-                if(piece != null){
-                    changePositionIcons(position);
-                }
-            }
-        };
-        addPropertyChangeListener(pieceChangeListener);
-         */
-
         TraceLogger.log(Level.INFO, "Position created: " + this, Position.class);
     }
 
@@ -114,12 +98,20 @@ public class Position extends JButton implements PositionEventAction, ObjectIcon
     public ImageIcon getNormalIcon(){ return NORMAL_ICON; }
     public ImageIcon getPressedIcon(){ return PRESSED_ICON; }
 
-    /*
+    @Override
+    public void paintComponent(Graphics g){
+        if(piece != null){
+            changePositionIcons(piece);
+        } else {
+            changePositionIcons(this);
+        }
+        super.paintComponent(g);
+    }
+
     private void changePositionIcons(ObjectIcon objectIcon){
         setIcon(objectIcon.getNormalIcon());
         setPressedIcon(objectIcon.getPressedIcon());
     }
-     */
 
     @Override
     public String toString() {
