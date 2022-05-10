@@ -53,7 +53,9 @@ public abstract class Player {
         //CODIGO DE PRUEBA - REMOVER
         System.out.println("----------------");
         //////
+
         TraceLogger.log(Level.INFO, this + " placed a piece in (" + x + ", " + y + ") position");
+        
         //CODIGO DE PRUEBA - REMOVER
         System.out.println("Numero de piezas en el tablero: " + placedPieces);
         //////
