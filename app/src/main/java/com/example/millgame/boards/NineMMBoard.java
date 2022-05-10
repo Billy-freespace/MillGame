@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class NineMMBoard extends Board {
+    public static final int NUMBER_PIECES = 9;
     public NineMMBoard() {
         super(GameVariant.NINE_MEN_MORRIS);
     }
@@ -21,4 +22,6 @@ public class NineMMBoard extends Board {
     public boolean isValidMill(Mill mill) {
         return true;
     }
+
+    public int getNumberPieces(){ return NUMBER_PIECES; }
 }

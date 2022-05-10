@@ -17,11 +17,11 @@ public class PieceFactory {
         return piece;
     }
 
-    public static Piece createWritePiece(){
+    private static Piece createWritePiece(){
         return new WhitePiece();
     }
 
-    public static Piece createBlackPiece(){
+    private static Piece createBlackPiece(){
         return new BlackPiece();
     }
 }

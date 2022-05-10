@@ -5,11 +5,10 @@ import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.pieces.PieceColor;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Board extends JPanel {
+public abstract class Board {
     protected Position origin;
     protected HashMap<Character, HashMap<Integer, Position>> positions;
     public final GameVariant variant;
@@ -65,9 +64,11 @@ public abstract class Board extends JPanel {
     }
 
     public abstract boolean isValidMill(Mill mill);
-    public GameVariant getGameVariant() {
+    public GameVariant getVariant() {
         return variant;
     }
+
+    public abstract int getNumberPieces();
     public static int getNumberPieces (GameVariant variant) {
         int npieces = -1;
 

@@ -28,12 +28,18 @@ public abstract class Player {
         this.game = game;
         board = game.getBoard();
 
-        GameVariant variant = board.getGameVariant();
+        GameVariant variant = board.getVariant();
         npieces = Board.getNumberPieces(variant);
         this.playerType = playerType;
         pieceColor = color;
         pieces = new ArrayList<Piece>(); // no pieces were placed to board
         placedPieces = 0;
+    }
+
+    public Player(PlayerType playerType, PieceColor color, Board board){
+        game = null;
+        this.board = board;
+        // SOMETHING MORE
     }
 
     public int getPlacedPieces(){ return placedPieces; }
