@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 public class HumanPlayerFactoryTest {
     /*
-     * PlayerFactory was changes - refactor this test
+     * PlayerFactory was changed - refactor this test
     @Test
     public void createTest () { // NOTE: Change board by game (ASAP)
         //Board board = new NineMMBoard();
