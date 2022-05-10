@@ -18,7 +18,7 @@ public class TwelveMMBoardBuildTest {
 
         TwelveMMBoard board = (TwelveMMBoard) BoardCreatorDirector.makeMMBoard(variant);
 
-        assertEquals(variant, board.getGameVariant());
+        assertEquals(variant, board.getVariant());
         assertEquals(TWELVE_MEM_MORRIS_PIECES, board.countPositions());
 
         Position origin = board.getOrigin();

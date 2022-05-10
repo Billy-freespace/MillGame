@@ -17,8 +17,7 @@ public class NineMMBoard extends Board {
     public ArrayList<Position> getPossibleMovements(char xLabel, int yLabel){
         return null;
     }
-
-    @Override
+    
     public boolean isValidMill(Mill mill) {
         return true;
     }

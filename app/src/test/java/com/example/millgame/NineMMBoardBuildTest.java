@@ -20,7 +20,7 @@ public class NineMMBoardBuildTest {
 
         NineMMBoard board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
 
-        assertEquals(variant, board.getGameVariant());
+        assertEquals(variant, board.getVariant());
         assertEquals(NINE_MEM_MORRIS_PIECES, board.countPositions());
 
         Position origin = board.getOrigin();
