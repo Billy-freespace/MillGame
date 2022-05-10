@@ -24,7 +24,7 @@ public abstract class Player {
     private Board board;
 
 
-    public Player(PlayerType playerType, PieceColor color, MillGame game){
+    public Player(PlayerType playerType, PieceColor color, MillGame game) {
         this.game = game;
         board = game.getBoard();
 
@@ -37,10 +37,11 @@ public abstract class Player {
     }
 
     public int getPlacedPieces(){ return placedPieces; }
-    public void placePiece(char x, int y) throws InvalidPositionCoordinate, NoPiecesError{
+    
+    public void placePiece(char x, int y) throws InvalidPositionCoordinate, NoPiecesError {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
-        if(placedPieces >= npieces){
+        if(placedPieces >= npieces) {
             throw new NoPiecesError(pieceColor, game.getStage(), Level.WARNING);
         }
 
