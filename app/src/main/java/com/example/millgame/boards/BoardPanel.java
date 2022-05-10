@@ -34,26 +34,17 @@ public abstract class BoardPanel extends JPanel {
         inner.put(yLabel, position);
     }
 
-    public Position getPosition(char xLabel, int yLabel) {
-        Position position = null;
-        try {
-            if(!positions.containsKey(xLabel)){
-                throw new InvalidPositionCoordinate(xLabel, yLabel);
-            }
-
-            HashMap<Integer, Position> inner = positions.get(xLabel);
-            if(!inner.containsKey(yLabel)){
-                throw new InvalidPositionCoordinate(xLabel, yLabel);
-            }
-
-            position = inner.get(yLabel);
-        }
-        catch (InvalidPositionCoordinate error){
-            // LOG ERROR
-            position = null;
+    public Position getPosition(char xLabel, int yLabel) throws InvalidPositionCoordinate {
+        if(!positions.containsKey(xLabel)){
+            throw new InvalidPositionCoordinate(xLabel, yLabel);
         }
 
-        return position;
+        HashMap<Integer, Position> inner = positions.get(xLabel);
+        if(!inner.containsKey(yLabel)){
+            throw new InvalidPositionCoordinate(xLabel, yLabel);
+        }
+
+        return inner.get(yLabel);
     }
 
     public void unmark(){
