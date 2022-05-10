@@ -48,7 +48,7 @@ public abstract class Player {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
         if(placedPieces >= npieces) {
-            throw new NoPiecesError(pieceColor, game.getStage(), Level.WARNING);
+            throw new NoPiecesError(pieceColor, MillGame.GameStage.POSITIONING, Level.WARNING);
         }
 
         Piece piece = PieceFactory.create(pieceColor);
