@@ -1,10 +1,12 @@
 .gradle
 .idea
 *~
+.*
 
 app/millgame.log
-app/millgame.log.lck
+app/millgame.log.*
 app/build
 app/target
+app/bin
 
 tmp

@@ -46,4 +46,6 @@ public abstract class Piece extends JButton implements ObjectIcon {
 
     abstract public ImageIcon getNormalIcon();
     abstract public ImageIcon getPressedIcon();
+
+    abstract public ImageIcon getRolloverIcon();
 }
