@@ -3,6 +3,7 @@ package com.example.millgame;
 import com.example.millgame.MillGame.GameMode;
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.actions.PositioningEventAction;
+import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.logging.TraceMessage;
 import com.example.millgame.logging.TraceMode;
@@ -27,6 +28,7 @@ interface MillGameBuilderInterface {
 public class MillGameBuilder implements MillGameBuilderInterface {
     private MillGame game;
     private Board board;
+    private BoardPanel boardPanel;
     private GameMode mode;
     private PlayerLevel robotLevel = PlayerLevel.NOOB;
     private ArrayList<Player> players;
@@ -35,12 +37,15 @@ public class MillGameBuilder implements MillGameBuilderInterface {
         game = new MillGame();
         players = new ArrayList<Player>(2);
         board = null;
+        boardPanel = null;
         TraceLogger.log(Level.INFO, "Reset MillGame, Players and Board objects", MillGameBuilder.class);
     }
 
     public void buildBoard(GameVariant variant){
         board = BoardCreatorDirector.makeMMBoard(variant);
         game.setBoard(board);
+        boardPanel = new BoardPanel(board);
+        game.setBoardPanel(boardPanel);
     }
 
     public void setGameMode(GameMode mode){
