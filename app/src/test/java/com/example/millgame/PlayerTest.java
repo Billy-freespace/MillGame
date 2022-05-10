@@ -19,10 +19,10 @@ public  class PlayerTest {
  
     
 
-    public void InvalidNoPieces () {
+    /*public void InvalidNoPieces () {
         player1.npieces = 9;
         assertThrows(NoPiecesError.class, () -> {
             player1.placePiece('d', 1);;
         });
-    }
+    }*/
 }

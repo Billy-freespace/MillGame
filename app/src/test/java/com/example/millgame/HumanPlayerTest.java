@@ -9,7 +9,7 @@ import com.example.millgame.players.HumanPlayer;
 
 public class HumanPlayerTest {
 
-    private MillGame  game = new MillGame();
+    private MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS, MillGame.GameMode.HUMAN_HUMAN);
     private HumanPlayer player1 = new HumanPlayer(PieceColor.WHITE, game);
  
     @Test

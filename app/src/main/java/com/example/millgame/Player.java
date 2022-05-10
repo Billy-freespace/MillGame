@@ -37,7 +37,7 @@ public abstract class Player {
     }
 
     public int getPlacedPieces(){ return placedPieces; }
-    
+
     public void placePiece(char x, int y) throws InvalidPositionCoordinate, NoPiecesError {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
@@ -49,7 +49,14 @@ public abstract class Player {
         pieces.add(piece);
         board.placePiece(piece, x, y);
         placedPieces += 1;
+
+        //CODIGO DE PRUEBA - REMOVER
+        System.out.println("----------------");
+        //////
         TraceLogger.log(Level.INFO, this + " placed a piece in (" + x + ", " + y + ") position");
+        //CODIGO DE PRUEBA - REMOVER
+        System.out.println("Numero de piezas en el tablero: " + placedPieces);
+        //////
     }
 
     public void placePiece(Position position) throws InvalidPositionCoordinate, NoPiecesError{
