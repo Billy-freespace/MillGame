@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-public  class PlayerTest {
+/*public  class PlayerTest {
 
     private MillGame  game = new MillGame();
     private HumanPlayer player1 = new HumanPlayer(PieceColor.WHITE, game);
@@ -24,5 +24,5 @@ public  class PlayerTest {
         assertThrows(NoPiecesError.class, () -> {
             player1.placePiece('d', 1);;
         });
-    }*/
-}
+    }
+}*/

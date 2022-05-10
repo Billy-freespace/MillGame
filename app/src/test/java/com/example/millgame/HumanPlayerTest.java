@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;//
@@ -14,17 +15,18 @@ import com.example.millgame.players.HumanPlayerFactory;
 
 public class HumanPlayerTest {
 
-    private MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS, MillGame.GameMode.HUMAN_HUMAN);
-    private Player player1 = new HumanPlayer(PieceColor.WHITE, game);
+    /*private MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS, MillGame.GameMode.HUMAN_HUMAN);
+    private Player player1 = new HumanPlayer(PieceColor.WHITE, game);*/
 
-    private final MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
-    private  NineMMBoard board;
+    //private final MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
+    private  Board board;
     private Player player2;
 
-    @BeforeEach
+    /*@BeforeEach
     public void createNineMMBoard(){
-        board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
+        board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(GameVariant.NINE_MEN_MORRIS);
         player2 = new HumanPlayerFactory().create(PieceColor.BLACK, board);
+        System.out.println(player2);
     }
     
  
@@ -45,7 +47,7 @@ public class HumanPlayerTest {
         assertThrows(NoPiecesError.class, () -> {
             player2.placePiece('e', 3);;
         });
-    }
+    }*/
     
     @Test
      public void placePieceTest() {
