@@ -24,7 +24,8 @@ public class GameGUI extends JFrame {
         game.nextTurn(); // init game turn
 
         setTitle(Constants.title);
-        setSize(Constants.WIDTH, Constants.HEIGHT);
+        getContentPane().setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+        pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //setResizable(false);
         setLocationRelativeTo(null);
@@ -46,7 +47,7 @@ public class GameGUI extends JFrame {
 
         BoardPanel boardPanel = game.getBoardPanel();
         //boardPanel.add(new JLabel("GAME BOARD"));
-        boardPanel.setBackground(new Color(128, 128, 128));
+        boardPanel.setBackground(new Color(128, 64, 32));
 
         //Position position = new Position('a', 1);
 

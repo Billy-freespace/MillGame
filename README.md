@@ -10,4 +10,15 @@
 </div>
 
 
-Juego de Nine Men's Morris en Java
+Mill Game - java
+
+## Quickstart
+Run game
+```bash
+./gradlew run
+```
+
+Build game and run tests
+```bash
+./gradlew build
+```

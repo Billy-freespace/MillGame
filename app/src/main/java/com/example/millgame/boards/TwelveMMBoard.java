@@ -1,4 +1,4 @@
-package com.example.millgame.boards;
+/*package com.example.millgame.boards;
 
 import com.example.millgame.Board;
 import com.example.millgame.Mill;
@@ -20,4 +20,4 @@ public class TwelveMMBoard extends Board {
     public boolean isValidMill(Mill mill) {
         return true;
     }
-}
+}*/
