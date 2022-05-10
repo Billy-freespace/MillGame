@@ -18,7 +18,6 @@ public class NineMMBoard extends Board {
         return null;
     }
 
-    @Override
     public boolean isValidMill(Mill mill) {
         return true;
     }

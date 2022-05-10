@@ -46,7 +46,6 @@ public class HumanPlayerTest {
             player2.placePiece('e', 3);;
         });
     }
-
     
     @Test
      public void placePieceTest() {
