@@ -12,7 +12,10 @@ public class HumanPlayerTest {
 
     private MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS, MillGame.GameMode.HUMAN_HUMAN);
     private HumanPlayer player1 = new HumanPlayer(PieceColor.WHITE, game);
- 
+
+    /*
+    * NOTE: player only can place a number limited of pieces (depend on the board),
+    *       so in the for you will get an InvalidNoPieces exception. Move this test to NineMMBoardOperationTest
     @Test
     public void InvalidNoPieces () throws InvalidPositionCoordinate, NoPiecesError {
         int j = 1;
@@ -30,6 +33,7 @@ public class HumanPlayerTest {
             player1.placePiece('e', 3);;
         });
     }
+    */
     
     @Test
      public void placePieceTest() {
