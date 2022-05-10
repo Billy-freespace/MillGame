@@ -8,16 +8,15 @@ import com.example.millgame.pieces.PieceColor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Board {
+public abstract class Board implements BoardDimension {
     protected Position origin;
     protected HashMap<Character, HashMap<Integer, Position>> positions;
     public final GameVariant variant;
     protected HashMap<PieceColor, ArrayList<Mill>> mills;
-    protected BoardPanel boardPanel;
 
     public Board (GameVariant variant) {
         this.variant = variant;
-        this.positions = null;
+        this.positions = new HashMap<Character, HashMap<Integer, Position>>();
         this.origin = null;
 
         mills =  new HashMap<PieceColor, ArrayList<Mill>>();
@@ -85,7 +84,16 @@ public abstract class Board {
     }
 
     public Position getPosition(char xLabel, int yLabel) throws InvalidPositionCoordinate {
-        return boardPanel.getPosition(xLabel, yLabel);
+        if(!positions.containsKey(xLabel)){
+            throw new InvalidPositionCoordinate(xLabel, yLabel);
+        }
+
+        HashMap<Integer, Position> inner = positions.get(xLabel);
+        if(!inner.containsKey(yLabel)){
+            throw new InvalidPositionCoordinate(xLabel, yLabel);
+        }
+
+        return inner.get(yLabel);
     }
 
     public int countPositions(){
@@ -108,10 +116,17 @@ public abstract class Board {
             }
         }
     } // unmark all positions of board
-    public void setBoardPanel(BoardPanel boardPanel){
-        this.boardPanel = boardPanel;
-        positions = boardPanel.getPositions();
-    }
 
-    public BoardPanel getPanel() { return boardPanel; }
+
+    public void addPosition(Position position){
+        char xLabel = position.getXLabel();
+        int yLabel = position.getYLabel();
+
+        if(!positions.containsKey(xLabel)){
+            positions.put(xLabel, new HashMap<Integer, Position>());
+        }
+
+        HashMap<Integer, Position> inner = positions.get(xLabel);
+        inner.put(yLabel, position);
+    }
 }
