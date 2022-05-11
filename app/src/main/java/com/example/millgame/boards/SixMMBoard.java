@@ -9,11 +9,12 @@ import java.util.ArrayList;
 
 public class SixMMBoard extends Board {
     static final char MIN_XLABEL = 'a';
-    static final char MAX_XLABEL = 'g';
+    static final char MAX_XLABEL = 'e';
     static final int MIN_YLABEL = 1;
-    static final int MAX_YLABEL = 7;
+    static final int MAX_YLABEL = 5;
 
     public static final int NUMBER_PIECES = 9;
+
     public SixMMBoard() {
         super(GameVariant.NINE_MEN_MORRIS);
     }
