@@ -13,6 +13,9 @@ public class BoardCreatorDirector {
         TraceLogger.log(Level.INFO, "Building " + variant + " board variant", BoardCreatorDirector.class);
         Board board;
         switch (variant){
+            case SIX_MEN_MORRIS:
+                board = new SixMMBoardBuilder().build();
+                break;
             case NINE_MEN_MORRIS:
                 board = new NineMMBoardBuilder().build();
                 break;
@@ -23,6 +26,11 @@ public class BoardCreatorDirector {
                 board = null;
         }
 
+        return board;
+    }
+
+    public SixMMBoard makeSixMMBoard(SixMMBoardBuilder builder){
+        SixMMBoard board = builder.build();
         return board;
     }
 
