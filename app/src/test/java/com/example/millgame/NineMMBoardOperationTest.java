@@ -22,7 +22,7 @@ public class NineMMBoardOperationTest {
     private Player player2;
 
     @BeforeEach
-    public void createNineMMBoard(){
+    public void createNineMMBoard() {
         board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
         player2 = new HumanPlayerFactory().create(PieceColor.BLACK, board);
         System.out.println(player2);
@@ -47,7 +47,7 @@ public class NineMMBoardOperationTest {
             System.out.println("BOARD: " + board);
             Player player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
             int j = 1;
-
+            System.out.println("---INICIA TEST # FICHAS ----");
             try {
                 // 3 fichas
                 for (char i = 'a'; i <= 'g';  i++, j++) {
@@ -63,7 +63,7 @@ public class NineMMBoardOperationTest {
             } catch (NoPiecesError | InvalidPositionCoordinate e){
                 // DONOTHING
             }
-
+            System.out.println("---FINALIZA TEST # FICHAS ----");
 
             assertThrows(NoPiecesError.class, () -> {
                 player1.placePiece('e', 3);;

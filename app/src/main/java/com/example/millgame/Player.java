@@ -37,9 +37,19 @@ public abstract class Player {
     }
 
     public Player(PlayerType playerType, PieceColor color, Board board){
+        System.out.println("INTENTAR CONSTRUIR");
         game = null;
         this.board = board;
         // SOMETHING MORE
+        GameVariant variant = board.getVariant();
+        npieces = Board.getNumberPieces(variant);
+        this.playerType = playerType;
+        pieceColor = color;
+        pieces = new ArrayList<Piece>(); 
+        placedPieces = 0;
+        //
+         System.out.println("INTENTAR CONSTRUIR 2");
+         System.out.println(toString());
     }
 
     public int getPlacedPieces(){ return placedPieces; }
@@ -47,7 +57,8 @@ public abstract class Player {
     public void placePiece(char x, int y) throws InvalidPositionCoordinate, NoPiecesError {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
-
+        System.out.println("INTENTAR COLOCAR");
+        //System.out.println(toString());
         if(false) {
             throw new InvalidPositionCoordinate(x, y);
         }
