@@ -19,13 +19,11 @@ import org.junit.jupiter.api.Test;
 public class NineMMBoardOperationTest {
     private final MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
     private  NineMMBoard board;
-    private Player player2;
+    private Player player1, player2;
 
     @BeforeEach
     public void createNineMMBoard() {
         board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
-        player2 = new HumanPlayerFactory().create(PieceColor.BLACK, board);
-        System.out.println(player2);
     }
 
 
@@ -42,10 +40,16 @@ public class NineMMBoardOperationTest {
 
     @Nested
     class PlayerOperationTest { 
+        @BeforeEach
+        public void createPlayers() {
+            player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
+            player2 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
+        }
+
         @Test
         public void testInvalidNoPieces(){
             System.out.println("BOARD: " + board);
-            Player player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
+            //Player player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
             int j = 1;
             System.out.println("---INICIA TEST # FICHAS ----");
             try {
@@ -69,6 +73,15 @@ public class NineMMBoardOperationTest {
                 player1.placePiece('e', 3);;
             });
 
+        }
+
+        public void getInvalidPositionTest() {
+            char xLabel = 'c';
+            int yLabel = 1;
+
+            assertThrows(InvalidPositionCoordinate.class, () -> {
+                player2.placePiece(xLabel, yLabel);
+            });
         }
     }
 

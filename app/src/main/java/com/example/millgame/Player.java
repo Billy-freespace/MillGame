@@ -54,17 +54,17 @@ public abstract class Player {
         // has no piece to positioning in the POSITIONING game stage
         System.out.println("INTENTAR COLOCAR");
         //System.out.println(toString());
-        if(false) {
+        /*if(false) {
             throw new InvalidPositionCoordinate(x, y);
-        }
+        }*/
 
         if(placedPieces >= npieces) {
             throw new NoPiecesError(pieceColor, MillGame.GameStage.POSITIONING, Level.WARNING);
         }
 
         Piece piece = PieceFactory.create(pieceColor);
-        pieces.add(piece);
         board.placePiece(piece, x, y);
+        pieces.add(piece);
         placedPieces += 1;
 
         TraceLogger.log(Level.INFO, this + " placed a piece in (" + x + ", " + y + ") position");
