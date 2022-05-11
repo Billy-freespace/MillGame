@@ -8,26 +8,34 @@ public abstract class CircularIterator<T> implements Cloneable {
     protected int iterationIndex;
     protected T iterationState = null;
 
+    private int initIterationIndex = -1;
+
     CircularIterator(List<T> collection, boolean randomPosition){
-        iterationIndex = 0;
+        iterationIndex = -1;
         if(randomPosition){
             Random rand = new Random();
             int size = collection.size();
             iterationIndex = rand.nextInt(size);
         }
+        initIterationIndex = iterationIndex;
         this.collection = collection;
     }
     public T next(){
-        if (iterationIndex == collection.size())
+        iterationIndex += 1;
+        if (iterationIndex >= collection.size()){
             iterationIndex = 0;
+        }
 
         iterationState = collection.get(iterationIndex);
-        iterationIndex += 1;
-
         return iterationState;
     }
     public T getIterationState(){
         return iterationState;
+    }
+
+    public void reset(){
+        iterationIndex = initIterationIndex;
+        iterationState = null;
     }
 
     public Object clone() throws CloneNotSupportedException {

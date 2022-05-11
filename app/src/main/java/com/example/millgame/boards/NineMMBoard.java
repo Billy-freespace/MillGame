@@ -6,9 +6,14 @@ import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.Position;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class NineMMBoard extends Board {
+    static final char MIN_XLABEL = 'a';
+    static final char MAX_XLABEL = 'g';
+    static final int MIN_YLABEL = 1;
+    static final int MAX_YLABEL = 7;
+
+    public static final int NUMBER_PIECES = 9;
     public NineMMBoard() {
         super(GameVariant.NINE_MEN_MORRIS);
     }
@@ -17,8 +22,14 @@ public class NineMMBoard extends Board {
         return null;
     }
 
-    @Override
     public boolean isValidMill(Mill mill) {
         return true;
     }
+
+    public int getNumberPieces(){ return NUMBER_PIECES; }
+
+    public char maxXLabel(){ return MAX_XLABEL; }
+    public char minXLabel(){ return MIN_XLABEL; }
+    public int maxYLabel(){ return MAX_YLABEL; }
+    public int minYLabel(){ return MIN_YLABEL; }
 }

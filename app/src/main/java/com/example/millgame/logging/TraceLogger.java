@@ -37,10 +37,11 @@ public class TraceLogger {
         }
     }
 
-    public static TraceLogger getTraceLogger(String name, String logfile, boolean debugMode) throws IOException, RankedException{
+    public static TraceLogger initTraceLogger(String name, String logfile, boolean debugMode) throws IOException, RankedException{
         if(instance == null){
             instance = new TraceLogger(name, logfile, debugMode);
         }
+
         return instance;
     }
 
@@ -59,7 +60,9 @@ public class TraceLogger {
             checkTraceLoggerInstance();
             logger.log(message.rank, message.toString());
         } catch (NullTraceLoggerInstance error){
-            System.err.println(error); // no logger was initialized
+            if (traceMode == TraceMode.PARANOID){
+                System.err.println(error); // no logger was initialized
+            }
         }
     }
 
@@ -80,7 +83,9 @@ public class TraceLogger {
                     break;
             }
         } catch (NullTraceLoggerInstance error){
-            System.err.println(error); // no logger was initialized
+            if (traceMode == TraceMode.PARANOID){
+                System.err.println(error); // no logger was initialized
+            }
         }
     }
 
@@ -102,7 +107,9 @@ public class TraceLogger {
                     break;
             }
         } catch (NullTraceLoggerInstance error){
-            System.err.println(error); // no logger was initialized
+            if (traceMode == TraceMode.PARANOID){
+                System.err.println(error); // no logger was initialized
+            }
         }
     }
 

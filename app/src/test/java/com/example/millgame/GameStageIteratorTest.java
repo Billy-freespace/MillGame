@@ -1,8 +1,15 @@
 package com.example.millgame;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.example.millgame.exceptions.RankedException;
+import com.example.millgame.logging.TraceLogger;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+import java.util.Random;
 
 public class GameStageIteratorTest {
     private GameStageIterator itr;
@@ -22,7 +29,7 @@ public class GameStageIteratorTest {
     @Test
     public void playingGameStageTest(){
         MillGame.GameStage stage;
-        int STAGES = 2; // stages to stay in PLAYING stage
+        int STAGES = 2; // stages to stay in GAMEOVER stage -1
         int counter = 0;
 
         while(counter < STAGES){
@@ -30,19 +37,21 @@ public class GameStageIteratorTest {
             counter += 1;
         }
 
-        stage = itr.next(); // now iterator is at PLAYING stage
-        assertEquals(MillGame.GameStage.PLAYING, stage);
+        stage = itr.next(); // now iterator is at GAMEOVER stage
+        assertEquals(MillGame.GameStage.GAMEOVER, stage);
     }
 
 
     @Test
     public void resetGameStageIteratorTest() {
-        int STAGES = 2; // number of iteration in GameStageIterator
+        int STAGES = new Random().nextInt(10) + 1; // number of stages to iterate
         int count = 0;
+
         while(count < STAGES){
             itr.next();
             count += 1;
         }
+
 
         itr.reset(); // reset iterator
         assertEquals(MillGame.GameStage.POSITIONING, itr.next());
