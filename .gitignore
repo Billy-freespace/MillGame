@@ -2,6 +2,7 @@
 .idea
 *~
 
+millgame.log
 app/millgame.log
 app/millgame.log.lck
 app/build
