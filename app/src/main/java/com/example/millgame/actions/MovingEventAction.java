@@ -4,6 +4,7 @@ import com.example.millgame.Piece;
 import com.example.millgame.Player;
 import com.example.millgame.Position;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.exceptions.EventException;
 import com.example.millgame.logging.TraceLogger;
 
@@ -55,6 +56,9 @@ public class MovingEventAction extends EventAction {
         }
         catch (EventException error){
             TraceLogger.log(error, MovingEventAction.class);
+        } catch (RankedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 }

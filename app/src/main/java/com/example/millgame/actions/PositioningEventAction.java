@@ -5,6 +5,7 @@ import com.example.millgame.Position;
 import com.example.millgame.exceptions.EventException;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NoPiecesError;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 
 import java.awt.event.ActionEvent;
@@ -58,5 +59,9 @@ public class PositioningEventAction extends EventAction {
             System.out.println("ERROR NULLPOINTER EXCEPTION");
         }
         // END
+ catch (RankedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }

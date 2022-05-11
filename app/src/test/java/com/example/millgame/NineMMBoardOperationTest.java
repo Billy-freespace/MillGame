@@ -4,6 +4,7 @@ import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NoPiecesError;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.pieces.PieceFactory;
 import com.example.millgame.players.HumanPlayerFactory;
@@ -47,7 +48,7 @@ public class NineMMBoardOperationTest {
         }
 
         @Test
-        public void testInvalidNoPieces(){
+        public void testInvalidNoPieces() throws RankedException{
             //Player player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
             int j = 1;
             try {
@@ -81,7 +82,7 @@ public class NineMMBoardOperationTest {
         }
 
         @Test
-        public void getNoEmptyPositionTest()  {
+        public void getNoEmptyPositionTest() throws RankedException  {
             try {
                 player2.placePiece('a', 7);
                 player2.placePiece('b', 6);
@@ -89,7 +90,7 @@ public class NineMMBoardOperationTest {
                 // DONOTHING
             }
 
-            assertThrows(InvalidPositionCoordinate.class, () -> {
+            assertThrows(RankedException.class, () -> {
                 player2.placePiece('a', 7);
             });
         }
@@ -115,7 +116,7 @@ public class NineMMBoardOperationTest {
      */
 
     @Test
-    public void removePieceTest() throws InvalidPositionCoordinate{
+    public void removePieceTest() throws RankedException{
         char xLabel = 'c';
         int yLabel = 3;
 

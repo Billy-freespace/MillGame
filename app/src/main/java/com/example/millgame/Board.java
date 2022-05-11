@@ -3,6 +3,7 @@ package com.example.millgame;
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.pieces.PieceColor;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public abstract class Board implements BoardDimension {
         return null;
     }
     public abstract ArrayList<Position> getPossibleMovements(char xLabel, int yLabel);
-    public void placePiece(Piece piece, char xLabel, int yLabel) throws InvalidPositionCoordinate {
+    public void placePiece(Piece piece, char xLabel, int yLabel) throws RankedException {
         Position position = this.getPosition(xLabel, yLabel);
         Piece positionPiece = position.getPiece();
 
@@ -37,7 +38,7 @@ public abstract class Board implements BoardDimension {
             /*
              * RAISE AN EXCEPTION, BECAUSE POSITION (xLabel, yLabel) IS NOT EMPTY
              */
-            throw new InvalidPositionCoordinate(xLabel, yLabel);
+            throw new RankedException("Casilla Ocupada");
         }
         position.setPiece(piece);
         piece.setPosition(position);
