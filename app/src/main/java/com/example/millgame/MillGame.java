@@ -11,6 +11,7 @@ public class MillGame {
     private TurnIterator turniter;
     private ArrayList<Player> players;
     private Board board;
+    private BoardPanel boardPanel;
     private EventAction eventAction;
     private GameStageIterator stageIterator;
 
@@ -34,9 +35,11 @@ public class MillGame {
     public void setTurnIterator(TurnIterator itr){ turniter = itr; }
     public void setPlayers(ArrayList<Player> players){ this.players = players; }
     public void setBoard(Board board){ this.board = board; }
+
+    public void setBoardPanel(BoardPanel boardPanel){ this.boardPanel = boardPanel;}
     public Board getBoard(){ return board; }
 
-    public BoardPanel getBoardPanel() { return board.getPanel(); }
+    public BoardPanel getBoardPanel() { return boardPanel; }
 
     public void changeEventAction(EventAction eventAction){
         this.eventAction = eventAction;

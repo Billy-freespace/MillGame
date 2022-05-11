@@ -1,59 +1,64 @@
 package com.example.millgame.boards;
 
+import com.example.millgame.Board;
 import com.example.millgame.Position;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.graphicsAndSounds.Assets;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class BoardPanel extends JPanel {
-    public static char MIN_XLABEL;
-    public static char MAX_YLABEL;
+public class BoardPanel extends JPanel {
 
-    protected Position origin;
-    protected HashMap<Character, HashMap<Integer, Position>> positions;
+    private GridBagLayout layoutManager;
+    protected Board board;
 
-    public BoardPanel(){
-        positions = new HashMap<Character, HashMap<Integer, Position>>();
-    }
-    public HashMap<Character, HashMap<Integer, Position>> getPositions(){ return positions; }
-
-    public Position getOrigin(){ return origin; }
-
-    public void addPosition(Position position){
-        char xLabel = position.getXLabel();
-        int yLabel = position.getYLabel();
-
-        if(!positions.containsKey(xLabel)){
-            positions.put(xLabel, new HashMap<Integer, Position>());
-        }
-
-        HashMap<Integer, Position> inner = positions.get(xLabel);
-        inner.put(yLabel, position);
+    public BoardPanel(Board board){
+        super();
+        layoutManager = new GridBagLayout();
+        setLayout(layoutManager);
+        this.board = board;
     }
 
-    public Position getPosition(char xLabel, int yLabel) throws InvalidPositionCoordinate {
-        if(!positions.containsKey(xLabel)){
-            throw new InvalidPositionCoordinate(xLabel, yLabel);
-        }
+    @Override
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
 
-        HashMap<Integer, Position> inner = positions.get(xLabel);
-        if(!inner.containsKey(yLabel)){
-            throw new InvalidPositionCoordinate(xLabel, yLabel);
-        }
+        g.drawImage(Assets.background, 0, 0, null);
 
-        return inner.get(yLabel);
-    }
+        board.unmark();
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
 
-    public void unmark(){
-        for(Character xLabel : positions.keySet()){
-            HashMap<Integer, Position> inner = positions.get(xLabel);
-            for(Integer yLabel : inner.keySet()){
-                Position position = inner.get(yLabel);
-                position.mark = false;
+        char MIN_XLABEL = board.minXLabel();
+        char MAX_XLABEL = board.maxXLabel();
+        int MIN_YLABEL = board.minYLabel();
+        int MAX_YLABEL = board.maxYLabel();
+
+        for(char x=MIN_XLABEL; x<=MAX_XLABEL; x++){
+            for(int y=MIN_YLABEL; y<=MAX_YLABEL; y++){
+                try{
+                    Position position = board.getPosition(x, y);
+                    gbc.gridx = (int) position.getXLabel() - (int) MIN_XLABEL;
+                    gbc.gridy = MAX_YLABEL - position.getYLabel();
+
+                    add(position, gbc);
+
+                    for(Position neighbour : position.getNeighbours()){
+                        if(!neighbour.mark){
+                            g.setColor(new Color(0, 0, 0));
+                            g.drawLine(position.getX() + position.getHeight()/2, position.getY() + position.getWidth()/2,
+                                    neighbour.getX() + neighbour.getHeight()/2, neighbour.getY() + neighbour.getWidth()/2);
+                        }
+                    }
+                } catch (InvalidPositionCoordinate error){
+                    continue;
+                }
             }
         }
-    } // unmark all positions of board
+    }
 }
