@@ -37,6 +37,7 @@ public abstract class Board implements BoardDimension {
             /*
              * RAISE AN EXCEPTION, BECAUSE POSITION (xLabel, yLabel) IS NOT EMPTY
              */
+            throw new InvalidPositionCoordinate(xLabel, yLabel);
         }
         position.setPiece(piece);
         piece.setPosition(position);

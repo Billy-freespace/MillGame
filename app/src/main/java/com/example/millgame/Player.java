@@ -52,7 +52,6 @@ public abstract class Player {
     public void placePiece(char x, int y) throws InvalidPositionCoordinate, NoPiecesError {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
-        System.out.println("INTENTAR COLOCAR");
         //System.out.println(toString());
         /*if(false) {
             throw new InvalidPositionCoordinate(x, y);
