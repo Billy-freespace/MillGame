@@ -28,16 +28,7 @@ public class NineMMBoardOperationTest {
         System.out.println(player2);
     }
 
-    @Test
-    public void getPositionTest() throws InvalidPositionCoordinate {
-        char originXLabel = 'a';
-        int originYLabel = 1;
 
-        Position origin = board.getOrigin();
-        Position originPosition = board.getPosition(originXLabel, originYLabel);
-
-        assertEquals(origin, originPosition);
-    }
 
     @Test
     public void getInvalidPositionTest(){
@@ -51,7 +42,34 @@ public class NineMMBoardOperationTest {
 
     @Nested
     class PlayerOperationTest { 
-        
+        @Test
+        public void testInvalidNoPieces(){
+            System.out.println("BOARD: " + board);
+            Player player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
+            int j = 1;
+
+            try {
+                // 3 fichas
+                for (char i = 'a'; i <= 'g';  i++, j++) {
+                    if (i == 'd') continue;
+                    player1.placePiece(i, j);
+                }
+
+                player1.placePiece('a', 7);
+                player1.placePiece('b', 6);
+                player1.placePiece('c', 5);
+
+                System.out.println("PLAYER: " + player1);
+            } catch (NoPiecesError | InvalidPositionCoordinate e){
+                // DONOTHING
+            }
+
+
+            assertThrows(NoPiecesError.class, () -> {
+                player1.placePiece('e', 3);;
+            });
+
+        }
     }
 
     ////
