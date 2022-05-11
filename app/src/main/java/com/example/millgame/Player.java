@@ -37,19 +37,14 @@ public abstract class Player {
     }
 
     public Player(PlayerType playerType, PieceColor color, Board board){
-        System.out.println("INTENTAR CONSTRUIR");
         game = null;
         this.board = board;
-        // SOMETHING MORE
         GameVariant variant = board.getVariant();
         npieces = Board.getNumberPieces(variant);
         this.playerType = playerType;
         pieceColor = color;
         pieces = new ArrayList<Piece>(); 
         placedPieces = 0;
-        //
-         System.out.println("INTENTAR CONSTRUIR 2");
-         System.out.println(toString());
     }
 
     public int getPlacedPieces(){ return placedPieces; }
@@ -71,10 +66,6 @@ public abstract class Player {
         pieces.add(piece);
         board.placePiece(piece, x, y);
         placedPieces += 1;
-
-        //CODIGO DE PRUEBA - REMOVER
-        System.out.println("-------*************---------");
-        //////
 
         TraceLogger.log(Level.INFO, this + " placed a piece in (" + x + ", " + y + ") position");
 
