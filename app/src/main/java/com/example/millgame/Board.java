@@ -29,7 +29,7 @@ public abstract class Board implements BoardDimension {
         return null;
     }
     public abstract ArrayList<Position> getPossibleMovements(char xLabel, int yLabel);
-    public void placePiece(Piece piece, char xLabel, int yLabel) throws InvalidPositionCoordinate{
+    public void placePiece(Piece piece, char xLabel, int yLabel) throws InvalidPositionCoordinate {
         Position position = this.getPosition(xLabel, yLabel);
         Piece positionPiece = position.getPiece();
 
@@ -37,6 +37,7 @@ public abstract class Board implements BoardDimension {
             /*
              * RAISE AN EXCEPTION, BECAUSE POSITION (xLabel, yLabel) IS NOT EMPTY
              */
+            throw new InvalidPositionCoordinate(xLabel, yLabel);
         }
         position.setPiece(piece);
         piece.setPosition(position);

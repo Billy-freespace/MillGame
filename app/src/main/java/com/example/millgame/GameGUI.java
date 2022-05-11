@@ -20,7 +20,7 @@ public class GameGUI extends JFrame {
         TraceLogger.log(Level.INFO, "Initializing GameGUI");
 
         // NOTE: This game will be initialized in ConfigPanel
-        MillGame game = new MillGameBuilder().build(MillGame.GameVariant.SIX_MEN_MORRIS, MillGame.GameMode.HUMAN_HUMAN);
+        MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS, MillGame.GameMode.HUMAN_HUMAN);
         game.nextTurn(); // init game turn
 
         setTitle(Constants.title);

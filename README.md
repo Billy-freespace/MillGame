@@ -22,3 +22,7 @@ Build game and run tests
 ```bash
 ./gradlew build
 ```
+
+
+## Documentation
+Check our design diagrams on the [wiki](https://github.com/Billy-freespace/MillGame/wiki)

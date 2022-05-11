@@ -39,7 +39,12 @@ public abstract class Player {
     public Player(PlayerType playerType, PieceColor color, Board board){
         game = null;
         this.board = board;
-        // SOMETHING MORE
+        GameVariant variant = board.getVariant();
+        npieces = Board.getNumberPieces(variant);
+        this.playerType = playerType;
+        pieceColor = color;
+        pieces = new ArrayList<Piece>(); 
+        placedPieces = 0;
     }
 
     public int getPlacedPieces(){ return placedPieces; }
@@ -47,23 +52,26 @@ public abstract class Player {
     public void placePiece(char x, int y) throws InvalidPositionCoordinate, NoPiecesError {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
+        //System.out.println(toString());
+        /*if(false) {
+            throw new InvalidPositionCoordinate(x, y);
+        }*/
+
         if(placedPieces >= npieces) {
             throw new NoPiecesError(pieceColor, MillGame.GameStage.POSITIONING, Level.WARNING);
         }
 
         Piece piece = PieceFactory.create(pieceColor);
-        pieces.add(piece);
         board.placePiece(piece, x, y);
+        pieces.add(piece);
         placedPieces += 1;
 
-        //CODIGO DE PRUEBA - REMOVER
-        System.out.println("----------------");
-        //////
-
         TraceLogger.log(Level.INFO, this + " placed a piece in (" + x + ", " + y + ") position");
-        
+
         //CODIGO DE PRUEBA - REMOVER
+        System.out.println("x: " + x + " , y: "  + y );
         System.out.println("Numero de piezas en el tablero: " + placedPieces);
+        System.out.println("---------------------------");
         //////
     }
 

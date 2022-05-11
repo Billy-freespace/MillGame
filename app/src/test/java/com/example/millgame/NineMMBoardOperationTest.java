@@ -6,6 +6,7 @@ import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NoPiecesError;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.pieces.PieceFactory;
+import com.example.millgame.players.HumanPlayerFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,22 +19,14 @@ import org.junit.jupiter.api.Test;
 public class NineMMBoardOperationTest {
     private final MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
     private  NineMMBoard board;
+    private Player player1, player2;
 
     @BeforeEach
-    public void createNineMMBoard(){
+    public void createNineMMBoard() {
         board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
     }
 
-    @Test
-    public void getPositionTest() throws InvalidPositionCoordinate {
-        char originXLabel = 'a';
-        int originYLabel = 1;
 
-        Position origin = board.getOrigin();
-        Position originPosition = board.getPosition(originXLabel, originYLabel);
-
-        assertEquals(origin, originPosition);
-    }
 
     @Test
     public void getInvalidPositionTest(){
@@ -46,14 +39,18 @@ public class NineMMBoardOperationTest {
     }
 
     @Nested
-    class PlayerOperation{
+    class PlayerOperationTest { 
+        @BeforeEach
+        public void createPlayers() {
+            player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
+            player2 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
+        }
+
         @Test
         public void testInvalidNoPieces(){
-            System.out.println("BOARD: " + board);
-            Player player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
+            //Player player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
             int j = 1;
-
-            try{
+            try {
                 // 3 fichas
                 for (char i = 'a'; i <= 'g';  i++, j++) {
                     if (i == 'd') continue;
@@ -63,20 +60,42 @@ public class NineMMBoardOperationTest {
                 player1.placePiece('a', 7);
                 player1.placePiece('b', 6);
                 player1.placePiece('c', 5);
-
-                System.out.println("PLAYER: " + player1);
             } catch (NoPiecesError | InvalidPositionCoordinate e){
                 // DONOTHING
             }
-
 
             assertThrows(NoPiecesError.class, () -> {
                 player1.placePiece('e', 3);;
             });
 
         }
+
+        @Test
+        public void getInvalidPositionTest() {
+            char xLabel = 'c';
+            int yLabel = 1;
+
+            assertThrows(InvalidPositionCoordinate.class, () -> {
+                player2.placePiece(xLabel, yLabel);
+            });
+        }
+
+        @Test
+        public void getNoEmptyPositionTest()  {
+            try {
+                player2.placePiece('a', 7);
+                player2.placePiece('b', 6);
+            } catch (NoPiecesError | InvalidPositionCoordinate e){
+                // DONOTHING
+            }
+
+            assertThrows(InvalidPositionCoordinate.class, () -> {
+                player2.placePiece('a', 7);
+            });
+        }
     }
 
+    ////
     /*
     @Test
     public void placePieceTest() throws InvalidPositionCoordinate{

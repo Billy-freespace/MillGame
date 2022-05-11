@@ -51,5 +51,12 @@ public class PositioningEventAction extends EventAction {
             // the player was positioned all their pieces, so now it will move them
             game.changeEventAction(new MovingEventAction());
         }
+        // REMOVE THIS CODE - ADDED FOR TESTING PURPOSES
+        // BEGIN
+        catch (NullPointerException error){
+            // the player was positioned all their pieces, so now it will move them
+            System.out.println("ERROR NULLPOINTER EXCEPTION");
+        }
+        // END
     }
 }
