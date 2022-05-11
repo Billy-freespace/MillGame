@@ -22,13 +22,6 @@ public abstract class Piece implements ObjectIcon {
         this.icon = pieceIcon;
     }
 
-    /*
-    public Piece(PieceColor color, Position position, ImageIcon pieceIcon){
-        this.color = color;
-        this.position = position;
-        this.icon = pieceIcon;
-    }
-     */
 
     public ArrayList<Position> getEmptyNeighbours(){
         ArrayList<Position> emptyNeighbours = new ArrayList<Position>();
