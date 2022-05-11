@@ -53,7 +53,7 @@ public abstract class Player {
         }
 
         if(placedPieces >= npieces) {
-            throw new NoPiecesError(pieceColor, game.getStage(), Level.WARNING);
+            throw new NoPiecesError(pieceColor, MillGame.GameStage.POSITIONING, Level.WARNING);
         }
 
         Piece piece = PieceFactory.create(pieceColor);

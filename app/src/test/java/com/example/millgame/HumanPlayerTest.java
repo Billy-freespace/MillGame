@@ -15,23 +15,23 @@ import com.example.millgame.players.HumanPlayerFactory;
 
 public class HumanPlayerTest {
 
-    /*private MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS, MillGame.GameMode.HUMAN_HUMAN);
-    private Player player1 = new HumanPlayer(PieceColor.WHITE, game);*/
+    private MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS, MillGame.GameMode.HUMAN_HUMAN);
+    private Player player2 = new HumanPlayer(PieceColor.WHITE, game);
 
     //private final MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
-    private  Board board;
-    private Player player2;
+    //private  Board board;////
+    //private Player player2;////
 
     /*@BeforeEach
     public void createNineMMBoard(){
         board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(GameVariant.NINE_MEN_MORRIS);
         player2 = new HumanPlayerFactory().create(PieceColor.BLACK, board);
         System.out.println(player2);
-    }
+    }*/
     
  
     @Test
-    public void InvalidNoPiecesTest () throws InvalidPositionCoordinate, NoPiecesError {
+    public void TmpInvalidNoPiecesTest () throws InvalidPositionCoordinate, NoPiecesError {
         int j = 0;
         for (char i = 'a'; i <= 'g';  i++) {
             j++;
@@ -47,7 +47,7 @@ public class HumanPlayerTest {
         assertThrows(NoPiecesError.class, () -> {
             player2.placePiece('e', 3);;
         });
-    }*/
+    }
     
     @Test
      public void placePieceTest() {
