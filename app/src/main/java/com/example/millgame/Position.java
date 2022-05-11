@@ -58,7 +58,6 @@ public class Position extends JButton implements PositionEventAction, ObjectIcon
         TraceLogger.log(Level.INFO, "Position created: " + this, Position.class);
     }
 
-    public Position(Point point, char xLabel, int yLabel){}
     public void addNeighbour(Position position){
         neighbours.add(position);
         // REAL LEVEL: FINE

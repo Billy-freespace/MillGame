@@ -19,6 +19,9 @@ public class BoardCreatorDirector {
             case TWELVE_MEN_MORRIS:
                 board = new TwelveMMBoardBuilder().build();
                 break;
+            case SIX_MEN_MORRIS:
+                board = new SixMMBoardBuilder().build();
+                break;
             default:
                 board = null;
         }
