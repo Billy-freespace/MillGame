@@ -66,7 +66,7 @@ public class App {
                     System.out.println("TraceMode: " + traceMode);
 
                     String name = ns.getString("traceLoggerName");
-                    TraceLogger traceLogger = TraceLogger.getTraceLogger(name, logfile, debug);
+                    TraceLogger traceLogger = TraceLogger.initTraceLogger(name, logfile, debug);
                     //System.out.println("(TraceLogger init) TraceMode: " +traceLogger.getTraceMode());
                     traceLogger.setTraceMode(traceMode);
                     //System.out.println("(TraceLogger after) TraceMode: " +traceLogger.getTraceMode());

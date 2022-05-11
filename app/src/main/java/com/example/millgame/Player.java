@@ -24,11 +24,11 @@ public abstract class Player {
     private Board board;
 
 
-    public Player(PlayerType playerType, PieceColor color, MillGame game){
+    public Player(PlayerType playerType, PieceColor color, MillGame game) {
         this.game = game;
         board = game.getBoard();
 
-        GameVariant variant = board.getGameVariant();
+        GameVariant variant = board.getVariant();
         npieces = Board.getNumberPieces(variant);
         this.playerType = playerType;
         pieceColor = color;
@@ -36,19 +36,35 @@ public abstract class Player {
         placedPieces = 0;
     }
 
+    public Player(PlayerType playerType, PieceColor color, Board board){
+        game = null;
+        this.board = board;
+        // SOMETHING MORE
+    }
+
     public int getPlacedPieces(){ return placedPieces; }
-    public void placePiece(char x, int y) throws InvalidPositionCoordinate, NoPiecesError{
+
+    public void placePiece(char x, int y) throws InvalidPositionCoordinate, NoPiecesError {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
-        if(placedPieces >= npieces){
-            throw new NoPiecesError(pieceColor, game.getStage(), Level.WARNING);
+        if(placedPieces >= npieces) {
+            throw new NoPiecesError(pieceColor, MillGame.GameStage.POSITIONING, Level.WARNING);
         }
 
         Piece piece = PieceFactory.create(pieceColor);
         pieces.add(piece);
         board.placePiece(piece, x, y);
         placedPieces += 1;
+
+        //CODIGO DE PRUEBA - REMOVER
+        System.out.println("----------------");
+        //////
+
         TraceLogger.log(Level.INFO, this + " placed a piece in (" + x + ", " + y + ") position");
+        
+        //CODIGO DE PRUEBA - REMOVER
+        System.out.println("Numero de piezas en el tablero: " + placedPieces);
+        //////
     }
 
     public void placePiece(Position position) throws InvalidPositionCoordinate, NoPiecesError{

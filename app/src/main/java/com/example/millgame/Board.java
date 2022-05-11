@@ -5,20 +5,18 @@ import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.pieces.PieceColor;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public abstract class Board extends JPanel {
+public abstract class Board implements BoardDimension {
     protected Position origin;
     protected HashMap<Character, HashMap<Integer, Position>> positions;
     public final GameVariant variant;
     protected HashMap<PieceColor, ArrayList<Mill>> mills;
-    protected BoardPanel boardPanel;
 
     public Board (GameVariant variant) {
         this.variant = variant;
-        this.positions = null;
+        this.positions = new HashMap<Character, HashMap<Integer, Position>>();
         this.origin = null;
 
         mills =  new HashMap<PieceColor, ArrayList<Mill>>();
@@ -65,9 +63,11 @@ public abstract class Board extends JPanel {
     }
 
     public abstract boolean isValidMill(Mill mill);
-    public GameVariant getGameVariant() {
+    public GameVariant getVariant() {
         return variant;
     }
+
+    public abstract int getNumberPieces();
     public static int getNumberPieces (GameVariant variant) {
         int npieces = -1;
 
@@ -84,7 +84,16 @@ public abstract class Board extends JPanel {
     }
 
     public Position getPosition(char xLabel, int yLabel) throws InvalidPositionCoordinate {
-        return boardPanel.getPosition(xLabel, yLabel);
+        if(!positions.containsKey(xLabel)){
+            throw new InvalidPositionCoordinate(xLabel, yLabel);
+        }
+
+        HashMap<Integer, Position> inner = positions.get(xLabel);
+        if(!inner.containsKey(yLabel)){
+            throw new InvalidPositionCoordinate(xLabel, yLabel);
+        }
+
+        return inner.get(yLabel);
     }
 
     public int countPositions(){
@@ -107,10 +116,17 @@ public abstract class Board extends JPanel {
             }
         }
     } // unmark all positions of board
-    public void setBoardPanel(BoardPanel boardPanel){
-        this.boardPanel = boardPanel;
-        positions = boardPanel.getPositions();
-    }
 
-    public BoardPanel getPanel() { return boardPanel; }
+
+    public void addPosition(Position position){
+        char xLabel = position.getXLabel();
+        int yLabel = position.getYLabel();
+
+        if(!positions.containsKey(xLabel)){
+            positions.put(xLabel, new HashMap<Integer, Position>());
+        }
+
+        HashMap<Integer, Position> inner = positions.get(xLabel);
+        inner.put(yLabel, position);
+    }
 }

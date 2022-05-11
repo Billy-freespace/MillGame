@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 
-public abstract class Piece extends JButton implements ObjectIcon {
+public abstract class Piece implements ObjectIcon {
     protected PieceColor color;
     protected Position position;
     protected ImageIcon icon;
@@ -22,13 +22,6 @@ public abstract class Piece extends JButton implements ObjectIcon {
         this.icon = pieceIcon;
     }
 
-    /*
-    public Piece(PieceColor color, Position position, ImageIcon pieceIcon){
-        this.color = color;
-        this.position = position;
-        this.icon = pieceIcon;
-    }
-     */
 
     public ArrayList<Position> getEmptyNeighbours(){
         ArrayList<Position> emptyNeighbours = new ArrayList<Position>();

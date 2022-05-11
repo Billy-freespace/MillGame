@@ -13,25 +13,6 @@ public class NineMMBoardBuildTest {
     private final MillGame.GameVariant nineMMGameVariant = MillGame.GameVariant.NINE_MEN_MORRIS;
     private  NineMMBoard nineMMBoard;
 
-//    @Test
-//    public void createBoardTest(){
-//        MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
-//        int NINE_MEM_MORRIS_PIECES = 24;
-//
-//        char originXLabel = 'a';
-//        int originYLabel = 1;
-//
-//        NineMMBoard board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
-//
-//        assertEquals(variant, board.getGameVariant());
-//        assertEquals(NINE_MEM_MORRIS_PIECES, board.countPositions());
-//
-//        Position origin = board.getOrigin();
-//
-//        assertEquals(originXLabel, origin.getXLabel());
-//        assertEquals(originYLabel, origin.getYLabel());
-//    }
-
     @BeforeEach
     public void createNineMMBoard(){
         nineMMBoard = (NineMMBoard) BoardCreatorDirector.makeMMBoard(nineMMGameVariant);
@@ -52,6 +33,6 @@ public class NineMMBoardBuildTest {
 
     @Test
     public void boardVariantTest() {
-        assertEquals(nineMMGameVariant, nineMMBoard.getGameVariant());
+        assertEquals(nineMMGameVariant, nineMMBoard.getVariant());
     }
 }
