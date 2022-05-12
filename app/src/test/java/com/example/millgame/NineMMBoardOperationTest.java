@@ -114,7 +114,7 @@ public class NineMMBoardOperationTest {
             try {
                 player2.placePiece('a', 7);
                 player2.placePiece('b', 6);
-            } catch (NoPiecesError e){
+            } catch (NoPiecesError | NoEmptyPosition e){
                 // DONOTHING
             }
 
@@ -159,7 +159,7 @@ public class NineMMBoardOperationTest {
     }
 
     @Test
-    public void getPieceTest() throws InvalidPositionCoordinate {
+    public void getPieceTest() throws InvalidPositionCoordinate, NoEmptyPosition {
         char xLabel = 'a';
         int yLabel = 7;
         Piece piece = PieceFactory.create(PieceColor.WHITE);

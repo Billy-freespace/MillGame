@@ -48,23 +48,11 @@ public class PositioningEventAction extends EventAction {
 
         } catch (InvalidPositionCoordinate | EventException error){
             TraceLogger.log(error, PositioningEventAction.class);
-        }
-        catch (NoPiecesError error){
+        } catch (NoPiecesError error){
             // the player was positioned all their pieces, so now it will move them
             game.changeEventAction(new MovingEventAction());
-        }
-        // REMOVE THIS CODE - ADDED FOR TESTING PURPOSES
-        // BEGIN
-        catch (NullPointerException error){
-            // the player was positioned all their pieces, so now it will move them
-            System.out.println("ERROR NULLPOINTER EXCEPTION");
-        } catch (NoEmptyPosition error) {
-            System.out.println("ERROR FULL POSITION");
-        }
-        // END
- catch (RankedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (RankedException error) {
+            TraceLogger.log(error);
         }
     }
 }
