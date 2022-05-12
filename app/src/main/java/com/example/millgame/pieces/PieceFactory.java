@@ -8,7 +8,7 @@ public class PieceFactory {
         switch (color)
         {
             case WHITE:
-                piece = createWritePiece();
+                piece = createWhitePiece();
                 break;
             case BLACK:
                 piece = createBlackPiece();
@@ -17,7 +17,7 @@ public class PieceFactory {
         return piece;
     }
 
-    private static Piece createWritePiece(){
+    private static Piece createWhitePiece(){
         return new WhitePiece();
     }
 

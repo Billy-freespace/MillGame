@@ -157,4 +157,22 @@ public class NineMMBoardOperationTest {
         c3 = board.getPosition(xLabel, yLabel);
         assertNull(c3.getPiece());
     }
+
+    @Test
+    public void getPieceTest() throws InvalidPositionCoordinate {
+        char xLabel = 'a';
+        int yLabel = 7;
+        Piece piece = PieceFactory.create(PieceColor.WHITE);
+        board.placePiece(piece, xLabel, yLabel);
+        Position a7 = board.getPosition(xLabel, yLabel);
+        assertEquals(piece, a7.getPiece());
+    }
+
+    @Test
+    public void getPieceInvalidPositionTest() {
+        char xLabel = 'z';
+        int yLabel = 100;
+        InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class , () -> board.getPosition(xLabel, yLabel));
+        assertEquals(InvalidPositionCoordinate.getErrorMessage(xLabel, yLabel), thrown.getMessage());
+    }
 }
