@@ -51,21 +51,32 @@ public class NineMMBoardOperationTest {
         @Test
         public void testEmptyPosition() throws RankedException {
 
-            char xLabel = 'a';
-            int yLabel = 7;
-            Position position = board.getPosition(xLabel, yLabel);
-            Piece positionPiece = position.getPiece();
+            Position origin = board.getOrigin();;
+            Piece positionPiece = origin.getPiece();
+
+            //CHECK  EMPTY POSITION
             assertEquals(null, positionPiece);
+
             try {
                
-                player1.placePiece(xLabel, yLabel);
+                player1.placePiece(origin.getXLabel(), origin.getYLabel());
         
             } catch (NoPiecesError | InvalidPositionCoordinate e){
                 // DONOTHING
             }
 
-            positionPiece = position.getPiece();
+            //CHECK NO EMPTY POSITION
+            positionPiece = origin.getPiece();
             assertNotEquals(null, positionPiece);
+
+            //CHECK POSITION PIECE
+            assertEquals(origin, positionPiece.getPosition());
+
+        }
+        
+        @Test
+        public void test2() throws RankedException {
+            
         }
 
         @Test
