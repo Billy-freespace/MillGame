@@ -3,7 +3,9 @@
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.exceptions.NoEmptyPosition;
 import com.example.millgame.exceptions.NoPiecesError;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.pieces.PieceFactory;
 import com.example.millgame.players.HumanPlayerFactory;
@@ -19,7 +21,7 @@ import org.junit.jupiter.api.Test;
 public class NineMMBoardOperationTest {
     private final MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
     private  NineMMBoard board;
-    private Player player1, player2;
+    private Player player0, player1, player2;
 
     @BeforeEach
     public void createNineMMBoard() {
@@ -42,12 +44,39 @@ public class NineMMBoardOperationTest {
     class PlayerOperationTest { 
         @BeforeEach
         public void createPlayers() {
+            player0 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.BLACK, board);
             player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
             player2 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
         }
 
         @Test
-        public void testInvalidNoPieces(){
+        public void testEmptyPosition() throws RankedException {
+
+            Position origin = board.getOrigin();;
+            Piece positionPiece = origin.getPiece();
+
+            //CHECK  EMPTY POSITION
+            assertEquals(null, positionPiece);
+
+            try {
+               
+                player1.placePiece(origin.getXLabel(), origin.getYLabel());
+        
+            } catch (NoPiecesError e){
+                // DONOTHING
+            }
+
+            //CHECK NO EMPTY POSITION
+            positionPiece = origin.getPiece();
+            assertNotEquals(null, positionPiece);
+
+            //CHECK POSITION PIECE
+            assertEquals(origin, positionPiece.getPosition());
+
+        }
+
+        @Test
+        public void testInvalidNoPieces() throws RankedException{
             //Player player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
             int j = 1;
             try {
@@ -60,7 +89,7 @@ public class NineMMBoardOperationTest {
                 player1.placePiece('a', 7);
                 player1.placePiece('b', 6);
                 player1.placePiece('c', 5);
-            } catch (NoPiecesError | InvalidPositionCoordinate e){
+            } catch (NoPiecesError e){
                 // DONOTHING
             }
 
@@ -72,8 +101,8 @@ public class NineMMBoardOperationTest {
 
         @Test
         public void getInvalidPositionTest() {
-            char xLabel = 'c';
-            int yLabel = 1;
+            char xLabel = 'z';
+            int yLabel = 100;
 
             assertThrows(InvalidPositionCoordinate.class, () -> {
                 player2.placePiece(xLabel, yLabel);
@@ -81,15 +110,15 @@ public class NineMMBoardOperationTest {
         }
 
         @Test
-        public void getNoEmptyPositionTest()  {
+        public void getNoEmptyPositionTest() throws NoEmptyPosition, InvalidPositionCoordinate  {
             try {
                 player2.placePiece('a', 7);
                 player2.placePiece('b', 6);
-            } catch (NoPiecesError | InvalidPositionCoordinate e){
+            } catch (NoPiecesError e){
                 // DONOTHING
             }
 
-            assertThrows(InvalidPositionCoordinate.class, () -> {
+            assertThrows(NoEmptyPosition.class, () -> {
                 player2.placePiece('a', 7);
             });
         }
@@ -115,7 +144,7 @@ public class NineMMBoardOperationTest {
      */
 
     @Test
-    public void removePieceTest() throws InvalidPositionCoordinate{
+    public void removePieceTest() throws RankedException{
         char xLabel = 'c';
         int yLabel = 3;
 

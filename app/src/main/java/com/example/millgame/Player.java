@@ -1,7 +1,9 @@
 package com.example.millgame;
 
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.exceptions.NoEmptyPosition;
 import com.example.millgame.exceptions.NoPiecesError;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.players.PlayerType;
 import com.example.millgame.pieces.PieceColor;
@@ -46,7 +48,7 @@ public abstract class Player {
 
     public int getPlacedPieces(){ return placedPieces; }
 
-    public void placePiece(char x, int y) throws InvalidPositionCoordinate, NoPiecesError {
+    public void placePiece(char x, int y) throws NoEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
         //System.out.println(toString());
@@ -64,15 +66,9 @@ public abstract class Player {
         placedPieces += 1;
 
         TraceLogger.log(Level.INFO, this + " placed a piece in (" + x + ", " + y + ") position");
-
-        //CODIGO DE PRUEBA - REMOVER
-        //System.out.println("x: " + x + " , y: "  + y );
-        //System.out.println("Numero de piezas en el tablero: " + placedPieces);
-        System.out.println("---------------------------");
-        //////
     }
 
-    public void placePiece(Position position) throws InvalidPositionCoordinate, NoPiecesError{
+    public void placePiece(Position position) throws NoEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
         char xLabel = position.getXLabel();
@@ -81,13 +77,13 @@ public abstract class Player {
         placePiece(xLabel, yLabel);
     }
 
-    public void movePiece(Piece piece, char x, int y) throws InvalidPositionCoordinate{ // sprint 2 - RECHECK
+    public void movePiece(Piece piece, char x, int y) throws RankedException{ // sprint 2 - RECHECK
         Position position = piece.getPosition();
         board.removePiece(position);
         board.placePiece(piece, x, y);
     }
 
-    public void movePiece(Piece piece, Position position) throws InvalidPositionCoordinate{ // sprint 2 - RECHECK
+    public void movePiece(Piece piece, Position position) throws RankedException{ // sprint 2 - RECHECK
         char xLabel = position.getXLabel();
         int yLabel = position.getYLabel();
 

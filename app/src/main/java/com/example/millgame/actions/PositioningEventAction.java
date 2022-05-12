@@ -4,7 +4,9 @@ import com.example.millgame.Player;
 import com.example.millgame.Position;
 import com.example.millgame.exceptions.EventException;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.exceptions.NoEmptyPosition;
 import com.example.millgame.exceptions.NoPiecesError;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 
 import java.awt.event.ActionEvent;
@@ -56,7 +58,13 @@ public class PositioningEventAction extends EventAction {
         catch (NullPointerException error){
             // the player was positioned all their pieces, so now it will move them
             System.out.println("ERROR NULLPOINTER EXCEPTION");
+        } catch (NoEmptyPosition error) {
+            System.out.println("ERROR FULL POSITION");
         }
         // END
+ catch (RankedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
