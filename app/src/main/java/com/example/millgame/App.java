@@ -61,6 +61,7 @@ public class App {
                             break;
                         default:
                             traceMode = TraceMode.CURIOUS;
+                            break;
                     }
 
                     System.out.println("TraceMode: " + traceMode);
