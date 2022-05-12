@@ -4,9 +4,17 @@ import java.util.logging.Level;
 
 public class NoEmptyPosition extends RankedException {
 
-    public NoEmptyPosition(Level rank, Exception exception) {
-        super(rank, exception);
-        //TODO Auto-generated constructor stub
+    public NoEmptyPosition(char xLabel, int yLabel) {
+        super(NoEmptyPosition.getErrorMessage(xLabel, yLabel));
+    
+    }
+
+    public NoEmptyPosition(char xLabel, int yLabel, Level rank) {
+        super(NoEmptyPosition.getErrorMessage(xLabel, yLabel), rank);
     }
     
+    public static  String getErrorMessage(char xLabel, int yLabel){
+        String message =  "Position in board: Position(x: " + xLabel + ", y: " + Integer.toString(yLabel) + ")" + "is full";
+        return message;
+    }
 }

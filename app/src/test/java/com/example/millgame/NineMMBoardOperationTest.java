@@ -3,6 +3,7 @@
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.exceptions.NoEmptyPosition;
 import com.example.millgame.exceptions.NoPiecesError;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.pieces.PieceColor;
@@ -61,7 +62,7 @@ public class NineMMBoardOperationTest {
                
                 player1.placePiece(origin.getXLabel(), origin.getYLabel());
         
-            } catch (NoPiecesError | InvalidPositionCoordinate e){
+            } catch (NoPiecesError e){
                 // DONOTHING
             }
 
@@ -72,11 +73,6 @@ public class NineMMBoardOperationTest {
             //CHECK POSITION PIECE
             assertEquals(origin, positionPiece.getPosition());
 
-        }
-        
-        @Test
-        public void test2() throws RankedException {
-            
         }
 
         @Test
@@ -93,7 +89,7 @@ public class NineMMBoardOperationTest {
                 player1.placePiece('a', 7);
                 player1.placePiece('b', 6);
                 player1.placePiece('c', 5);
-            } catch (NoPiecesError | InvalidPositionCoordinate e){
+            } catch (NoPiecesError e){
                 // DONOTHING
             }
 
@@ -105,8 +101,8 @@ public class NineMMBoardOperationTest {
 
         @Test
         public void getInvalidPositionTest() {
-            char xLabel = 'c';
-            int yLabel = 1;
+            char xLabel = 'z';
+            int yLabel = 100;
 
             assertThrows(InvalidPositionCoordinate.class, () -> {
                 player2.placePiece(xLabel, yLabel);
@@ -114,15 +110,15 @@ public class NineMMBoardOperationTest {
         }
 
         @Test
-        public void getNoEmptyPositionTest() throws RankedException  {
+        public void getNoEmptyPositionTest() throws NoEmptyPosition, InvalidPositionCoordinate  {
             try {
                 player2.placePiece('a', 7);
                 player2.placePiece('b', 6);
-            } catch (NoPiecesError | InvalidPositionCoordinate e){
+            } catch (NoPiecesError e){
                 // DONOTHING
             }
 
-            assertThrows(RankedException.class, () -> {
+            assertThrows(NoEmptyPosition.class, () -> {
                 player2.placePiece('a', 7);
             });
         }
