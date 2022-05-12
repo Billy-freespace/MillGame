@@ -5,7 +5,6 @@ import com.example.millgame.exceptions.NoPiecesError;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.players.PlayerType;
 import com.example.millgame.pieces.PieceColor;
-import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.pieces.PieceFactory;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +27,7 @@ public abstract class Player {
         this.game = game;
         board = game.getBoard();
 
-        GameVariant variant = board.getVariant();
-        npieces = Board.getNumberPieces(variant);
+        npieces = board.getNumberPlayerPieces();
         this.playerType = playerType;
         pieceColor = color;
         pieces = new ArrayList<Piece>(); // no pieces were placed to board
@@ -39,8 +37,7 @@ public abstract class Player {
     public Player(PlayerType playerType, PieceColor color, Board board){
         game = null;
         this.board = board;
-        GameVariant variant = board.getVariant();
-        npieces = Board.getNumberPieces(variant);
+        npieces = board.getNumberPlayerPieces();
         this.playerType = playerType;
         pieceColor = color;
         pieces = new ArrayList<Piece>(); 
@@ -57,7 +54,7 @@ public abstract class Player {
             throw new InvalidPositionCoordinate(x, y);
         }*/
 
-        if(placedPieces >= npieces) {
+        if(placedPieces >= board.getNumberPlayerPieces()) {
             throw new NoPiecesError(pieceColor, MillGame.GameStage.POSITIONING, Level.WARNING);
         }
 
@@ -69,8 +66,8 @@ public abstract class Player {
         TraceLogger.log(Level.INFO, this + " placed a piece in (" + x + ", " + y + ") position");
 
         //CODIGO DE PRUEBA - REMOVER
-        System.out.println("x: " + x + " , y: "  + y );
-        System.out.println("Numero de piezas en el tablero: " + placedPieces);
+        //System.out.println("x: " + x + " , y: "  + y );
+        //System.out.println("Numero de piezas en el tablero: " + placedPieces);
         System.out.println("---------------------------");
         //////
     }

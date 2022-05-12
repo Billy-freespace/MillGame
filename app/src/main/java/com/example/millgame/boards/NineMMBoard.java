@@ -14,9 +14,7 @@ public class NineMMBoard extends Board {
     static final int MAX_YLABEL = 7;
 
     public static final int NUMBER_PIECES = 9;
-    public NineMMBoard() {
-        super(GameVariant.NINE_MEN_MORRIS);
-    }
+    public NineMMBoard() { super(GameVariant.NINE_MEN_MORRIS); }
 
     public ArrayList<Position> getPossibleMovements(char xLabel, int yLabel){
         return null;
@@ -26,7 +24,7 @@ public class NineMMBoard extends Board {
         return true;
     }
 
-    public int getNumberPieces(){ return NUMBER_PIECES; }
+    public int getNumberPlayerPieces(){ return NUMBER_PIECES; }
 
     public char maxXLabel(){ return MAX_XLABEL; }
     public char minXLabel(){ return MIN_XLABEL; }

@@ -1,7 +1,6 @@
 package com.example.millgame;
 
 import com.example.millgame.MillGame.GameVariant;
-import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.pieces.PieceColor;
 
@@ -68,21 +67,7 @@ public abstract class Board implements BoardDimension {
         return variant;
     }
 
-    public abstract int getNumberPieces();
-    public static int getNumberPieces (GameVariant variant) {
-        int npieces = -1;
-
-        switch (variant){
-            case NINE_MEN_MORRIS:
-            case TWELVE_MEN_MORRIS:
-                npieces = 9;
-                break;
-
-            default:
-                npieces = -1;
-        }
-        return npieces;
-    }
+    public abstract int getNumberPlayerPieces();
 
     public Position getPosition(char xLabel, int yLabel) throws InvalidPositionCoordinate {
         if(!positions.containsKey(xLabel)){

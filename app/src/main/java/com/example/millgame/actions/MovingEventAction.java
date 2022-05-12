@@ -5,6 +5,7 @@ import com.example.millgame.Player;
 import com.example.millgame.Position;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.EventException;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 
 import java.awt.event.ActionEvent;
@@ -22,7 +23,12 @@ public class MovingEventAction extends EventAction {
         TraceLogger.log(Level.INFO, position + " was selected", MovingEventAction.class);
         // END
 
+
         try {
+            // forced throw exception
+            throw new RankedException(MovingEventAction.class.getName() + " was not implemented yet! (SPRINT 2)");
+
+            /*
             if(selectedPosition == null){
                 if(!position.hasPiece()){
                     throw new EventException(event,
@@ -50,11 +56,14 @@ public class MovingEventAction extends EventAction {
 
                 game.nextTurn();
             }
+             */
         } catch (InvalidPositionCoordinate error){
             TraceLogger.log(error, MovingEventAction.class);
-        }
-        catch (EventException error){
+        } catch (EventException error){
             TraceLogger.log(error, MovingEventAction.class);
+        } catch (RankedException error){
+            TraceLogger.log(error);
         }
+
     }
 }

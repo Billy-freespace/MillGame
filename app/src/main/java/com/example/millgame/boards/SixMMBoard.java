@@ -13,7 +13,7 @@ public class SixMMBoard extends Board {
     static final int MIN_YLABEL = 1;
     static final int MAX_YLABEL = 5;
 
-    public static final int NUMBER_PIECES = 9;
+    public static final int NUMBER_PIECES = 6;
 
     public SixMMBoard() {
         super(GameVariant.NINE_MEN_MORRIS);
@@ -27,7 +27,7 @@ public class SixMMBoard extends Board {
         return true;
     }
 
-    public int getNumberPieces(){ return NUMBER_PIECES; }
+    public int getNumberPlayerPieces(){ return NUMBER_PIECES; }
 
     public char maxXLabel(){ return MAX_XLABEL; }
     public char minXLabel(){ return MIN_XLABEL; }
