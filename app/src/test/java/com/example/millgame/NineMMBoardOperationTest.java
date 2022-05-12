@@ -143,10 +143,7 @@ public class NineMMBoardOperationTest {
     public void getPieceInvalidPositionTest() {
         char xLabel = 'z';
         int yLabel = 100;
-        Piece piece = PieceFactory.create(PieceColor.WHITE);
-        InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class , () -> board.placePiece(piece, xLabel, yLabel));
+        InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class , () -> board.getPosition(xLabel, yLabel));
         assertEquals(InvalidPositionCoordinate.getErrorMessage(xLabel, yLabel), thrown.getMessage());
-
-
     }
 }
