@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 public class NineMMBoardOperationTest {
     private final MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
     private  NineMMBoard board;
-    private Player player1, player2;
+    private Player player0, player1, player2;
 
     @BeforeEach
     public void createNineMMBoard() {
@@ -43,8 +43,29 @@ public class NineMMBoardOperationTest {
     class PlayerOperationTest { 
         @BeforeEach
         public void createPlayers() {
+            player0 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.BLACK, board);
             player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
             player2 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
+        }
+
+        @Test
+        public void testEmptyPosition() throws RankedException {
+
+            char xLabel = 'a';
+            int yLabel = 7;
+            Position position = board.getPosition(xLabel, yLabel);
+            Piece positionPiece = position.getPiece();
+            assertEquals(null, positionPiece);
+            try {
+               
+                player1.placePiece(xLabel, yLabel);
+        
+            } catch (NoPiecesError | InvalidPositionCoordinate e){
+                // DONOTHING
+            }
+
+            positionPiece = position.getPiece();
+            assertNotEquals(null, positionPiece);
         }
 
         @Test
