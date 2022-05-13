@@ -6,8 +6,6 @@ import com.example.millgame.logging.TraceLogger;
 
 import java.util.logging.Level;
 
-import static com.example.millgame.MillGame.GameVariant.*;
-
 public class BoardCreatorDirector {
     public static Board makeMMBoard(GameVariant variant){
         TraceLogger.log(Level.INFO, "Building " + variant + " board variant", BoardCreatorDirector.class);

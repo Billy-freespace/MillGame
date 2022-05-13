@@ -6,7 +6,6 @@ import com.example.millgame.actions.PositioningEventAction;
 import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.logging.TraceMessage;
-import com.example.millgame.logging.TraceMode;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.players.HumanPlayer;

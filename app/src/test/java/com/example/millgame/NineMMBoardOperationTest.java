@@ -8,7 +8,6 @@ import com.example.millgame.exceptions.NoPiecesError;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.pieces.PieceFactory;
-import com.example.millgame.players.HumanPlayerFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 

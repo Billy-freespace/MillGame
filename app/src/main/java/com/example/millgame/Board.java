@@ -3,7 +3,6 @@ package com.example.millgame;
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NoEmptyPosition;
-import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.pieces.PieceColor;
 
 import java.util.ArrayList;
