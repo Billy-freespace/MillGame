@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class PieceRadar {
-    private HashMap<CardinalDirection, List<Position>> positions;
+    private HashMap<CardinalDirection, ArrayList<Position>> positions;
     private Board board;
     PieceRadar(Board board){
         this.board = board;
-        positions = new HashMap<CardinalDirection, List<Position>>();
+        positions = new HashMap<CardinalDirection, ArrayList<Position>>();
     }
 
     public void map(Piece piece){
@@ -25,6 +25,10 @@ public class PieceRadar {
 
     public int getCount(CardinalDirection direction){
         return positions.get(direction).size();
+    }
+
+    public ArrayList<Position> getPositions(CardinalDirection direction){
+        return positions.get(direction);
     }
 
     private ArrayList<Position> mapLine(Piece piece, int variantX, int variantY){

@@ -4,9 +4,12 @@ import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.exceptions.EmptyPositionError;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NotEmptyPosition;
+import com.example.millgame.exceptions.RankedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.logging.Level;
 
 public abstract class Board implements BoardDimension {
     protected Position origin;
@@ -134,5 +137,24 @@ public abstract class Board implements BoardDimension {
 
         HashMap<Integer, Position> inner = positions.get(xLabel);
         inner.put(yLabel, position);
+    }
+
+    /*
+     * Mill inner class
+     */
+    public abstract class Mill {
+        private Set<Piece> pieces;
+
+        public Mill(Set<Piece> pieces) throws RankedException {
+            if(pieces.size() > 3){
+                throw new RankedException("Invalid number positions to form a mill", Level.WARNING);
+            }
+
+            this.pieces = pieces;
+        }
+
+        public abstract boolean isValid(Set<Piece> pieces);
+        public void addPosition(Piece piece) { pieces.add(piece); }
+        public boolean inMill (Piece piece) { return pieces.contains(piece); }
     }
 }
