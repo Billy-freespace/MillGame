@@ -1,7 +1,6 @@
 package com.example.millgame;
 
 import com.example.millgame.boards.BoardPanel;
-import com.example.millgame.gameObjects.Constants;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.panels.*;
 

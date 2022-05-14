@@ -15,9 +15,9 @@ interface PositionEventAction{
 }
 
 public class Position extends JButton implements PositionEventAction, ObjectIcon {
-    private static final ImageIcon NORMAL_ICON = new ImageIcon("src/main/resources/textures/nmm_point-normal.png");
-    private static final ImageIcon PRESSED_ICON = new ImageIcon("src/main/resources/textures/nmm_point-pressed.png");
-    private static final ImageIcon ROLLOVER_ICON = new ImageIcon("src/main/resources/textures/nmm_point-hover.png");
+    private static final ImageIcon NORMAL_ICON = new ImageIcon("src/main/resources/textures/point-normal.png");
+    private static final ImageIcon PRESSED_ICON = new ImageIcon("src/main/resources/textures/point-pressed.png");
+    private static final ImageIcon ROLLOVER_ICON = new ImageIcon("src/main/resources/textures/point-hover.png");
 
     private char xLabel;
     private int yLabel;

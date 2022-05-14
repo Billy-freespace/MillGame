@@ -78,21 +78,27 @@ public abstract class Player {
     }
 
     public void movePiece(Piece piece, char x, int y) throws RankedException{ // sprint 2 - RECHECK
+        /*
         Position position = piece.getPosition();
         board.removePiece(position);
         board.placePiece(piece, x, y);
+         */
     }
 
     public void movePiece(Piece piece, Position position) throws RankedException{ // sprint 2 - RECHECK
+/*
         char xLabel = position.getXLabel();
         int yLabel = position.getYLabel();
 
         movePiece(piece, xLabel, yLabel);
+ */
     }
     public void removePiece(Piece piece){ // sprint 2 - RECHECK
+/*
         Position position = piece.getPosition();
         board.removePiece(position);
         pieces.remove(piece);
+ */
     }
     public List<Mill> getMills(){ return null; } //sprint 2
     public Piece getPiece(char x, char y) throws InvalidPositionCoordinate {
