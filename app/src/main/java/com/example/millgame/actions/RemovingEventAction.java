@@ -28,7 +28,7 @@ public class RemovingEventAction extends EventAction {
         try {
             Player opponent = game.getOpponentPlayer();
             opponent.removePiece(position);
-            
+
         } catch (Exception error){
             RankedException exception = new RankedException(error, Level.WARNING);
             TraceLogger.log(exception, RemovingEventAction.class);
