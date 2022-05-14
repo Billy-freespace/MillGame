@@ -3,15 +3,15 @@ package com.example.millgame;
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class NineMMBoardBuildTest {
     private static NineMMBoard board;
 
-    @BeforeEach
-    static void setUp(){
+    @BeforeAll
+    public static void initBoard(){
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
         board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
     }

@@ -35,7 +35,7 @@ public class RemovingEventAction extends EventAction {
                 // REDRAW GAME BOARD
             }
         } catch (Exception error){
-            RankedException exception = new RankedException(Level.WARNING, error);
+            RankedException exception = new RankedException(error, Level.WARNING);
             TraceLogger.log(exception, RemovingEventAction.class);
         }
     }

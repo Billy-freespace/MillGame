@@ -17,7 +17,7 @@ public class TurnIterator extends CircularIterator<Player>{
             TurnIterator itr = (TurnIterator) this.clone();
             opponent = itr.next();
         }catch (CloneNotSupportedException error){
-            RankedException exception = new RankedException(Level.SEVERE, error);
+            RankedException exception = new RankedException(error, Level.SEVERE);
             TraceLogger.log(exception, TurnIterator.class);
         }
 

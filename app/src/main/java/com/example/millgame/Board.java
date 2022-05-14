@@ -1,8 +1,9 @@
 package com.example.millgame;
 
 import com.example.millgame.MillGame.GameVariant;
+import com.example.millgame.exceptions.EmptyPositionError;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
-import com.example.millgame.exceptions.NoEmptyPosition;
+import com.example.millgame.exceptions.NotEmptyPosition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +43,7 @@ public abstract class Board implements BoardDimension {
         return emptyPositions;
     }
     public abstract ArrayList<Position> getPossibleMovements(char xLabel, int yLabel);
-    public void placePiece(Piece piece, char xLabel, int yLabel) throws NoEmptyPosition, InvalidPositionCoordinate {
+    public void placePiece(Piece piece, char xLabel, int yLabel) throws NotEmptyPosition, InvalidPositionCoordinate {
         Position position = null;
         
         position = this.getPosition(xLabel, yLabel);
@@ -53,16 +54,22 @@ public abstract class Board implements BoardDimension {
             /*
              * RAISE AN EXCEPTION, BECAUSE POSITION (xLabel, yLabel) IS NOT EMPTY
              */
-            throw new NoEmptyPosition(xLabel, yLabel);
+            throw new NotEmptyPosition(xLabel, yLabel);
         }
         position.setPiece(piece);
         piece.setPosition(position);
     }
 
-    public void removePiece(char xLabel, int yLabel) throws InvalidPositionCoordinate{
-        /*
-         * SPRINT 2
-         */
+    public void removePiece(char xLabel, int yLabel) throws InvalidPositionCoordinate, EmptyPositionError{
+        Position position = getPosition(xLabel, yLabel);
+
+        Piece piece = position.getPiece();
+        if(piece == null){
+            throw new EmptyPositionError(position);
+        }
+
+        piece.setPosition(null);
+        position.setPiece(null);
     }
 
 

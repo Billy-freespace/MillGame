@@ -14,7 +14,7 @@ public class TwelveMMBoardBuildTest {
     private static TwelveMMBoard board;
 
     @BeforeAll
-    static void setUp(){
+    public static void initBoard(){
         MillGame.GameVariant variant = MillGame.GameVariant.TWELVE_MEN_MORRIS;
         board = (TwelveMMBoard) BoardCreatorDirector.makeMMBoard(variant);
     }

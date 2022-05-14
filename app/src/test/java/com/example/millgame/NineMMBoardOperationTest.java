@@ -2,8 +2,9 @@ package com.example.millgame;
 
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
+import com.example.millgame.exceptions.EmptyPositionError;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
-import com.example.millgame.exceptions.NoEmptyPosition;
+import com.example.millgame.exceptions.NotEmptyPosition;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.pieces.PieceFactory;
@@ -23,7 +24,7 @@ public class NineMMBoardOperationTest {
     }
 
     @Test
-    public void placePieceTest() throws InvalidPositionCoordinate, NoEmptyPosition{
+    public void placePieceTest() throws InvalidPositionCoordinate, NotEmptyPosition {
         /*
          * Test for AC1.2
          */
@@ -47,7 +48,7 @@ public class NineMMBoardOperationTest {
     }
 
     @Test
-    public void getPieceTest() throws InvalidPositionCoordinate, NoEmptyPosition {
+    public void getPieceTest() throws InvalidPositionCoordinate, NotEmptyPosition {
         /*
          * Test for AC1.4
          */
@@ -87,15 +88,18 @@ public class NineMMBoardOperationTest {
         char xLabel = 'a';
         int yLabel = 1;
 
+        // place a piece on origin position
         Piece piece = PieceFactory.create(PieceColor.WHITE);
         board.placePiece(piece, xLabel, yLabel);
-
         Position origin = board.getOrigin();
         assertEquals(piece, origin.getPiece());
 
+        // remove placed piece on origin position
         board.removePiece(xLabel, yLabel);
         origin = board.getOrigin();
+
         assertNull(origin.getPiece());
+        assertNull(piece.getPosition());
     }
 
     @Test
@@ -103,6 +107,14 @@ public class NineMMBoardOperationTest {
         /*
          * Test for AC1.7
          */
+
+        char xLabel = 'a';
+        int yLabel = 1;
+
+        EmptyPositionError thrown = assertThrows(
+                EmptyPositionError.class,
+                () -> board.removePiece(xLabel, yLabel));
+        assertEquals(EmptyPositionError.getErrorMessage(xLabel, yLabel), thrown.getMessage());
     }
 
     @Test
@@ -110,5 +122,13 @@ public class NineMMBoardOperationTest {
         /*
          * Test for AC1.8
          */
+
+        char xLabel = 'a';
+        int yLabel = -1;
+
+        InvalidPositionCoordinate thrown = assertThrows(
+                InvalidPositionCoordinate.class,
+                () -> board.removePiece(xLabel, yLabel));
+        assertEquals(InvalidPositionCoordinate.getErrorMessage(xLabel, yLabel), thrown.getMessage());
     }
 }

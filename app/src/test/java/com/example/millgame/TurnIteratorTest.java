@@ -1,5 +1,6 @@
 package com.example.millgame;
 
+import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.players.PlayerFactory;
 import com.example.millgame.players.PlayerType;
@@ -20,7 +21,7 @@ public class TurnIteratorTest {
 
     @BeforeEach
     public void initTurnIterator(){
-        Board board = null;
+        Board board = BoardCreatorDirector.makeMMBoard(MillGame.GameVariant.NINE_MEN_MORRIS);
         player0 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
         player1 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.BLACK, board);
 
