@@ -3,8 +3,6 @@ package com.example.millgame;
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NoEmptyPosition;
-import com.example.millgame.exceptions.RankedException;
-import com.example.millgame.pieces.PieceColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,21 +11,35 @@ public abstract class Board implements BoardDimension {
     protected Position origin;
     protected HashMap<Character, HashMap<Integer, Position>> positions;
     public final GameVariant variant;
-    protected HashMap<PieceColor, ArrayList<Mill>> mills;
+    //protected HashMap<PieceColor, ArrayList<Mill>> mills;
 
     public Board (GameVariant variant) {
         this.variant = variant;
         this.positions = new HashMap<Character, HashMap<Integer, Position>>();
         this.origin = null;
-
+/*
         mills =  new HashMap<PieceColor, ArrayList<Mill>>();
         mills.put(PieceColor.BLACK, new ArrayList<Mill>());
         mills.put(PieceColor.WHITE, new ArrayList<Mill>());
-
+*/
     }
 
     public ArrayList<Position> getEmptyPositions(){
-        return null;
+        ArrayList<Position> emptyPositions = new ArrayList<Position>();
+        Position position;
+
+        for(Character x : positions.keySet()){
+            HashMap<Integer, Position> inner = positions.get(x);
+            for(Integer y : inner.keySet()){
+                position = inner.get(y);
+
+                if(!position.hasPiece()){
+                    emptyPositions.add(position);
+                }
+            }
+        }
+
+        return emptyPositions;
     }
     public abstract ArrayList<Position> getPossibleMovements(char xLabel, int yLabel);
     public void placePiece(Piece piece, char xLabel, int yLabel) throws NoEmptyPosition, InvalidPositionCoordinate {
@@ -48,22 +60,18 @@ public abstract class Board implements BoardDimension {
     }
 
     public void removePiece(char xLabel, int yLabel) throws InvalidPositionCoordinate{
-        Position position = this.getPosition(xLabel, yLabel);
-        this.removePiece(position);
+        /*
+         * SPRINT 2
+         */
     }
 
-    public void removePiece(Position position){
-        Piece piece = position.getPiece();
-        piece.setPosition(null);
-        position.setPiece(null);
-    };
 
     public void removeMarks(){
         // ITERATE OVER ALL POSITIONS AND SET mark to false
     }
 
     public ArrayList<Mill> searchMills(){
-        // IMPLEMENT ME (sprint 2)
+        // sprint 2
         return null;
     }
 

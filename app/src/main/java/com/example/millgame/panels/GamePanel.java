@@ -1,10 +1,7 @@
 package com.example.millgame.panels;
 
-import com.example.millgame.Board;
 import com.example.millgame.boards.BoardPanel;
-import com.example.millgame.gameObjects.Constants;
 import com.example.millgame.MillGame;
-import com.example.millgame.graphicsAndSounds.Assets;
 
 import javax.swing.JPanel;
 import java.awt.*;
