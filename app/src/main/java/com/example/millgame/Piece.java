@@ -41,4 +41,10 @@ public abstract class Piece implements ObjectIcon {
     abstract public ImageIcon getPressedIcon();
 
     abstract public ImageIcon getRolloverIcon();
+
+    @Override
+    public String toString() {
+        String out = "Piece(color=" + color + ")";
+        return out;
+    }
 }
