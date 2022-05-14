@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class NineMMBoardBuildTest {
-    private NineMMBoard board;
+    private static NineMMBoard board;
 
     @BeforeEach
-    public void createNineMMBoard(){
+    static void setUp(){
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
         board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
     }
@@ -36,7 +36,7 @@ public class NineMMBoardBuildTest {
     @Test
     public void boardVariantTest() {
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
-        
+
         assertEquals(variant, board.getVariant());
     }
 
