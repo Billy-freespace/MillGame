@@ -14,6 +14,7 @@ public class GameOperationTest {
         MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
 
         game = new MillGameBuilder().build(variant, mode);
+        game.nextTurn(); // init player turn
         board = game.getBoard();
     }
 
@@ -33,7 +34,7 @@ public class GameOperationTest {
     /*
      * Tests for history 4 (Eliminar pieza del oponente)
      */
-    
+
     @Test
     public void SOMETHING_H4(){
         /*

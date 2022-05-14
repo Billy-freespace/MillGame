@@ -1,29 +1,52 @@
 package com.example.millgame;
 
 import com.example.millgame.boards.BoardCreatorDirector;
+import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.boards.TwelveMMBoard;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TwelveMMBoardBuildTest {
 
-    @Test
-    public void createBoardTest(){
+    private static TwelveMMBoard board;
+
+    @BeforeAll
+    void setUp(){
         MillGame.GameVariant variant = MillGame.GameVariant.TWELVE_MEN_MORRIS;
-        int TWELVE_MEM_MORRIS_PIECES = 24;
+        board = (TwelveMMBoard) BoardCreatorDirector.makeMMBoard(variant);
+    }
 
-        char originXLabel = 'a';
-        int originYLabel = 1;
+    @Test
+    public void numberPositionsTest() {
+        int numberPieces = 24;
 
-        TwelveMMBoard board = (TwelveMMBoard) BoardCreatorDirector.makeMMBoard(variant);
+        assertEquals(numberPieces, board.countPositions());
+    }
 
-        assertEquals(variant, board.getVariant());
-        assertEquals(TWELVE_MEM_MORRIS_PIECES, board.countPositions());
-
+    @Test
+    public void originPositionTest() {
+        char xLabel = 'a';
+        int yLabel = 1;
         Position origin = board.getOrigin();
 
-        assertEquals(originXLabel, origin.getXLabel());
-        assertEquals(originYLabel, origin.getYLabel());
+        assertEquals(xLabel, origin.getXLabel());
+        assertEquals(yLabel, origin.getYLabel());
+    }
+
+    @Test
+    public void boardVariantTest() {
+        MillGame.GameVariant variant = MillGame.GameVariant.TWELVE_MEN_MORRIS;
+
+        assertEquals(variant, board.getVariant());
+    }
+
+    @Test
+    public void numberPlayerPiecesTest(){
+        int playerPieces = 12;
+
+        assertEquals(playerPieces, board.getNumberPlayerPieces());
     }
 }
