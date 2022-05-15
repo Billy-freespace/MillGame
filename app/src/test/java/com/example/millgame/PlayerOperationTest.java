@@ -31,31 +31,86 @@ class PlayerOperationTest {
     }
 
     @Test
-    public void placePieceTest(){
+    public void placePieceTest() throws NoEmptyPosition, InvalidPositionCoordinate{
         /*
          * Test for AC3.1
          */
+        Position origin = board.getOrigin();
+        Piece positionPiece = origin.getPiece();
+
+        //CHECK  EMPTY POSITION
+        assertEquals(null, positionPiece);
+
+        try {
+
+            player.placePiece(origin.getXLabel(), origin.getYLabel());
+
+        } catch (NoPiecesError e){
+            // DONOTHING
+        }
+
+        //CHECK IF NO EMPTY POSITION
+        positionPiece = origin.getPiece();
+        assertNotEquals(null, positionPiece);
+
+        //CHECK POSITION PIECE
+        assertEquals(origin, positionPiece.getPosition());
     }
 
     @Test
-    public void placePieceOnOccupiedPositionTest(){
+    public void placePieceOnOccupiedPositionTest() throws InvalidPositionCoordinate{
         /*
          * Test for AC3.2
          */
+        try {
+            player.placePiece('a', 7);
+            player.placePiece('b', 6);
+        } catch (NoPiecesError | NoEmptyPosition e){
+            // DONOTHING
+        }
+
+        assertThrows(NoEmptyPosition.class, () -> {
+            player.placePiece('a', 7);
+        });
     }
 
     @Test
-    public void placePieceOnInvalidPositionTest(){
+    public void placePieceOnInvalidPositionTest() throws NoEmptyPosition, InvalidPositionCoordinate{
         /*
          * Test for AC3.3
          */
+        char xLabel = 'z';
+        int yLabel = 100;
+
+        assertThrows(InvalidPositionCoordinate.class, () -> {
+            player.placePiece(xLabel, yLabel);
+        });
+
     }
 
     @Test
-    public void noPositioningPiecesTest(){
+    public void noPositioningPiecesTest() throws NoEmptyPosition, InvalidPositionCoordinate{
         /*
          * Test for AC3.4
          */
+        int j = 1;
+        try {
+            // 3 fichas
+            for (char i = 'a'; i <= 'g';  i++, j++) {
+                if (i == 'd') continue;
+                player.placePiece(i, j);
+            }
+
+            player.placePiece('a', 7);
+            player.placePiece('b', 6);
+            player.placePiece('c', 5);
+        } catch (NoPiecesError e){
+            // DONOTHING
+        }
+
+        assertThrows(NoPiecesError.class, () -> {
+            player.placePiece('e', 3);;
+        });
     }
 
     /*
