@@ -30,4 +30,8 @@ public class TurnIterator extends CircularIterator<Player>{
         TraceLogger.log(Level.INFO, "Active turn: " + player);
         return player;
     }
+
+    public void addPlayer(Player player){
+        addIterationState(player);
+    }
 }
