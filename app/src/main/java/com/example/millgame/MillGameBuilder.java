@@ -12,8 +12,7 @@ import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.players.PlayerLevel;
 import com.example.millgame.players.PlayerType;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.logging.Level;
 
 public class MillGameBuilder {
@@ -22,11 +21,9 @@ public class MillGameBuilder {
     private BoardPanel boardPanel;
     private GameMode mode;
     private PlayerLevel robotLevel = PlayerLevel.NOOB;
-    private List<Player> players;
 
     public void reset(){
         game = new MillGame();
-        players = new ArrayList<Player>(2);
         board = null;
         boardPanel = null;
         TraceLogger.log(Level.INFO, "Reset MillGame, Players and Board objects", MillGameBuilder.class);

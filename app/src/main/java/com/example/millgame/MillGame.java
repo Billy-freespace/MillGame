@@ -22,7 +22,7 @@ public class MillGame {
     private GameStageIterator stageIterator;
 
     public MillGame(){ // useless constructor, to create a MillGame object use MillGameBuilder class
-        turniter = null;
+        turniter = new TurnIterator();
         players = new ArrayList<Player>();
         board = null;
         stageIterator = GameStageIterator.init();
@@ -48,7 +48,7 @@ public class MillGame {
 
         for(Player player : turniter.values()){
             if(player.getColor() == color){
-                throw new RankedException("Color " + color + " was already taken", Level.WARNING); // NOTE: write an exception for handle this case
+                throw new RankedException("Color " + color + " was already taken by a player", Level.WARNING); // NOTE: write an exception for handle this case
             }
         }
 
