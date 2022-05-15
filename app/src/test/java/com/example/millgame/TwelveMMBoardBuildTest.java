@@ -1,11 +1,9 @@
 package com.example.millgame;
 
 import com.example.millgame.boards.BoardCreatorDirector;
-import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.boards.TwelveMMBoard;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +21,7 @@ public class TwelveMMBoardBuildTest {
     public void numberPositionsTest() {
         int numberPieces = 24;
 
-        assertEquals(numberPieces, board.countPositions());
+        assertEquals(numberPieces, board.getNumberPositions());
     }
 
     @Test

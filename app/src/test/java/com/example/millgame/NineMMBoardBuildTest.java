@@ -20,7 +20,7 @@ public class NineMMBoardBuildTest {
     public void numberPositionsTest() {
         int numberPieces = 24;
 
-        assertEquals(numberPieces, board.countPositions());
+        assertEquals(numberPieces, board.getNumberPositions());
     }
 
     @Test
