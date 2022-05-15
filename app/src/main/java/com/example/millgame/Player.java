@@ -119,7 +119,7 @@ public abstract class Player {
     }
 
 
-    public List<Mill> getMills(){ return null; } //sprint 2
+    //public List<Mill> getMills(){ return null; } //sprint 2
     public Piece getPiece(char x, char y) throws InvalidPositionCoordinate {
         Position position = board.getPosition(x, y);
         Piece piece = null;
