@@ -67,6 +67,7 @@ public class MillGameBuilder {
 
         // initialize event action
         game.changeEventAction(new PositioningEventAction());
+        game.initTurn(false);
 
         return game;
     }

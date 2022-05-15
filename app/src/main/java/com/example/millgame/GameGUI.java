@@ -3,6 +3,7 @@ package com.example.millgame;
 import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.misc.Constants;
 import com.example.millgame.panels.*;
 
 import javax.swing.*;
@@ -73,5 +74,6 @@ public class GameGUI extends JFrame {
         Container mainPanel = this.getContentPane();
         TraceLogger.log(Level.FINE, "Adding controlPanel in Frame Panel");
         mainPanel.add(controlPanel, BorderLayout.CENTER);
+        setVisible(true);
     }
 }

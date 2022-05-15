@@ -3,6 +3,7 @@ package com.example.millgame;
 import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.misc.Constants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,18 +20,19 @@ public class GameGUIMinimal extends JFrame {
 
         TraceLogger.log(Level.INFO, "Initializing GameGUIMinimal");
         setTitle(Constants.title);
-        getContentPane().setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+        Container mainPanel = getContentPane();
+        mainPanel.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         MillGame game = new MillGameBuilder().build(variant, mode);
-        game.nextTurn(); // init game turn
 
         BoardPanel boardPanel = game.getBoardPanel();
         boardPanel.setBackground(new Color(128, 64, 32));
 
-        Container mainPanel = this.getContentPane();
+
         mainPanel.add(boardPanel, BorderLayout.CENTER);
+        setVisible(true);
     }
 }

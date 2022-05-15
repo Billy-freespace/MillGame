@@ -29,6 +29,11 @@ public class MillGame {
         eventAction = null;
     }
 
+    public void initTurn(boolean random){
+        turniter.reset(random);
+        turniter.next();
+    }
+
     public GameStage nextStage(){ return stageIterator.next(); }
     public GameStage getStage(){ return  stageIterator.getIterationState(); }
     public Player nextTurn(){ return turniter.next(); }

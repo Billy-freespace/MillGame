@@ -1,4 +1,4 @@
-package com.example.millgame;
+package com.example.millgame.boards;
 
 public interface BoardDimension {
     public char maxXLabel();
