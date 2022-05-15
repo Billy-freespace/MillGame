@@ -43,8 +43,6 @@ public class MillGame {
     public Player getOpponentPlayer(){ return turniter.getOpponent(); }
     public boolean isGameOver(){ return false; }
 
-
-    public void setTurnIterator(TurnIterator itr){ turniter = itr; }
     public void setPlayers(List<Player> players){ this.players = players; }
     public void addPlayer(PlayerType playerType, PieceColor color) throws RankedException{
         if(turniter.size() > 2){

@@ -3,7 +3,6 @@ package com.example.millgame;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.logging.TraceMessage;
-import com.example.millgame.logging.TraceMode;
 import com.example.millgame.misc.CmdParser;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;

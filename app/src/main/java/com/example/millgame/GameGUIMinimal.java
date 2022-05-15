@@ -17,7 +17,31 @@ public class GameGUIMinimal extends JFrame {
     public GameGUIMinimal(MillGame.GameVariant variant,
                           MillGame.GameMode mode) throws RankedException { // NOTE: handle this exception (ASAP)
         super();
+        frameConfig();
 
+        MillGame game = new MillGameBuilder().build(variant, mode);
+
+        BoardPanel boardPanel = game.getBoardPanel();
+        boardPanel.setBackground(new Color(128, 64, 32));
+
+        Container mainPanel = getContentPane();
+        mainPanel.add(boardPanel, BorderLayout.CENTER);
+        setVisible(true);
+    }
+
+    public GameGUIMinimal(MillGame game){
+        super();
+        frameConfig();
+
+        BoardPanel boardPanel = game.getBoardPanel();
+        boardPanel.setBackground(new Color(128, 64, 32));
+
+        Container mainPanel = getContentPane();
+        mainPanel.add(boardPanel, BorderLayout.CENTER);
+        setVisible(true);
+    }
+
+    private void frameConfig(){
         TraceLogger.log(Level.INFO, "Initializing GameGUIMinimal");
         setTitle(Constants.title);
         Container mainPanel = getContentPane();
@@ -25,14 +49,5 @@ public class GameGUIMinimal extends JFrame {
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        MillGame game = new MillGameBuilder().build(variant, mode);
-
-        BoardPanel boardPanel = game.getBoardPanel();
-        boardPanel.setBackground(new Color(128, 64, 32));
-
-
-        mainPanel.add(boardPanel, BorderLayout.CENTER);
-        setVisible(true);
     }
 }

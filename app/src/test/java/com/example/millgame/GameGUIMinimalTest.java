@@ -3,16 +3,41 @@ package com.example.millgame;
 import com.example.millgame.exceptions.RankedException;
 import org.junit.jupiter.api.Test;
 
-public class BoardPanelTest {
+public class GameGUIMinimalTest {
     @Test
-    public void nineMMBoardPanelTest() throws RankedException {
+    public void emptyNineMMBoardTest() throws RankedException {
         MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
-        GameGUIMinimal game = new GameGUIMinimal(variant, mode);
-        game.setVisible(true);
+        GameGUIMinimal gameGUI = new GameGUIMinimal(variant, mode);
 
         try {
-            Thread.sleep(2500);
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void initializedNineMMBoardTest() throws RankedException {
+        MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
+        MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
+        MillGame game = new MillGameBuilder().build(variant, mode);
+
+        // initialization of game
+        Player player = game.getActivePlayer();
+        player.placePiece('a', 1);
+
+        game.nextTurn();
+
+        player = game.getActivePlayer();
+        player.placePiece('b', 2);
+
+        game.nextTurn();
+
+        GameGUIMinimal gameGUI = new GameGUIMinimal(game);
+
+        try {
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -23,7 +48,6 @@ public class BoardPanelTest {
         MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
         MillGame.GameVariant variant = MillGame.GameVariant.TWELVE_MEN_MORRIS;
         GameGUIMinimal game = new GameGUIMinimal(variant, mode);
-        game.setVisible(true);
 
         try {
             Thread.sleep(2000);
@@ -37,7 +61,6 @@ public class BoardPanelTest {
         MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
         MillGame.GameVariant variant = MillGame.GameVariant.SIX_MEN_MORRIS;
         GameGUIMinimal game = new GameGUIMinimal(variant, mode);
-        game.setVisible(true);
 
         try {
             Thread.sleep(2000);
