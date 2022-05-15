@@ -1,9 +1,6 @@
 package com.example.millgame;
 
-import com.example.millgame.exceptions.InvalidPositionCoordinate;
-import com.example.millgame.exceptions.NotEmptyPosition;
-import com.example.millgame.exceptions.NoPiecesError;
-import com.example.millgame.exceptions.RankedException;
+import com.example.millgame.exceptions.*;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.players.PlayerType;
 import com.example.millgame.pieces.PieceColor;
@@ -48,7 +45,8 @@ public abstract class Player {
 
     public int getPlacedPieces(){ return placedPieces; }
 
-    public void placePiece(char x, int y) throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
+    public void placePiece(char x, int y)
+            throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
         //System.out.println(toString());
@@ -68,7 +66,8 @@ public abstract class Player {
         TraceLogger.log(Level.INFO, this + " placed a piece in (" + x + ", " + y + ") position");
     }
 
-    public void placePiece(Position position) throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
+    public void placePiece(Position position)
+            throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
         char xLabel = position.getXLabel();

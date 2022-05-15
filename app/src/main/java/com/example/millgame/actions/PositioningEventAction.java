@@ -1,11 +1,13 @@
 package com.example.millgame.actions;
 
+import com.example.millgame.Board;
 import com.example.millgame.Player;
 import com.example.millgame.Position;
 import com.example.millgame.exceptions.*;
 import com.example.millgame.logging.TraceLogger;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 import java.util.logging.Level;
 
 public class PositioningEventAction extends EventAction {
@@ -21,8 +23,10 @@ public class PositioningEventAction extends EventAction {
 
 
             // CHECK IF A MILL WAS FORMED
-            if(false){ // sprint 2 - verify if a mill was formed
+            List<Board.Mill> mills = game.getMills(position.getPiece());
+            if(mills.size() > 0){
                 // HIGHLIGHT POSSIBLE POSITIONS TO DELETE
+                TraceLogger.log(Level.INFO, "A mill was formed: " + mills);
                 game.changeEventAction(new RemovingEventAction());
             } else {
                 Player opponent = game.getOpponentPlayer();
@@ -41,6 +45,8 @@ public class PositioningEventAction extends EventAction {
             // the player was positioned all their pieces, so now it will move them
             TraceLogger.log(error, PositioningEventAction.class);
             game.changeEventAction(new MovingEventAction());
+        } catch (RankedException error){
+            TraceLogger.log(error);
         }
     }
 }

@@ -2,10 +2,8 @@ package com.example.millgame;
 
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.boards.BoardDimension;
-import com.example.millgame.exceptions.EmptyPositionError;
-import com.example.millgame.exceptions.InvalidPositionCoordinate;
-import com.example.millgame.exceptions.NotEmptyPosition;
-import com.example.millgame.exceptions.RankedException;
+import com.example.millgame.boards.NineMMBoard;
+import com.example.millgame.exceptions.*;
 import com.example.millgame.pieces.PieceColor;
 
 import java.util.*;
@@ -62,7 +60,8 @@ public abstract class Board implements BoardDimension {
         return possibleMovements;
     }
 
-    public void placePiece(Piece piece, char xLabel, int yLabel) throws NotEmptyPosition, InvalidPositionCoordinate {
+    public void placePiece(Piece piece, char xLabel, int yLabel)
+            throws NotEmptyPosition, InvalidPositionCoordinate {
         Position position = null;
         
         position = this.getPosition(xLabel, yLabel);
@@ -74,6 +73,10 @@ public abstract class Board implements BoardDimension {
         }
         position.setPiece(piece);
         piece.setPosition(position);
+
+        List<Mill> pieceMills = getMills(piece);
+        List<Mill> colorMills = mills.get(piece.getColor());
+        colorMills.addAll(pieceMills);
     }
 
     public void removePiece(char xLabel, int yLabel) throws InvalidPositionCoordinate, EmptyPositionError{
@@ -82,6 +85,15 @@ public abstract class Board implements BoardDimension {
         Piece piece = position.getPiece();
         if(piece == null){
             throw new EmptyPositionError(position);
+        }
+
+        // remove all mills where piece belongs
+        List<Mill> colorMills = mills.get(piece.getColor());
+        ArrayList<Mill> colorMillsCopy = new ArrayList<Mill>(); // making a copy
+        for(Mill mill : colorMillsCopy){
+            if(mill.hasPiece(piece)){
+                colorMills.remove(mill);
+            }
         }
 
         piece.setPosition(null);
@@ -143,22 +155,26 @@ public abstract class Board implements BoardDimension {
         inner.put(yLabel, position);
     }
 
+    public abstract Mill createMill(List<Piece> pieces);
+
     /*
      * Mill inner class
      */
     public abstract class Mill {
-        private Set<Piece> pieces;
+        private List<Piece> pieces;
 
-        public Mill(Set<Piece> pieces) throws RankedException {
+        public Mill(List<Piece> pieces) throws InvalidMill, InvalidMillSize {
             if(pieces.size() != 3){
-                throw new RankedException("Invalid number of pieces to form a mill", Level.WARNING);
+                throw  new InvalidMillSize(pieces);
             }
-            isValid(pieces);
+            if(!isValid(pieces)){
+                throw new InvalidMill(pieces);
+            }
             this.pieces = pieces;
         }
 
-        public abstract boolean isValid(Set<Piece> pieces);
+        protected abstract boolean isValid(List<Piece> pieces);
         //public void addPiece(Piece piece) { pieces.add(piece); }
-        public boolean inMill (Piece piece) { return pieces.contains(piece); }
+        public boolean hasPiece (Piece piece) { return pieces.contains(piece); }
     }
 }
