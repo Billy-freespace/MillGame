@@ -14,6 +14,7 @@ import net.sourceforge.argparse4j.inf.Namespace;
 public class App {
     public static void main(String[] args){
         Runnable runner = new Runnable(){
+            @Override
             public void run(){
                 ArgumentParser parser = ArgumentParsers.newFor("MillGame").build()
                         .defaultHelp(true)
@@ -45,7 +46,6 @@ public class App {
 
                 try{
                     Namespace ns = parser.parseArgs(args);
-                    System.out.println(ns.toString());
 
                     String logfile = ns.getString("logfile");
                     boolean debug = ns.getBoolean("debug");
@@ -64,13 +64,9 @@ public class App {
                             break;
                     }
 
-                    System.out.println("TraceMode: " + traceMode);
-
                     String name = ns.getString("traceLoggerName");
                     TraceLogger traceLogger = TraceLogger.initTraceLogger(name, logfile, debug);
-                    //System.out.println("(TraceLogger init) TraceMode: " +traceLogger.getTraceMode());
                     traceLogger.setTraceMode(traceMode);
-                    //System.out.println("(TraceLogger after) TraceMode: " +traceLogger.getTraceMode());
 
                     GameGUI gameGUI = new GameGUI();
                     gameGUI.setTraceLogger(traceLogger);

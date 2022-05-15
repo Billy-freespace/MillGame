@@ -8,18 +8,19 @@ import com.example.millgame.exceptions.RankedException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
 public abstract class Board implements BoardDimension {
     protected Position origin;
-    protected HashMap<Character, HashMap<Integer, Position>> positions;
+    protected Map<Character, Map<Integer, Position>> positions;
     public final GameVariant variant;
     //protected HashMap<PieceColor, ArrayList<Mill>> mills;
 
     public Board (GameVariant variant) {
         this.variant = variant;
-        this.positions = new HashMap<Character, HashMap<Integer, Position>>();
+        this.positions = new HashMap<Character, Map<Integer, Position>>();
         this.origin = null;
 /*
         mills =  new HashMap<PieceColor, ArrayList<Mill>>();
@@ -33,7 +34,7 @@ public abstract class Board implements BoardDimension {
         Position position;
 
         for(Character x : positions.keySet()){
-            HashMap<Integer, Position> inner = positions.get(x);
+            Map<Integer, Position> inner = positions.get(x);
             for(Integer y : inner.keySet()){
                 position = inner.get(y);
 
@@ -54,9 +55,6 @@ public abstract class Board implements BoardDimension {
         Piece positionPiece = position.getPiece();
 
         if(positionPiece != null) {
-            /*
-             * RAISE AN EXCEPTION, BECAUSE POSITION (xLabel, yLabel) IS NOT EMPTY
-             */
             throw new NotEmptyPosition(xLabel, yLabel);
         }
         position.setPiece(piece);
@@ -97,7 +95,7 @@ public abstract class Board implements BoardDimension {
             throw new InvalidPositionCoordinate(xLabel, yLabel);
         }
 
-        HashMap<Integer, Position> inner = positions.get(xLabel);
+        Map<Integer, Position> inner = positions.get(xLabel);
         if(!inner.containsKey(yLabel)){
             throw new InvalidPositionCoordinate(xLabel, yLabel);
         }
@@ -107,7 +105,7 @@ public abstract class Board implements BoardDimension {
 
     public int countPositions(){
         int count =0;
-        for(HashMap<Integer, Position> inner : positions.values()){
+        for(Map<Integer, Position> inner : positions.values()){
             count += inner.size();
         }
 
@@ -118,7 +116,7 @@ public abstract class Board implements BoardDimension {
     public Position getOrigin(){ return origin; }
     public void unmark(){
         for(Character xLabel : positions.keySet()){
-            HashMap<Integer, Position> inner = positions.get(xLabel);
+            Map<Integer, Position> inner = positions.get(xLabel);
             for(Integer yLabel : inner.keySet()){
                 Position position = inner.get(yLabel);
                 position.mark = false;
@@ -135,7 +133,7 @@ public abstract class Board implements BoardDimension {
             positions.put(xLabel, new HashMap<Integer, Position>());
         }
 
-        HashMap<Integer, Position> inner = positions.get(xLabel);
+        Map<Integer, Position> inner = positions.get(xLabel);
         inner.put(yLabel, position);
     }
 

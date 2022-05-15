@@ -131,6 +131,8 @@ public abstract class Player {
         return piece;
     }
 
+    public PieceColor getColor(){  return pieceColor; }
+
     public boolean hasPiece(Piece piece){ return pieces.contains(piece); }
 
     @Override

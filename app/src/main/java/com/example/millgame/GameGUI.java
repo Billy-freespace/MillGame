@@ -1,6 +1,7 @@
 package com.example.millgame;
 
 import com.example.millgame.boards.BoardPanel;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.panels.*;
 
@@ -12,9 +13,7 @@ public class GameGUI extends JFrame {
     private JPanel controlPanel;
     private GameLayout gameLayout;
 
-    private TraceLogger traceLogger;
-
-    public GameGUI(){
+    public GameGUI() throws RankedException { // NOTE: handle this exception (ASAP)
         super();
         TraceLogger.log(Level.INFO, "Initializing GameGUI");
 
@@ -75,6 +74,4 @@ public class GameGUI extends JFrame {
         TraceLogger.log(Level.FINE, "Adding controlPanel in Frame Panel");
         mainPanel.add(controlPanel, BorderLayout.CENTER);
     }
-
-    public void setTraceLogger(TraceLogger traceLogger){ this.traceLogger = traceLogger; }
 }
