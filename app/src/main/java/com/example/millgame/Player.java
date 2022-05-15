@@ -78,11 +78,15 @@ public abstract class Player {
     }
 
     public void movePiece(Piece piece, char x, int y) throws RankedException{ // sprint 2 - RECHECK
-        /*
+        
+         //CODIGO DE PRUEBA
         Position position = piece.getPosition();
-        board.removePiece(position);
+        board.removePiece(piece);
+        System.out.println("Piexa origen 01: " + piece.getPosition());
         board.placePiece(piece, x, y);
-         */
+        System.out.println("Piexa origen: 02 " + piece.getPosition());
+        //FIN DE PRUEBA
+
     }
 
     public void movePiece(Piece piece, Position position) throws RankedException{ // sprint 2 - RECHECK
@@ -93,12 +97,12 @@ public abstract class Player {
         movePiece(piece, xLabel, yLabel);
  */
     }
-    public void removePiece(Piece piece){ // sprint 2 - RECHECK
-/*
-        Position position = piece.getPosition();
-        board.removePiece(position);
-        pieces.remove(piece);
- */
+    public void removePiece(Piece piece) throws InvalidPositionCoordinate{ // sprint 2 - RECHECK
+
+        /*Position position = piece.getPosition();
+        board.removePiece(piece, position.getXLabel(), position.getYLabel());
+        pieces.remove(piece);*/
+ 
     }
     public List<Mill> getMills(){ return null; } //sprint 2
     public Piece getPiece(char x, char y) throws InvalidPositionCoordinate {

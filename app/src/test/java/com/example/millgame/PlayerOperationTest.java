@@ -26,10 +26,10 @@ class PlayerOperationTest {
     public void createPlayers() {
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
         board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
-
         player = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
     }
 
+    //PLACE TESTS
     @Test
     public void placePieceTest() throws NoEmptyPosition, InvalidPositionCoordinate{
         /*
@@ -112,6 +112,33 @@ class PlayerOperationTest {
             player.placePiece('e', 3);;
         });
     }
+
+    //MOVE TESTS
+    @Test
+    public void movePieceTets() throws RankedException {
+        Position origin = board.getOrigin();
+        //FINAL POSITION
+        char xLabel = 'a'; 
+        int yLabel = 4;
+        Position posFinal = board.getPosition(xLabel, yLabel);
+
+        player.placePiece(origin.getXLabel(), origin.getYLabel());
+
+        Piece positionPiece = origin.getPiece();
+        //CHECK 
+        assertNotEquals(null, positionPiece);
+        assertEquals(origin, positionPiece.getPosition());
+        
+        player.movePiece(positionPiece, xLabel, yLabel);
+        
+        Piece originPiece = origin.getPiece();
+        assertEquals(null, originPiece);
+        assertNotEquals(null, posFinal.getPiece());
+        assertEquals(posFinal, posFinal.getPiece().getPosition());
+
+        //assertNotEquals(origin, positionPiece.getPosition());
+    }
+
 
     /*
     @Test

@@ -59,12 +59,56 @@ public abstract class Board implements BoardDimension {
         piece.setPosition(position);
     }
 
+    //REMOVE-PIECE PARA EL CASO DE MOVER PIEZA
     public void removePiece(char xLabel, int yLabel) throws InvalidPositionCoordinate{
-        /*
-         * SPRINT 2
-         */
+        Position position = null;  
+        position = this.getPosition(xLabel, yLabel);
+        Piece positionPiece = position.getPiece();
+        if(positionPiece == null) {
+            /*
+             * RAISE AN EXCEPTION, BECAUSE POSITION (xLabel, yLabel) IS EMPTY
+             */
+            //
+        }
+        position.setPiece(null);
+        //piece.setPosition(null);
+    }
+    public void removePiece(Position position) throws InvalidPositionCoordinate {
+        char xLabel = position.getXLabel();
+        int yLabel = position.getYLabel();
+        removePiece(xLabel, yLabel);
     }
 
+    //CLASE DE PRUEBA
+    public void removePiece(Piece piece, char xLabel, int yLabel) throws InvalidPositionCoordinate{
+        Position position = null;  
+        position = this.getPosition(xLabel, yLabel);
+        Piece positionPiece = position.getPiece();
+        if(positionPiece == null) {
+            /*
+             * RAISE AN EXCEPTION, BECAUSE POSITION (xLabel, yLabel) IS EMPTY
+             */
+            System.out.println("NO SE PUEDE REMOVER PORQUE NO HAY NADA");
+        }
+        position.setPiece(null);
+        //System.out.println("POSITION: " + position.getPiece());
+        piece.setPosition(null);
+    }
+
+    public void removePiece(Piece piece, Position position) throws InvalidPositionCoordinate {
+        char xLabel = position.getXLabel();
+        int yLabel = position.getYLabel();
+        removePiece(piece, xLabel, yLabel);
+    }
+
+    public void removePiece(Piece piece) throws InvalidPositionCoordinate {
+        Position position = piece.getPosition();
+        char xLabel = position.getXLabel();
+        int yLabel = position.getYLabel();
+        removePiece(piece, xLabel, yLabel);
+    }
+
+    //
 
     public void removeMarks(){
         // ITERATE OVER ALL POSITIONS AND SET mark to false
