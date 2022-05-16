@@ -27,7 +27,12 @@ Run game
 ./gradlew run
 ```
 
-Build game and run tests
+Run tests
+```bash
+./gradlew test
+```
+
+Build game (include **pmd** static analysis)
 ```bash
 ./gradlew build
 ```
