@@ -87,7 +87,7 @@ public  class PieceRadar {
         position.mark = true;
         for(Position neighbour : position.getNeighbours()){
             Piece neighbourPiece = neighbour.getPiece();
-            
+
             variantX = (int) neighbour.getXLabel() - (int) position.getXLabel();
             variantY = neighbour.getYLabel() - position.getYLabel();
 
