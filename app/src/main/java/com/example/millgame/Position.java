@@ -66,6 +66,8 @@ public class Position extends JButton implements PositionEventAction, ObjectIcon
 
     public boolean hasPiece(){ return piece != null ; }
 
+    public boolean hasNeighbour(Position position) { return neighbours.contains(position); }
+
     public char getXLabel(){ return xLabel; }
     public int getYLabel(){ return yLabel; }
 
