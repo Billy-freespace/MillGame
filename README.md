@@ -15,11 +15,24 @@ Mill Game - java
 
 ## Quickstart
 Run game
+* Minimal GUI version (include cli arguments to configure your game)
+```bash
+./gradlew minimal
+
+# To get available game configuration options
+./gradlew minimal --args="-h"
+```
+* Complete GUI version (include panels to configure your game)[STATE: in development]
 ```bash
 ./gradlew run
 ```
 
-Build game and run tests
+Run tests
+```bash
+./gradlew test
+```
+
+Build game (include **pmd** static analysis)
 ```bash
 ./gradlew build
 ```
