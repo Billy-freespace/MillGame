@@ -10,7 +10,9 @@ import com.example.millgame.players.PlayerType;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 public class MillGame {
@@ -34,6 +36,7 @@ public class MillGame {
         turniter.next();
     }
 
+    public int countPieces(PieceColor color) { return board.countPieces(color); }
     public GameStage nextStage(){ return stageIterator.next(); }
     public GameStage getStage(){ return  stageIterator.getIterationState(); }
     public Player nextTurn(){ return turniter.next(); }

@@ -4,6 +4,9 @@ import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.boards.BoardDimension;
 import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.exceptions.*;
+import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.misc.CardinalDirection;
+import com.example.millgame.misc.Direction;
 import com.example.millgame.pieces.PieceColor;
 
 import java.util.*;
@@ -14,7 +17,8 @@ public abstract class Board implements BoardDimension {
     protected Map<Character, Map<Integer, Position>> positions;
     public final GameVariant variant;
     protected Map<PieceColor, List<Mill>> mills;
-    protected Map<PieceColor, Boolean> fly;
+
+    protected PieceRadar radar;
 
     public Board (GameVariant variant) {
         this.variant = variant;
@@ -22,11 +26,9 @@ public abstract class Board implements BoardDimension {
         this.origin = null;
 
         mills =  new HashMap<PieceColor, List<Mill>>();
-        fly = new HashMap<PieceColor, Boolean>();
 
         for(PieceColor color : PieceColor.values()){
             mills.put(color, new ArrayList<Mill>());
-            fly.put(color, false);
         }
     }
 
@@ -46,18 +48,6 @@ public abstract class Board implements BoardDimension {
         }
 
         return emptyPositions;
-    }
-    public List<Position> getPossibleMovements(Piece piece){
-        ArrayList<Position> possibleMovements = new ArrayList<Position>();
-
-        if(fly.get(piece.getColor())){
-            possibleMovements.addAll(getEmptyPositions());
-        } else {
-            Position position = piece.getPosition();
-            possibleMovements.addAll(position.getNeighbours());
-        }
-
-        return possibleMovements;
     }
 
     public void placePiece(Piece piece, char xLabel, int yLabel)
@@ -89,7 +79,7 @@ public abstract class Board implements BoardDimension {
 
         // remove all mills where piece belongs
         List<Mill> colorMills = mills.get(piece.getColor());
-        ArrayList<Mill> colorMillsCopy = new ArrayList<Mill>(); // making a copy
+        ArrayList<Mill> colorMillsCopy = new ArrayList<Mill>(colorMills); // making a copy
         for(Mill mill : colorMillsCopy){
             if(mill.hasPiece(piece)){
                 colorMills.remove(mill);
@@ -119,6 +109,23 @@ public abstract class Board implements BoardDimension {
         }
 
         return inner.get(yLabel);
+    }
+
+    public int countPieces(PieceColor color){
+        int count = 0;
+
+        for(Character x : positions.keySet()){
+            Map<Integer, Position> inner = positions.get(x);
+            for(int y : positions.keySet()){
+                Position position = inner.get(y);
+                Piece piece = position.getPiece();
+                if(piece != null && piece.getColor() == color){
+                    count += 1;
+                }
+            }
+        }
+
+        return count;
     }
 
     public int getNumberPositions(){
@@ -162,11 +169,21 @@ public abstract class Board implements BoardDimension {
      */
     public abstract class Mill {
         private List<Piece> pieces;
+        private PieceColor color;
 
-        public Mill(List<Piece> pieces) throws InvalidMill, InvalidMillSize {
+        public Mill(List<Piece> pieces) throws InvalidMill, InvalidMillSize, InvalidMillColor {
             if(pieces.size() != 3){
                 throw  new InvalidMillSize(pieces);
             }
+
+            color = pieces.get(0).getColor();
+
+            for(Piece piece : pieces){
+                if(piece.getColor() != color){
+                    throw new InvalidMillColor(pieces);
+                }
+            }
+
             if(!isValid(pieces)){
                 throw new InvalidMill(pieces);
             }
@@ -176,5 +193,18 @@ public abstract class Board implements BoardDimension {
         protected abstract boolean isValid(List<Piece> pieces);
         //public void addPiece(Piece piece) { pieces.add(piece); }
         public boolean hasPiece (Piece piece) { return pieces.contains(piece); }
+
+        @Override
+        public String toString() {
+            String out="";
+
+            out += "Mill(color=" + color + ", Positions=[";
+            for(Piece piece : pieces){
+                out += piece.getPosition() + ", ";
+            }
+            out += "]";
+
+            return out;
+        }
     }
 }

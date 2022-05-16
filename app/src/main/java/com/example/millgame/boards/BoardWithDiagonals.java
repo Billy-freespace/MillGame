@@ -5,22 +5,25 @@ import com.example.millgame.MillGame;
 import com.example.millgame.Piece;
 import com.example.millgame.PieceRadar;
 import com.example.millgame.exceptions.InvalidMill;
+import com.example.millgame.exceptions.InvalidMillColor;
 import com.example.millgame.exceptions.InvalidMillSize;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.CardinalDirection;
+import com.example.millgame.misc.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BoardWithDiagonals extends Board {
 
+
     public BoardWithDiagonals(MillGame.GameVariant variant){
         super(variant);
+        radar = new PieceRadar(List.of(Direction.values()), this);
     }
     @Override
     public List<Board.Mill> getMills(Piece piece) {
         List<Board.Mill> mills = new ArrayList<Board.Mill>();
-        PieceRadar radar = new PieceRadar(this);
 
         radar.map(piece);
 
@@ -91,7 +94,7 @@ public abstract class BoardWithDiagonals extends Board {
             }
         }
 
-        // CHECK DIAGONAL (NW, NE, SW, SE)
+        // check NW, NE, SW, SE
 
         return mills;
     }
@@ -101,7 +104,7 @@ public abstract class BoardWithDiagonals extends Board {
         Mill mill = null;
         try{
             mill = new Mill(pieces);
-        } catch (InvalidMill | InvalidMillSize error){
+        } catch (InvalidMill | InvalidMillSize | InvalidMillColor error){
             TraceLogger.log(error);
         }
 
@@ -110,7 +113,7 @@ public abstract class BoardWithDiagonals extends Board {
 
     public class Mill extends Board.Mill {
 
-        public Mill(List<Piece> pieces) throws InvalidMill, InvalidMillSize {
+        public Mill(List<Piece> pieces) throws InvalidMill, InvalidMillSize, InvalidMillColor {
             super(pieces);
         }
 

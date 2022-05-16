@@ -11,15 +11,15 @@ import java.util.logging.Level;
 
 public abstract class Player {
     private List<Piece> pieces;
-    public int npieces;
+    public final int npieces;
     private int placedPieces;
 
-    private PlayerType playerType;
+    private final PlayerType playerType;
 
-    private PieceColor pieceColor;
-    protected MillGame game;
+    private final PieceColor pieceColor;
+    protected final MillGame game;
 
-    private Board board;
+    private final Board board;
 
 
     public Player(PlayerType playerType, PieceColor color, MillGame game) {
@@ -96,10 +96,11 @@ public abstract class Player {
 
         movePiece(piece, xLabel, yLabel);
     }
-    public void removePiece(char xLabel, int yLabel) throws RankedException {
+    public int removePiece(char xLabel, int yLabel) throws RankedException {
         // this code was wrote just for testing RemovingEventAction (REMOVE or REUSE)
         // this code is not intended to handle all the possible cases, just to work
         // NOTE: remove throws RankedException and specify the specific exceptions
+        // * verify that active turn belongs to the opponent
         // BEGIN
         Position position = board.getPosition(xLabel, yLabel);
         Piece piece = position.getPiece();
@@ -107,18 +108,33 @@ public abstract class Player {
             board.removePiece(xLabel, yLabel);
             pieces.remove(piece);
         }
+
+        return pieces.size();
         //END
     }
 
-    public void removePiece(Position position) throws RankedException {
+    public int removePiece(Position position) throws RankedException {
         char xLabel = position.getXLabel();
         int yLabel = position.getYLabel();
 
-        removePiece(xLabel, yLabel);
+        return removePiece(xLabel, yLabel);
     }
 
+    public List<Position> getPossibleMovements(Piece piece){
+        ArrayList<Position> possibleMovements = new ArrayList<Position>();
 
-    //public List<Mill> getMills(){ return null; } //sprint 2
+        if(pieces.size() == 3){
+            possibleMovements.addAll(board.getEmptyPositions());
+        } else {
+            Position position = piece.getPosition();
+            possibleMovements.addAll(position.getNeighbours());
+        }
+
+        return possibleMovements;
+    }
+
+    public int countBoardPieces(){ return pieces.size(); }
+
     public Piece getPiece(char x, char y) throws InvalidPositionCoordinate {
         Position position = board.getPosition(x, y);
         Piece piece = null;
