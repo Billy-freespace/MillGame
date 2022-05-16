@@ -40,6 +40,13 @@ application {
     mainClass = 'com.example.millgame.App'
 }
 
+// tasks to run AppMinimal application
+task minimal(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.example.millgame.AppMinimal'
+}
+
+
 jacocoTestReport {
     reports {
         xml.required = true
@@ -53,7 +60,7 @@ pmd {
     ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
 }
 
-tasks.named('test') {
+test {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }

@@ -2,6 +2,7 @@ package com.example.millgame;
 
 import com.example.millgame.actions.EventAction;
 import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.misc.ObjectIcon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,11 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
-interface PositionEventAction{
-    public void setEventAction(EventAction eventAction);
-}
-
-public class Position extends JButton implements PositionEventAction, ObjectIcon {
+public class Position extends JButton implements ObjectIcon {
     private static final ImageIcon NORMAL_ICON = new ImageIcon("src/main/resources/textures/point-normal.png");
     private static final ImageIcon PRESSED_ICON = new ImageIcon("src/main/resources/textures/point-pressed.png");
     private static final ImageIcon ROLLOVER_ICON = new ImageIcon("src/main/resources/textures/point-hover.png");

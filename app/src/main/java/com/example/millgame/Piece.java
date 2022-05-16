@@ -1,5 +1,6 @@
 package com.example.millgame;
 
+import com.example.millgame.misc.ObjectIcon;
 import com.example.millgame.pieces.PieceColor;
 
 import java.util.ArrayList;

@@ -1,32 +1,35 @@
 package com.example.millgame;
 
 import com.example.millgame.MillGame.GameVariant;
+import com.example.millgame.boards.BoardDimension;
 import com.example.millgame.exceptions.EmptyPositionError;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NotEmptyPosition;
 import com.example.millgame.exceptions.RankedException;
+import com.example.millgame.pieces.PieceColor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 
 public abstract class Board implements BoardDimension {
     protected Position origin;
     protected Map<Character, Map<Integer, Position>> positions;
     public final GameVariant variant;
-    //protected HashMap<PieceColor, ArrayList<Mill>> mills;
+    protected Map<PieceColor, List<Mill>> mills;
+    protected Map<PieceColor, Boolean> fly;
 
     public Board (GameVariant variant) {
         this.variant = variant;
         this.positions = new HashMap<Character, Map<Integer, Position>>();
         this.origin = null;
-/*
-        mills =  new HashMap<PieceColor, ArrayList<Mill>>();
-        mills.put(PieceColor.BLACK, new ArrayList<Mill>());
-        mills.put(PieceColor.WHITE, new ArrayList<Mill>());
-*/
+
+        mills =  new HashMap<PieceColor, List<Mill>>();
+        fly = new HashMap<PieceColor, Boolean>();
+
+        for(PieceColor color : PieceColor.values()){
+            mills.put(color, new ArrayList<Mill>());
+            fly.put(color, false);
+        }
     }
 
     public ArrayList<Position> getEmptyPositions(){
@@ -46,7 +49,19 @@ public abstract class Board implements BoardDimension {
 
         return emptyPositions;
     }
-    public abstract ArrayList<Position> getPossibleMovements(char xLabel, int yLabel);
+    public List<Position> getPossibleMovements(Piece piece){
+        ArrayList<Position> possibleMovements = new ArrayList<Position>();
+
+        if(fly.get(piece.getColor())){
+            possibleMovements.addAll(getEmptyPositions());
+        } else {
+            Position position = piece.getPosition();
+            possibleMovements.addAll(position.getNeighbours());
+        }
+
+        return possibleMovements;
+    }
+
     public void placePiece(Piece piece, char xLabel, int yLabel) throws NotEmptyPosition, InvalidPositionCoordinate {
         Position position = null;
         
@@ -73,18 +88,8 @@ public abstract class Board implements BoardDimension {
         position.setPiece(null);
     }
 
-    //
-
-    public void removeMarks(){
-        // ITERATE OVER ALL POSITIONS AND SET mark to false
-    }
-
-    public ArrayList<Mill> searchMills(){
-        // sprint 2
-        return null;
-    }
-
-    public abstract boolean isValidMill(Mill mill);
+    public List<Mill> getMills(PieceColor color){ return mills.get(color); }
+    public abstract List<Mill> getMills(Piece piece);
     public GameVariant getVariant() {
         return variant;
     }
@@ -104,7 +109,7 @@ public abstract class Board implements BoardDimension {
         return inner.get(yLabel);
     }
 
-    public int countPositions(){
+    public int getNumberPositions(){
         int count =0;
         for(Map<Integer, Position> inner : positions.values()){
             count += inner.size();
@@ -145,15 +150,15 @@ public abstract class Board implements BoardDimension {
         private Set<Piece> pieces;
 
         public Mill(Set<Piece> pieces) throws RankedException {
-            if(pieces.size() > 3){
-                throw new RankedException("Invalid number positions to form a mill", Level.WARNING);
+            if(pieces.size() != 3){
+                throw new RankedException("Invalid number of pieces to form a mill", Level.WARNING);
             }
-
+            isValid(pieces);
             this.pieces = pieces;
         }
 
         public abstract boolean isValid(Set<Piece> pieces);
-        public void addPosition(Piece piece) { pieces.add(piece); }
+        //public void addPiece(Piece piece) { pieces.add(piece); }
         public boolean inMill (Piece piece) { return pieces.contains(piece); }
     }
 }

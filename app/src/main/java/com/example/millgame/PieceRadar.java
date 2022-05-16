@@ -1,8 +1,9 @@
 package com.example.millgame;
 
+import com.example.millgame.misc.CardinalDirection;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class PieceRadar {
     private HashMap<CardinalDirection, ArrayList<Position>> positions;

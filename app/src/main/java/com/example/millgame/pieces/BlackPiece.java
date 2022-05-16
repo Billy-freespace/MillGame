@@ -1,6 +1,5 @@
 package com.example.millgame.pieces;
 
-import com.example.millgame.ObjectIcon;
 import com.example.millgame.Piece;
 
 import javax.swing.*;

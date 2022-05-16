@@ -47,8 +47,17 @@ public abstract class CircularIterator<T> implements Cloneable {
     public List<T> values(){ return collection; }
 
     public void reset(){
-        iterationIndex = initIterationIndex;
         iterationState = null;
+        iterationIndex = initIterationIndex;
+    }
+
+    public void reset(boolean random){
+        iterationState = null;
+        if(random){
+            Random rand = new Random();
+            int size = collection.size();
+            iterationIndex = rand.nextInt(size);
+        }
     }
 
     public CircularIterator<T> clone() throws CloneNotSupportedException {
