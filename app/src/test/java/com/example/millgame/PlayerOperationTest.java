@@ -2,7 +2,9 @@ package com.example.millgame;
 
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.pieces.PieceColor;
+import com.example.millgame.pieces.PieceFactory;
 import com.example.millgame.players.PlayerFactory;
 import com.example.millgame.players.PlayerType;
 
@@ -10,9 +12,7 @@ import com.example.millgame.players.PlayerType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class PlayerOperationTest {
@@ -62,7 +62,7 @@ class PlayerOperationTest {
         try {
             player.placePiece('a', 7);
             player.placePiece('b', 6);
-        } catch (NoPiecesError | NoEmptyPosition e){
+        } catch (NoPiecesError | NotEmptyPosition e){
             // DONOTHING
         }
 
@@ -72,7 +72,7 @@ class PlayerOperationTest {
     }
 
     @Test
-    public void placePieceOnInvalidPositionTest() throws NoEmptyPosition, InvalidPositionCoordinate{
+    public void placePieceOnInvalidPositionTest() throws NotEmptyPosition, InvalidPositionCoordinate{
         /*
          * Test for AC3.3
          */
@@ -86,7 +86,7 @@ class PlayerOperationTest {
     }
 
     @Test
-    public void noPositioningPiecesTest() throws NoEmptyPosition, InvalidPositionCoordinate{
+    public void noPositioningPiecesTest() throws NotEmptyPosition, InvalidPositionCoordinate{
         /*
          * Test for AC3.4
          */
@@ -110,32 +110,16 @@ class PlayerOperationTest {
         });
     }
 
-    //MOVE TESTS
     @Test
-    public void movePieceTets() throws RankedException {
+    public void movePieceTest() throws RankedException {
         Position origin = board.getOrigin();
-        //FINAL POSITION
-        char xLabel = 'a'; 
-        int yLabel = 4;
-        Position posFinal = board.getPosition(xLabel, yLabel);
+        Position position = board.getPosition('a', 4);
+        player.placePiece(position);
+        player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin);
 
-        player.placePiece(origin.getXLabel(), origin.getYLabel());
-
-        Piece positionPiece = origin.getPiece();
-        //CHECK 
-        assertNotEquals(null, positionPiece);
-        assertEquals(origin, positionPiece.getPosition());
-        
-        player.movePiece(positionPiece, xLabel, yLabel);
-        
-        Piece originPiece = origin.getPiece();
-        assertEquals(null, originPiece);
-        assertNotEquals(null, posFinal.getPiece());
-        assertEquals(posFinal, posFinal.getPiece().getPosition());
-
-        //assertNotEquals(origin, positionPiece.getPosition());
+        assertEquals(player.getPiece(origin.getXLabel(), (char) origin.getYLabel()), board.getOrigin().getPiece());
+        assertNull(position.getPiece());
     }
-
 
     /*
     @Test

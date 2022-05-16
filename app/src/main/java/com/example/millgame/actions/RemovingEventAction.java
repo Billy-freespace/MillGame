@@ -1,17 +1,10 @@
 package com.example.millgame.actions;
 
-import com.example.millgame.MillGame;
-import com.example.millgame.Piece;
-import com.example.millgame.Player;
-import com.example.millgame.Position;
-import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.*;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 
 import java.awt.event.ActionEvent;
-import java.io.PipedOutputStream;
-import java.util.ArrayList;
-import java.lang.CloneNotSupportedException;
 import java.util.logging.Level;
 
 public class RemovingEventAction extends EventAction {
@@ -28,6 +21,19 @@ public class RemovingEventAction extends EventAction {
         try {
             Player opponent = game.getOpponentPlayer();
             opponent.removePiece(position);
+
+            int count = opponent.countBoardPieces();
+            if(count == 2){
+                // GAME OVER
+                TraceLogger.log(Level.INFO, "GAME OVER - winner: " + game.getActivePlayer());
+            } else {
+                if(opponent.getPlacedPieces() < game.getNumberPlayerPieces()){
+                    game.changeEventAction(new PositioningEventAction());
+                } else {
+                    game.changeEventAction(new MovingEventAction());
+                }
+                game.nextTurn();
+            }
 
         } catch (Exception error){
             RankedException exception = new RankedException(error, Level.WARNING);

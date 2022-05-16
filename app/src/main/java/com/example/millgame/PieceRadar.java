@@ -1,104 +1,125 @@
 package com.example.millgame;
 
+import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.CardinalDirection;
+import com.example.millgame.misc.Direction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
 
-public class PieceRadar {
-    private HashMap<CardinalDirection, ArrayList<Position>> positions;
+public  class PieceRadar {
+    private Map<Direction, List<Piece>> pieces;
+    private final List<Direction> directions;
     private Board board;
-    PieceRadar(Board board){
+
+    public PieceRadar(List<Direction> directions, Board board){
+        pieces = new HashMap<Direction, List<Piece>>();
+        this.directions = directions;
         this.board = board;
-        positions = new HashMap<CardinalDirection, ArrayList<Position>>();
     }
 
-    public void map(Piece piece){
-        /*
-         * Map all pieces of the same color around its position
-         */
-        reset();
+    private boolean validateDirection(Direction direction, int variantX, int variantY){
+        boolean result = false;
+        switch (direction){
+            case VERTICAL:
+                if(variantX == 0 && variantY != 0){
+                    result = true;
+                }
+                break;
 
-        for(CardinalDirection direction: CardinalDirection.values()){
+            case HORIZONTAL:
+                if(variantY == 0 && variantX != 0){
+                    result = true;
+                }
+                break;
+
+            case DIAGONAL:
+                if(variantX*variantY < 0){
+                    result = true;
+                }
+                break;
+
+            case ANTIDIAGONAL:
+                if(variantX*variantY > 0){
+                    result = true;
+                }
+                break;
+        }
+
+        return result;
+    }
+
+    public void map(Piece piece) {
+        //Map all pieces of the same color around its position
+
+        reset();
+        board.unmark();
+        for(Direction direction: directions){
             mapDirection(piece, direction);
         }
     }
 
-    public int getCount(CardinalDirection direction){
-        return positions.get(direction).size();
+    public int getCount(Direction direction){
+        return pieces.get(direction).size();
     }
 
-    public ArrayList<Position> getPositions(CardinalDirection direction){
-        return positions.get(direction);
+    public List<Piece> getPieces(Direction direction){
+        return pieces.get(direction);
     }
 
-    private ArrayList<Position> mapLine(Piece piece, int variantX, int variantY){
+    private void mapDirection(Piece piece, Direction direction){
         /*
          * map all neighbour positions that contain a piece of the same color
-         * and their coordinate are L: (x, y) + n*(variantX, variantY), where n is positive number
-         * NOTE:
-         * x = piece.getPosition().getXLabel(), y = piece.getPosition().getYLabel()
-         * L = line equation -> mapLine
+         * in the same direction (VERTICAL, HORIZONTAL, DIAGONAL, ANTIDIAGONAL)
+         * NOTE: VERTICAL = NORTH + SOUTH, ...
          */
 
         Position position = piece.getPosition();
-        ArrayList<Position> mapPositions = new ArrayList<Position>();
+        Map<CardinalDirection, List<Piece>> mappedPieces = new HashMap<CardinalDirection, List<Piece>>();
 
         char x = position.getXLabel();
         int y = position.getYLabel();
 
+        int variantX, variantY;
+        position.mark = true;
         for(Position neighbour : position.getNeighbours()){
             Piece neighbourPiece = neighbour.getPiece();
-            if(neighbourPiece != null && neighbourPiece.getColor() == piece.getColor() &&
-                    neighbour.getXLabel() == x + variantX && neighbour.getYLabel() == y + variantY){
-                ArrayList<Position> neighbourMapPositions = mapLine(neighbourPiece, variantX, variantY);
-                mapPositions.addAll(neighbourMapPositions);
+
+            variantX = (int) neighbour.getXLabel() - (int) position.getXLabel();
+            variantY = neighbour.getYLabel() - position.getYLabel();
+
+            if(neighbourPiece != null && !neighbour.mark &&
+                    neighbourPiece.getColor() == piece.getColor() &&
+                    validateDirection(direction, variantX, variantY)){
+
+                    pieces.get(direction).add(neighbourPiece);
+                    mapDirection(neighbourPiece, direction);
             }
         }
-        return mapPositions;
-    }
-
-    private void mapDirection(Piece piece, CardinalDirection direction){
-        int variantX, variantY;
-
-        switch (direction){
-            case N:
-                variantX = 0;
-                variantY = 1;
-                break;
-            case S:
-                variantX = 0;
-                variantY = -1;
-            case E:
-                variantX = 1;
-                variantY = 0;
-            case W:
-                variantX = -1;
-                variantY = 0;
-            case NE:
-                variantX = 1;
-                variantY = 1;
-            case NW:
-                variantX = -1;
-                variantY = 1;
-            case SE:
-                variantX = 1;
-                variantY = -1;
-            case SW:
-                variantX = -1;
-                variantY = -1;
-            default:
-                variantX = 0;
-                variantY = 0;
-        }
-
-        ArrayList<Position> mapPositions = mapLine(piece, variantX, variantY);
-        positions.put(direction, mapPositions);
+        TraceLogger.log(Level.INFO, position + "\n\n" + this.toString());
     }
 
     private void reset(){
-        for(CardinalDirection direction : CardinalDirection.values()){
-            positions.put(direction, new ArrayList<Position>());
+        for(Direction direction : Direction.values()){
+            pieces.put(direction, new ArrayList<Piece>());
         }
+    }
+
+    @Override
+    public String toString() {
+        String out="\n";
+
+        for(Direction direction : directions){
+            out += direction + " : " + pieces.get(direction).size();
+            out += "\nPositions:";
+            for(Piece piece : pieces.get(direction)){
+                out += piece.getPosition() + ", ";
+            }
+            out += "\n------------\n";
+        }
+        return out;
     }
 }
