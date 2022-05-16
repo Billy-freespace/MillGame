@@ -1,7 +1,7 @@
 package com.example.millgame.boards;
 
 import com.example.millgame.Board;
-import com.example.millgame.Mill;
+//import com.example.millgame.Mill;
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.Position;
 

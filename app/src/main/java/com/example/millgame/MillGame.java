@@ -2,24 +2,31 @@ package com.example.millgame;
 
 import com.example.millgame.actions.EventAction;
 import com.example.millgame.boards.BoardPanel;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.pieces.PieceColor;
+import com.example.millgame.players.PlayerFactory;
+import com.example.millgame.players.PlayerType;
+
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 public class MillGame {
     private TurnIterator turniter;
-    private ArrayList<Player> players;
+    private List<Player> players;
     private Board board;
     private BoardPanel boardPanel;
     private EventAction eventAction;
     private GameStageIterator stageIterator;
 
     public MillGame(){ // useless constructor, to create a MillGame object use MillGameBuilder class
-        turniter = null;
-        players = null;
+        turniter = new TurnIterator();
+        players = new ArrayList<Player>();
         board = null;
         stageIterator = GameStageIterator.init();
+        eventAction = null;
     }
 
     public GameStage nextStage(){ return stageIterator.next(); }
@@ -33,7 +40,21 @@ public class MillGame {
 
 
     public void setTurnIterator(TurnIterator itr){ turniter = itr; }
-    public void setPlayers(ArrayList<Player> players){ this.players = players; }
+    public void setPlayers(List<Player> players){ this.players = players; }
+    public void addPlayer(PlayerType playerType, PieceColor color) throws RankedException{
+        if(turniter.size() > 2){
+            throw new RankedException("Limit of players reached", Level.WARNING); // NOTE: write an exception for handle this case
+        }
+
+        for(Player player : turniter.values()){
+            if(player.getColor() == color){
+                throw new RankedException("Color " + color + " was already taken by a player", Level.WARNING); // NOTE: write an exception for handle this case
+            }
+        }
+
+        Player player = PlayerFactory.create(playerType, color, board);
+        turniter.addPlayer(player);
+    }
     public void setBoard(Board board){ this.board = board; }
 
     public void setBoardPanel(BoardPanel boardPanel){ this.boardPanel = boardPanel;}

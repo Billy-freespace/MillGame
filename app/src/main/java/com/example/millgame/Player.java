@@ -1,7 +1,7 @@
 package com.example.millgame;
 
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
-import com.example.millgame.exceptions.NoEmptyPosition;
+import com.example.millgame.exceptions.NotEmptyPosition;
 import com.example.millgame.exceptions.NoPiecesError;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
@@ -48,7 +48,7 @@ public abstract class Player {
 
     public int getPlacedPieces(){ return placedPieces; }
 
-    public void placePiece(char x, int y) throws NoEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
+    public void placePiece(char x, int y) throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
         //System.out.println(toString());
@@ -68,7 +68,7 @@ public abstract class Player {
         TraceLogger.log(Level.INFO, this + " placed a piece in (" + x + ", " + y + ") position");
     }
 
-    public void placePiece(Position position) throws NoEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
+    public void placePiece(Position position) throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
         // raise NoPiecesError exception if the player
         // has no piece to positioning in the POSITIONING game stage
         char xLabel = position.getXLabel();
@@ -77,34 +77,49 @@ public abstract class Player {
         placePiece(xLabel, yLabel);
     }
 
-    public void movePiece(Piece piece, char x, int y) throws RankedException{ // sprint 2 - RECHECK
-        
-         //CODIGO DE PRUEBA
-        Position position = piece.getPosition();
-        board.removePiece(piece);
-        System.out.println("Piexa origen 01: " + piece.getPosition());
+    public void movePiece(Piece piece, char x, int y) throws RankedException {
+        // this code was wrote just for testing MovingEventAction (REMOVE or REUSE)
+        // this code is not intended to handle all the possible cases, just to work
+        // NOTE: remove throws RankedException and specify the specific exceptions
+        //          and validate that the piece can only be moved to allowed positions (neighbours positions)
+        // BEGIN
+        Position selectedPosition = piece.getPosition();
+        char selectedXLabel = selectedPosition.getXLabel();
+        int selectedYLabel = selectedPosition.getYLabel();
+        board.removePiece(selectedXLabel, selectedYLabel);
         board.placePiece(piece, x, y);
-        System.out.println("Piexa origen: 02 " + piece.getPosition());
-        //FIN DE PRUEBA
-
+        //END
     }
 
-    public void movePiece(Piece piece, Position position) throws RankedException{ // sprint 2 - RECHECK
-/*
+    public void movePiece(Piece piece, Position position) throws RankedException{
         char xLabel = position.getXLabel();
         int yLabel = position.getYLabel();
 
         movePiece(piece, xLabel, yLabel);
- */
     }
-    public void removePiece(Piece piece) throws InvalidPositionCoordinate{ // sprint 2 - RECHECK
+    public void removePiece(char xLabel, int yLabel) throws RankedException {
+        // this code was wrote just for testing RemovingEventAction (REMOVE or REUSE)
+        // this code is not intended to handle all the possible cases, just to work
+        // NOTE: remove throws RankedException and specify the specific exceptions
+        // BEGIN
+        Position position = board.getPosition(xLabel, yLabel);
+        Piece piece = position.getPiece();
+        if(piece != null && hasPiece(piece)){
+            board.removePiece(xLabel, yLabel);
+            pieces.remove(piece);
+        }
+        //END
+    }
 
-        /*Position position = piece.getPosition();
-        board.removePiece(piece, position.getXLabel(), position.getYLabel());
-        pieces.remove(piece);*/
- 
+    public void removePiece(Position position) throws RankedException {
+        char xLabel = position.getXLabel();
+        int yLabel = position.getYLabel();
+
+        removePiece(xLabel, yLabel);
     }
-    public List<Mill> getMills(){ return null; } //sprint 2
+
+
+    //public List<Mill> getMills(){ return null; } //sprint 2
     public Piece getPiece(char x, char y) throws InvalidPositionCoordinate {
         Position position = board.getPosition(x, y);
         Piece piece = null;
@@ -115,6 +130,10 @@ public abstract class Player {
 
         return piece;
     }
+
+    public PieceColor getColor(){  return pieceColor; }
+
+    public boolean hasPiece(Piece piece){ return pieces.contains(piece); }
 
     @Override
     public String toString() {

@@ -34,6 +34,8 @@ public abstract class Piece implements ObjectIcon {
 
         return emptyNeighbours;
     }
+
+    public PieceColor getColor(){ return color; }
     public void setPosition(Position position){this.position = position;}
     public Position getPosition(){return position;}
 
@@ -41,4 +43,10 @@ public abstract class Piece implements ObjectIcon {
     abstract public ImageIcon getPressedIcon();
 
     abstract public ImageIcon getRolloverIcon();
+
+    @Override
+    public String toString() {
+        String out = "Piece(color=" + color + ")";
+        return out;
+    }
 }

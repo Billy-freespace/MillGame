@@ -1,5 +1,6 @@
 package com.example.millgame;
 
+import com.example.millgame.exceptions.RankedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,7 @@ public class GameOperationTest {
     private Board board;
 
     @BeforeEach
-    public void initGame(){
+    public void initGame() throws RankedException {
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
         MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
 

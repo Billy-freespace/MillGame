@@ -15,7 +15,6 @@ import java.lang.CloneNotSupportedException;
 import java.util.logging.Level;
 
 public class RemovingEventAction extends EventAction {
-    private ArrayList<Position> positions; // possible positions to delete
 
     @Override
     public void actionPerformed(ActionEvent event){
@@ -27,15 +26,11 @@ public class RemovingEventAction extends EventAction {
         // END
 
         try {
-            if(positions.contains(position)){
-                Player opponent = game.getOpponentPlayer();
-                Piece piece = position.getPiece();
-                opponent.removePiece(piece);
+            Player opponent = game.getOpponentPlayer();
+            opponent.removePiece(position);
 
-                // REDRAW GAME BOARD
-            }
         } catch (Exception error){
-            RankedException exception = new RankedException(Level.WARNING, error);
+            RankedException exception = new RankedException(error, Level.WARNING);
             TraceLogger.log(exception, RemovingEventAction.class);
         }
     }

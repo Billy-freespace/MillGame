@@ -3,10 +3,11 @@ package com.example.millgame;
 import com.example.millgame.logging.TraceLogger;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 public class GameStageIterator extends CircularIterator<MillGame.GameStage>{
-    private GameStageIterator(ArrayList<MillGame.GameStage> gameStages){
+    private GameStageIterator(List<MillGame.GameStage> gameStages){
         super(gameStages, false);
     }
 

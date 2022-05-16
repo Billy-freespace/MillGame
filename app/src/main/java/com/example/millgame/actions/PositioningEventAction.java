@@ -2,11 +2,7 @@ package com.example.millgame.actions;
 
 import com.example.millgame.Player;
 import com.example.millgame.Position;
-import com.example.millgame.exceptions.EventException;
-import com.example.millgame.exceptions.InvalidPositionCoordinate;
-import com.example.millgame.exceptions.NoEmptyPosition;
-import com.example.millgame.exceptions.NoPiecesError;
-import com.example.millgame.exceptions.RankedException;
+import com.example.millgame.exceptions.*;
 import com.example.millgame.logging.TraceLogger;
 
 import java.awt.event.ActionEvent;
@@ -17,16 +13,9 @@ public class PositioningEventAction extends EventAction {
     public void actionPerformed(ActionEvent event) {
         Position position = (Position) event.getSource();
 
-        // REMOVE THIS CODE - ADDED FOR TESTING PURPOSES
-        // BEGIN
-        TraceLogger.log(Level.INFO, position + " was selected", PositioningEventAction.class);
-        // END
+        TraceLogger.log(Level.FINE, position + " was selected", PositioningEventAction.class);
 
         try{
-            if(position.hasPiece()){
-                 throw new EventException(event, "Selected position has a piece - select an empty position");
-            }
-
             Player player = game.getActivePlayer();
             player.placePiece(position);
 
@@ -46,13 +35,12 @@ public class PositioningEventAction extends EventAction {
                 game.nextTurn();
             }
 
-        } catch (InvalidPositionCoordinate | EventException error){
+        } catch (InvalidPositionCoordinate | NotEmptyPosition error) {
             TraceLogger.log(error, PositioningEventAction.class);
         } catch (NoPiecesError error){
             // the player was positioned all their pieces, so now it will move them
+            TraceLogger.log(error, PositioningEventAction.class);
             game.changeEventAction(new MovingEventAction());
-        } catch (RankedException error) {
-            TraceLogger.log(error);
         }
     }
 }
