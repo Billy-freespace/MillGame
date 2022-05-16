@@ -202,7 +202,7 @@ public abstract class Board implements BoardDimension {
             for(Piece piece : pieces){
                 out += piece.getPosition() + ", ";
             }
-            out += "]";
+            out += "])";
 
             return out;
         }

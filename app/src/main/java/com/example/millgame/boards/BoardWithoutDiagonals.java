@@ -28,7 +28,7 @@ public abstract class BoardWithoutDiagonals extends Board {
 
         radar.map(piece);
 
-        TraceLogger.log(Level.INFO, radar.toString());
+        //TraceLogger.log(Level.INFO, radar.toString());
 
         int verticalCount = radar.getCount(Direction.VERTICAL);
         int horizontalCount = radar.getCount(Direction.HORIZONTAL);

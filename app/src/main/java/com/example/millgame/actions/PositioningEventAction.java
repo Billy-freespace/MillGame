@@ -26,7 +26,7 @@ public class PositioningEventAction extends EventAction {
             List<Board.Mill> mills = game.getMills(position.getPiece());
             if(mills.size() > 0){
                 // HIGHLIGHT POSSIBLE POSITIONS TO DELETE
-                TraceLogger.log(Level.INFO, "A mill was formed: " + mills);
+                TraceLogger.log(Level.INFO, "mills were formed: " + mills);
                 game.changeEventAction(new RemovingEventAction());
             } else {
                 Player opponent = game.getOpponentPlayer();

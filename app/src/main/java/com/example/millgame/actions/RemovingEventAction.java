@@ -22,18 +22,18 @@ public class RemovingEventAction extends EventAction {
             Player opponent = game.getOpponentPlayer();
             opponent.removePiece(position);
 
-            int count = opponent.countBoardPieces();
-            if(count == 2){
-                // GAME OVER
-                TraceLogger.log(Level.INFO, "GAME OVER - winner: " + game.getActivePlayer());
-            } else {
-                if(opponent.getPlacedPieces() < game.getNumberPlayerPieces()){
-                    game.changeEventAction(new PositioningEventAction());
+            if(opponent.getPlacedPieces() < game.getNumberPlayerPieces()){
+                game.changeEventAction(new PositioningEventAction());
+            } else { // all pieces were already placed
+                int count = opponent.countBoardPieces();
+                if(count == 2){
+                    TraceLogger.log(Level.INFO, "GAME OVER - winner: " + game.getActivePlayer());
                 } else {
                     game.changeEventAction(new MovingEventAction());
                 }
-                game.nextTurn();
             }
+
+            game.nextTurn();
 
         } catch (Exception error){
             RankedException exception = new RankedException(error, Level.WARNING);

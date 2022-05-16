@@ -1,5 +1,6 @@
 package com.example.millgame.actions;
 
+import com.example.millgame.Board;
 import com.example.millgame.Piece;
 import com.example.millgame.Player;
 import com.example.millgame.Position;
@@ -8,6 +9,7 @@ import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 
 import java.awt.event.ActionEvent;
+import java.util.List;
 import java.util.logging.Level;
 
 public class MovingEventAction extends EventAction {
@@ -50,8 +52,10 @@ public class MovingEventAction extends EventAction {
                     piece = selectedPosition.getPiece();
                     player.movePiece(piece, position);
 
-                    if(false){ // CHECK IF A MILL WAS FORMED
+                    List<Board.Mill> mills = game.getMills(position.getPiece());
+                    if(mills.size() > 0){
                         // HIGHLIGHT POSSIBLE POSITIONS TO DELETE
+                        TraceLogger.log(Level.INFO, "mills were formed: " + mills);
                         game.changeEventAction(new RemovingEventAction());
                     } else {
                         selectedPosition = null;

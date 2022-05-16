@@ -99,7 +99,7 @@ public  class PieceRadar {
                     mapDirection(neighbourPiece, direction);
             }
         }
-        TraceLogger.log(Level.INFO, position + "\n\n" + this.toString());
+        //TraceLogger.log(Level.INFO, position + "\n\n" + this.toString());
     }
 
     private void reset(){
