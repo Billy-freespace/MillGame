@@ -2,6 +2,7 @@ package com.example.millgame;
 
 import com.example.millgame.actions.EventAction;
 import com.example.millgame.boards.BoardPanel;
+import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.pieces.PieceColor;
@@ -44,6 +45,13 @@ public class MillGame {
         return turniter.getIterationState();
     }
     public Player getOpponentPlayer(){ return turniter.getOpponent(); }
+
+    public Piece getPiece(char x, int y) throws InvalidPositionCoordinate {
+        Position position = board.getPosition(x, y);
+        Piece piece = position.getPiece();
+
+        return piece;
+    }
     public int getNumberPlayerPieces(){ return board.getNumberPlayerPieces();}
     public boolean isGameOver(){ return false; }
 
