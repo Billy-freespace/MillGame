@@ -2,7 +2,9 @@ package com.example.millgame;
 
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.pieces.PieceColor;
+import com.example.millgame.pieces.PieceFactory;
 import com.example.millgame.players.PlayerFactory;
 import com.example.millgame.players.PlayerType;
 
@@ -10,7 +12,7 @@ import com.example.millgame.players.PlayerType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class PlayerOperationTest {
@@ -51,6 +53,17 @@ class PlayerOperationTest {
         /*
          * Test for AC3.4
          */
+    }
+
+    @Test
+    public void movePieceTest() throws RankedException {
+        Position origin = board.getOrigin();
+        Position position = board.getPosition('a', 4);
+        player.placePiece(position);
+        player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin);
+
+        assertEquals(player.getPiece(origin.getXLabel(), (char) origin.getYLabel()), board.getOrigin().getPiece());
+        assertNull(position.getPiece());
     }
 
     /*
