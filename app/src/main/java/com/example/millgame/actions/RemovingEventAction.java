@@ -27,6 +27,11 @@ public class RemovingEventAction extends EventAction {
                 // GAME OVER
                 TraceLogger.log(Level.INFO, "GAME OVER - winner: " + game.getActivePlayer());
             } else {
+                if(opponent.getPlacedPieces() < game.getNumberPlayerPieces()){
+                    game.changeEventAction(new PositioningEventAction());
+                } else {
+                    game.changeEventAction(new MovingEventAction());
+                }
                 game.nextTurn();
             }
 

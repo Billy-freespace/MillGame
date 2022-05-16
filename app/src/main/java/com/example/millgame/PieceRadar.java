@@ -1,6 +1,5 @@
 package com.example.millgame;
 
-import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.CardinalDirection;
 import com.example.millgame.misc.Direction;
@@ -12,59 +11,45 @@ import java.util.Map;
 import java.util.logging.Level;
 
 public  class PieceRadar {
-    private Map<CardinalDirection, List<Piece>> pieces;
-    private List<Direction> directions;
+    private Map<Direction, List<Piece>> pieces;
+    private final List<Direction> directions;
     private Board board;
 
     public PieceRadar(List<Direction> directions, Board board){
-        pieces = new HashMap<CardinalDirection, List<Piece>>();
+        pieces = new HashMap<Direction, List<Piece>>();
         this.directions = directions;
         this.board = board;
     }
 
-    private CardinalDirection getCardinalDirection(Direction direction, int variantX, int variantY) throws RankedException {
-        CardinalDirection cardinalDirection;
+    private boolean validateDirection(Direction direction, int variantX, int variantY){
+        boolean result = false;
         switch (direction){
             case VERTICAL:
-                if(variantX != 0){
-                    throw new RankedException("Invalid variant of X in direction="+ direction);
-                }
-
-                cardinalDirection = CardinalDirection.N;
-                if(variantY < 0){
-                    cardinalDirection = CardinalDirection.S;
+                if(variantX == 0 && variantY != 0){
+                    result = true;
                 }
                 break;
+
             case HORIZONTAL:
-                if(variantY != 0){
-                    throw new RankedException("Invalid variant of Y in direction="+ direction);
+                if(variantY == 0 && variantX != 0){
+                    result = true;
                 }
-                cardinalDirection = CardinalDirection.E;
-                if(variantX < 0){
-                    cardinalDirection = CardinalDirection.W;
-                }
+                break;
 
             case DIAGONAL:
-                if(variantY == 0 || variantX == 0){
-                    throw new RankedException("Invalid variant of X and Y in direction="+ direction);
-                }
-                cardinalDirection = CardinalDirection.SE;
-                if(variantX > 0 && variantY < 0){
-                    cardinalDirection = CardinalDirection.NW;
-                }
-            case ANTIDIAGONAL:
-                if(variantY*variantX <= 0){
-                    throw new RankedException("Invalid variant of (x, y) in direction="+ direction);
-                }
-                cardinalDirection = CardinalDirection.NE;
-                if(variantX < 0 && variantY < 0){
-                    cardinalDirection = CardinalDirection.SW;
+                if(variantX*variantY < 0){
+                    result = true;
                 }
                 break;
-            default: // this case never happens, but it's preferred to raise an exception to set cardinalDirection to null
-                throw new RankedException("Invalid direction: "+ direction);
+
+            case ANTIDIAGONAL:
+                if(variantX*variantY > 0){
+                    result = true;
+                }
+                break;
         }
-        return cardinalDirection;
+
+        return result;
     }
 
     public void map(Piece piece) {
@@ -77,21 +62,19 @@ public  class PieceRadar {
         }
     }
 
-    public int getCount(CardinalDirection direction){
+    public int getCount(Direction direction){
         return pieces.get(direction).size();
     }
 
-    public List<Piece> getPieces(CardinalDirection direction){
+    public List<Piece> getPieces(Direction direction){
         return pieces.get(direction);
     }
 
     private void mapDirection(Piece piece, Direction direction){
         /*
          * map all neighbour positions that contain a piece of the same color
-         * and their coordinate are L: (x, y) + n*(variantX, variantY), where n is positive number
-         * NOTE:
-         * x = piece.getPosition().getXLabel(), y = piece.getPosition().getYLabel()
-         * L = line equation -> mapLine
+         * in the same direction (VERTICAL, HORIZONTAL, DIAGONAL, ANTIDIAGONAL)
+         * NOTE: VERTICAL = NORTH + SOUTH, ...
          */
 
         Position position = piece.getPosition();
@@ -104,25 +87,23 @@ public  class PieceRadar {
         position.mark = true;
         for(Position neighbour : position.getNeighbours()){
             Piece neighbourPiece = neighbour.getPiece();
-            if(neighbourPiece != null && !neighbour.mark &&
-                    neighbourPiece.getColor() == piece.getColor()){
-                try{
-                    variantX = neighbour.getXLabel() - position.getXLabel();
-                    variantY = neighbour.getYLabel() - position.getYLabel();
+            
+            variantX = (int) neighbour.getXLabel() - (int) position.getXLabel();
+            variantY = neighbour.getYLabel() - position.getYLabel();
 
-                    CardinalDirection cardinalDirection = getCardinalDirection(direction, variantX, variantY);
-                    pieces.get(cardinalDirection).add(neighbourPiece);
+            if(neighbourPiece != null && !neighbour.mark &&
+                    neighbourPiece.getColor() == piece.getColor() &&
+                    validateDirection(direction, variantX, variantY)){
+
+                    pieces.get(direction).add(neighbourPiece);
                     mapDirection(neighbourPiece, direction);
-                } catch (RankedException error){
-                    TraceLogger.log(error);
-                }
             }
         }
         TraceLogger.log(Level.INFO, position + "\n\n" + this.toString());
     }
 
     private void reset(){
-        for(CardinalDirection direction : CardinalDirection.values()){
+        for(Direction direction : Direction.values()){
             pieces.put(direction, new ArrayList<Piece>());
         }
     }
@@ -131,7 +112,7 @@ public  class PieceRadar {
     public String toString() {
         String out="\n";
 
-        for(CardinalDirection direction : CardinalDirection.values()){
+        for(Direction direction : directions){
             out += direction + " : " + pieces.get(direction).size();
             out += "\nPositions:";
             for(Piece piece : pieces.get(direction)){

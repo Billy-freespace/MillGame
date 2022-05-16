@@ -24,73 +24,29 @@ public abstract class BoardWithoutDiagonals extends Board {
     @Override
     public List<Board.Mill> getMills(Piece piece) {
         List<Board.Mill> mills = new ArrayList<Board.Mill>();
+        List<List<Piece>> pieces = new ArrayList<List<Piece>>();
 
         radar.map(piece);
 
         TraceLogger.log(Level.INFO, radar.toString());
 
-        int northCount = radar.getCount(CardinalDirection.N);
-        int southCount = radar.getCount(CardinalDirection.S);
-        int eastCount = radar.getCount(CardinalDirection.E);
-        int westCount = radar.getCount(CardinalDirection.W);
+        int verticalCount = radar.getCount(Direction.VERTICAL);
+        int horizontalCount = radar.getCount(Direction.HORIZONTAL);
 
-        if(northCount == 2){
-            List<Piece> pieces = radar.getPieces(CardinalDirection.N);
-            pieces.add(0, piece);
-            Mill mill = createMill(pieces);
-            if(mill != null){
-                mills.add(mill);
-            }
+        if(verticalCount == 2){
+            List<Piece> millPieces = radar.getPieces(Direction.VERTICAL);
+            millPieces.add(piece);
+            pieces.add(millPieces);
         }
 
-        if(southCount == 2){
-            List<Piece> pieces = radar.getPieces(CardinalDirection.S);
-            pieces.add(piece);
-            Mill mill = createMill(pieces);
-            if(mill != null){
-                mills.add(mill);
-            }
+        if(horizontalCount == 2){
+            List<Piece> millPieces = radar.getPieces(Direction.HORIZONTAL);
+            millPieces.add(piece);
+            pieces.add(millPieces);
         }
 
-        if(eastCount == 2){
-            List<Piece> pieces = radar.getPieces(CardinalDirection.E);
-            pieces.add(0, piece);
-            Mill mill = createMill(pieces);
-            if(mill != null){
-                mills.add(mill);
-            }
-        }
-
-        if(westCount == 2){
-            List<Piece> pieces = radar.getPieces(CardinalDirection.W);
-            pieces.add(piece);
-            Mill mill = createMill(pieces);
-            if(mill != null){
-                mills.add(mill);
-            }
-        }
-
-        if(westCount + eastCount == 2){ // piece is the central piece of the mill
-            List<Piece> pieces = new ArrayList<Piece>();
-
-            pieces.addAll(radar.getPieces(CardinalDirection.W));
-            pieces.add(piece);
-            pieces.addAll(radar.getPieces(CardinalDirection.E));
-
-            Mill mill = createMill(pieces);
-            if(mill != null){
-                mills.add(mill);
-            }
-        }
-
-        if(northCount + southCount == 2){ // piece is the central piece of the mill
-            List<Piece> pieces = new ArrayList<Piece>();
-
-            pieces.addAll(radar.getPieces(CardinalDirection.S));
-            pieces.add(piece);
-            pieces.addAll(radar.getPieces(CardinalDirection.N));
-
-            Mill mill = createMill(pieces);
+        for(List<Piece> millPieces : pieces){
+            Mill mill = createMill(millPieces);
             if(mill != null){
                 mills.add(mill);
             }

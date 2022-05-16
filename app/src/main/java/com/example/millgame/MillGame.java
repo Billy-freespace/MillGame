@@ -44,6 +44,7 @@ public class MillGame {
         return turniter.getIterationState();
     }
     public Player getOpponentPlayer(){ return turniter.getOpponent(); }
+    public int getNumberPlayerPieces(){ return board.getNumberPlayerPieces();}
     public boolean isGameOver(){ return false; }
 
     public List<Board.Mill> getMills(Piece piece) throws RankedException { return board.getMills(piece); }

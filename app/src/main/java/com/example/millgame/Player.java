@@ -86,18 +86,19 @@ public abstract class Player {
             throw new NotOwnPiece(piece);
         }
 
+        Position position = piece.getPosition();
         Position selectedPosition = board.getPosition(x, y);
 
-        if (!piece.getPosition().hasNeighbour(selectedPosition)) {
-            throw new InvalidMovement(piece.getPosition(), selectedPosition);
+        if (!position.hasNeighbour(selectedPosition)) {
+            throw new InvalidMovement(position, selectedPosition);
         }
 
         if (selectedPosition.hasPiece()) {
             throw new NotEmptyPosition(selectedPosition);
         }
 
-        char pieceXLabel = piece.getPosition().getXLabel();
-        int pieceYLabel = piece.getPosition().getYLabel();
+        char pieceXLabel = position.getXLabel();
+        int pieceYLabel = position.getYLabel();
         board.removePiece(pieceXLabel, pieceYLabel);
         board.placePiece(piece, x, y);
         //END
@@ -109,7 +110,7 @@ public abstract class Player {
 
         movePiece(piece, xLabel, yLabel);
     }
-    public int removePiece(char xLabel, int yLabel) throws RankedException {
+    public int removePiece(char xLabel, int yLabel) throws RankedException { // create a specific exception (ASAP)
         // this code was wrote just for testing RemovingEventAction (REMOVE or REUSE)
         // this code is not intended to handle all the possible cases, just to work
         // NOTE: remove throws RankedException and specify the specific exceptions
@@ -117,10 +118,12 @@ public abstract class Player {
         // BEGIN
         Position position = board.getPosition(xLabel, yLabel);
         Piece piece = position.getPiece();
-        if(piece != null && hasPiece(piece)){
-            board.removePiece(xLabel, yLabel);
-            pieces.remove(piece);
+        if(piece == null || !hasPiece(piece)){
+            throw new RankedException("Selected position is empty or piece does not belong to player");
         }
+
+        board.removePiece(xLabel, yLabel);
+        pieces.remove(piece);
 
         return pieces.size();
         //END
