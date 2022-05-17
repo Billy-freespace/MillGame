@@ -134,8 +134,8 @@ class PlayerOperationTest {
             player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin);
         });
 
-        /*assertNotEquals(player.getPiece(origin.getXLabel(), (char) origin.getYLabel()), board.getOrigin().getPiece());
-        assertNotNull(position.getPiece());*/
+        //assertNotEquals(player.getPiece(origin.getXLabel(), (char) origin.getYLabel()), board.getOrigin().getPiece());
+        assertNull(origin.getPiece());
     }
 
     /*@Test
