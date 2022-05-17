@@ -27,14 +27,14 @@ Run game
 ./gradlew run
 ```
 
-Run tests
-```bash
-./gradlew test
-```
-
-Build game (include **pmd** static analysis)
+Build game and run unit tests (exclude **pmd** static analysis)
 ```bash
 ./gradlew build
+```
+
+Static Analysis (PMD)
+```bash
+./gradlew check
 ```
 
 
