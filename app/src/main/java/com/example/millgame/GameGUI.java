@@ -72,12 +72,9 @@ public class GameGUI extends JFrame {
         //gamePanel.addActionResetButton(gameLayoutAction);
 
         Container mainPanel = this.getContentPane();
-<<<<<<< HEAD
-        mainPanel.add(controlPanel);
-=======
+
         TraceLogger.log(Level.FINE, "Adding controlPanel in Frame Panel");
         mainPanel.add(controlPanel, BorderLayout.CENTER);
         setVisible(true);
->>>>>>> test
     }
 }
