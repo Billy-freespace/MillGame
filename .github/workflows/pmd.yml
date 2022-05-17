@@ -1,4 +1,4 @@
-name: pmd
+name: pmd-workflow
 on: [push]
 jobs:
   pmd:
