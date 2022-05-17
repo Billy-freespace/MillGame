@@ -47,7 +47,7 @@ public abstract class Piece implements ObjectIcon {
 
     @Override
     public String toString() {
-        String out = "Piece(color=" + color + ")";
+        String out = "Piece(color=" + color + ", position=" + position + ")";
         return out;
     }
 }
