@@ -2,13 +2,8 @@ package com.example.millgame;
 
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
-import com.example.millgame.exceptions.InvalidMovement;
-import com.example.millgame.exceptions.InvalidPositionCoordinate;
-import com.example.millgame.exceptions.NoPiecesError;
-import com.example.millgame.exceptions.NotEmptyPosition;
-import com.example.millgame.exceptions.RankedException;
+import com.example.millgame.exceptions.*;
 import com.example.millgame.pieces.PieceColor;
-import com.example.millgame.pieces.PieceFactory;
 import com.example.millgame.players.PlayerFactory;
 import com.example.millgame.players.PlayerType;
 
@@ -22,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerOperationTest {
     private NineMMBoard board;
     private Player player;
+    private Player player2;
 
     @BeforeEach
     public void createPlayers() {
@@ -114,6 +110,7 @@ class PlayerOperationTest {
         });
     }
 
+//    Test for AC6.1
     @Test
     public void movePieceTest() throws RankedException {
         Position origin = board.getOrigin();
@@ -124,6 +121,7 @@ class PlayerOperationTest {
         assertEquals(player.getPiece(origin.getXLabel(), (char) origin.getYLabel()), board.getOrigin().getPiece());
         assertNull(position.getPiece());
     }
+
 
     @Test
     public void movePieceNotNeighbourTest() throws RankedException {
@@ -140,15 +138,44 @@ class PlayerOperationTest {
         assertNull(origin.getPiece());
     }
 
-    /*@Test
-    public void movePieceOnInvalidPositionTest() throws RankedException {
+    @Test
+    public void movePieceNoEmptyPositionTest() throws InvalidPositionCoordinate, NotEmptyPosition, NoPiecesError {
         Position origin = board.getOrigin();
-        Position position = board.getPosition('a', 7);
+        Position position = board.getPosition('a', 4);
         player.placePiece(position);
-        assertThrows(InvalidMovement.class, () -> {
-            player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin);
-        });
-    }*/
+        player.placePiece(origin);
+
+        NotEmptyPosition thrown = assertThrows(NotEmptyPosition.class,
+                () -> player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin)
+        );
+        assertEquals(NotEmptyPosition.getErrorMessage(origin.getXLabel(), origin.getYLabel()), thrown.getMessage());
+    }
+
+//    Test for AC6.5
+    @Test
+    public void movePieceInvalidPositionTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
+        Position origin = board.getOrigin();
+        Position position = new Position('z', 100);
+        player.placePiece(origin);
+
+        InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class,
+                () -> player.placePiece(position)
+        );
+        assertEquals(InvalidPositionCoordinate.getErrorMessage(position.getXLabel(), position.getYLabel()), thrown.getMessage());
+    }
+
+//    Test for AC6.6
+    @Test
+    public void movePieceNotOwnPieceTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
+        player2 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.BLACK, board);
+        Position origin = board.getOrigin();
+        player.placePiece(origin);
+
+        NotOwnPiece thrown = assertThrows(NotOwnPiece.class,
+                () -> player2.movePiece(origin.getPiece(), 'a', 4)
+        );
+        assertEquals(NotOwnPiece.getErrorMessage(origin.getPiece()), thrown.getMessage());
+    }
 
     /*
     @Test
