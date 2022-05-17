@@ -10,6 +10,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
     id 'jacoco'
+    id 'pmd'
 }
 
 jar {
@@ -39,13 +40,27 @@ application {
     mainClass = 'com.example.millgame.App'
 }
 
+// tasks to run AppMinimal application
+task minimal(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'com.example.millgame.AppMinimal'
+}
+
+
 jacocoTestReport {
     reports {
         xml.required = true
     }
 }
 
-tasks.named('test') {
+pmd {
+    consoleOutput = true
+    toolVersion = "6.21.0"
+    rulesMinimumPriority = 5
+    ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
+}
+
+test {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }

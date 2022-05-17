@@ -1,6 +1,5 @@
 package com.example.millgame.panels;
 
-import com.example.millgame.gameObjects.Constants;
 import com.example.millgame.graphicsAndSounds.Assets;
 
 import javax.swing.*;
@@ -13,7 +12,7 @@ public class WelcomePanel extends JPanel{
 
     public WelcomePanel(){
         super();
-        setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+        //setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
 //        setOpaque(false);
         setFocusable(true);
 

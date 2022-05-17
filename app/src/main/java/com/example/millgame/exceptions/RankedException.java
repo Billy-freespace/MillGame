@@ -5,7 +5,7 @@ import java.util.logging.Level;
 public class RankedException extends Exception{
     public Level rank;
 
-    public RankedException(Level rank, Exception exception){
+    public RankedException(Exception exception, Level rank){
         super(exception);
         this.rank = rank;
     }

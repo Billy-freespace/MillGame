@@ -1,13 +1,12 @@
 package com.example.millgame.boards;
 
-import com.example.millgame.Board;
-import com.example.millgame.Mill;
+
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.Position;
 
 import java.util.ArrayList;
 
-public class SixMMBoard extends Board {
+public class SixMMBoard extends BoardWithoutDiagonals {
     static final char MIN_XLABEL = 'a';
     static final char MAX_XLABEL = 'e';
     static final int MIN_YLABEL = 1;

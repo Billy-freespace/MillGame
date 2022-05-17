@@ -1,21 +1,13 @@
 package com.example.millgame.actions;
 
-import com.example.millgame.MillGame;
-import com.example.millgame.Piece;
-import com.example.millgame.Player;
-import com.example.millgame.Position;
-import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.*;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 
 import java.awt.event.ActionEvent;
-import java.io.PipedOutputStream;
-import java.util.ArrayList;
-import java.lang.CloneNotSupportedException;
 import java.util.logging.Level;
 
 public class RemovingEventAction extends EventAction {
-    private ArrayList<Position> positions; // possible positions to delete
 
     @Override
     public void actionPerformed(ActionEvent event){
@@ -27,15 +19,24 @@ public class RemovingEventAction extends EventAction {
         // END
 
         try {
-            if(positions.contains(position)){
-                Player opponent = game.getOpponentPlayer();
-                Piece piece = position.getPiece();
-                opponent.removePiece(piece);
+            Player opponent = game.getOpponentPlayer();
+            opponent.removePiece(position);
 
-                // REDRAW GAME BOARD
+            if(opponent.getPlacedPieces() < game.getNumberPlayerPieces()){
+                game.changeEventAction(new PositioningEventAction());
+            } else { // all pieces were already placed
+                int count = opponent.countBoardPieces();
+                if(count == 2){
+                    TraceLogger.log(Level.INFO, "GAME OVER - winner: " + game.getActivePlayer());
+                } else {
+                    game.changeEventAction(new MovingEventAction());
+                }
             }
+
+            game.nextTurn();
+
         } catch (Exception error){
-            RankedException exception = new RankedException(Level.WARNING, error);
+            RankedException exception = new RankedException(error, Level.WARNING);
             TraceLogger.log(exception, RemovingEventAction.class);
         }
     }

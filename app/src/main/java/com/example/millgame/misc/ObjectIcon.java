@@ -1,4 +1,4 @@
-package com.example.millgame;
+package com.example.millgame.misc;
 
 import javax.swing.*;
 import java.awt.*;

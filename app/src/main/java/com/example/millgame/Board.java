@@ -2,34 +2,52 @@ package com.example.millgame;
 
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
-import com.example.millgame.exceptions.NoEmptyPosition;
+import com.example.millgame.exceptions.NotEmptyPosition;
+import com.example.millgame.boards.BoardDimension;
+import com.example.millgame.exceptions.*;
 import com.example.millgame.pieces.PieceColor;
-
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
 public abstract class Board implements BoardDimension {
     protected Position origin;
-    protected HashMap<Character, HashMap<Integer, Position>> positions;
+    protected Map<Character, Map<Integer, Position>> positions;
     public final GameVariant variant;
-    protected HashMap<PieceColor, ArrayList<Mill>> mills;
+    protected Map<PieceColor, List<Mill>> mills;
+
+    protected PieceRadar radar;
 
     public Board (GameVariant variant) {
         this.variant = variant;
-        this.positions = new HashMap<Character, HashMap<Integer, Position>>();
+        this.positions = new HashMap<Character, Map<Integer, Position>>();
         this.origin = null;
 
-        mills =  new HashMap<PieceColor, ArrayList<Mill>>();
-        mills.put(PieceColor.BLACK, new ArrayList<Mill>());
-        mills.put(PieceColor.WHITE, new ArrayList<Mill>());
+        mills =  new HashMap<PieceColor, List<Mill>>();
 
+        for(PieceColor color : PieceColor.values()){
+            mills.put(color, new ArrayList<Mill>());
+        }
     }
 
     public ArrayList<Position> getEmptyPositions(){
-        return null;
+        ArrayList<Position> emptyPositions = new ArrayList<Position>();
+        Position position;
+
+        for(Character x : positions.keySet()){
+            Map<Integer, Position> inner = positions.get(x);
+            for(Integer y : inner.keySet()){
+                position = inner.get(y);
+
+                if(!position.hasPiece()){
+                    emptyPositions.add(position);
+                }
+            }
+        }
+
+        return emptyPositions;
     }
-    public abstract ArrayList<Position> getPossibleMovements(char xLabel, int yLabel);
-    public void placePiece(Piece piece, char xLabel, int yLabel) throws NoEmptyPosition, InvalidPositionCoordinate {
+
+    public void placePiece(Piece piece, char xLabel, int yLabel)
+            throws NotEmptyPosition, InvalidPositionCoordinate {
         Position position = null;
         
         position = this.getPosition(xLabel, yLabel);
@@ -37,36 +55,39 @@ public abstract class Board implements BoardDimension {
         Piece positionPiece = position.getPiece();
 
         if(positionPiece != null) {
-            /*
-             * RAISE AN EXCEPTION, BECAUSE POSITION (xLabel, yLabel) IS NOT EMPTY
-             */
-            throw new NoEmptyPosition(xLabel, yLabel);
+            throw new NotEmptyPosition(xLabel, yLabel);
         }
         position.setPiece(piece);
         piece.setPosition(position);
+
+        List<Mill> pieceMills = getMills(piece);
+        List<Mill> colorMills = mills.get(piece.getColor());
+        colorMills.addAll(pieceMills);
     }
 
-    public void removePiece(char xLabel, int yLabel) throws InvalidPositionCoordinate{
-        Position position = this.getPosition(xLabel, yLabel);
-        this.removePiece(position);
-    }
+    public void removePiece(char xLabel, int yLabel) throws InvalidPositionCoordinate, EmptyPositionError{
+        Position position = getPosition(xLabel, yLabel);
 
-    public void removePiece(Position position){
         Piece piece = position.getPiece();
+        if(piece == null){
+            throw new EmptyPositionError(position);
+        }
+
+        // remove all mills where piece belongs
+        List<Mill> colorMills = mills.get(piece.getColor());
+        ArrayList<Mill> colorMillsCopy = new ArrayList<Mill>(colorMills); // making a copy
+        for(Mill mill : colorMillsCopy){
+            if(mill.hasPiece(piece)){
+                colorMills.remove(mill);
+            }
+        }
+
         piece.setPosition(null);
         position.setPiece(null);
-    };
-
-    public void removeMarks(){
-        // ITERATE OVER ALL POSITIONS AND SET mark to false
     }
 
-    public ArrayList<Mill> searchMills(){
-        // IMPLEMENT ME (sprint 2)
-        return null;
-    }
-
-    public abstract boolean isValidMill(Mill mill);
+    public List<Mill> getMills(PieceColor color){ return mills.get(color); }
+    public abstract List<Mill> getMills(Piece piece);
     public GameVariant getVariant() {
         return variant;
     }
@@ -78,7 +99,7 @@ public abstract class Board implements BoardDimension {
             throw new InvalidPositionCoordinate(xLabel, yLabel);
         }
 
-        HashMap<Integer, Position> inner = positions.get(xLabel);
+        Map<Integer, Position> inner = positions.get(xLabel);
         if(!inner.containsKey(yLabel)){
             throw new InvalidPositionCoordinate(xLabel, yLabel);
         }
@@ -86,9 +107,26 @@ public abstract class Board implements BoardDimension {
         return inner.get(yLabel);
     }
 
-    public int countPositions(){
+    public int countPieces(PieceColor color){
+        int count = 0;
+
+        for(Character x : positions.keySet()){
+            Map<Integer, Position> inner = positions.get(x);
+            for(int y : positions.keySet()){
+                Position position = inner.get(y);
+                Piece piece = position.getPiece();
+                if(piece != null && piece.getColor() == color){
+                    count += 1;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    public int getNumberPositions(){
         int count =0;
-        for(HashMap<Integer, Position> inner : positions.values()){
+        for(Map<Integer, Position> inner : positions.values()){
             count += inner.size();
         }
 
@@ -99,7 +137,7 @@ public abstract class Board implements BoardDimension {
     public Position getOrigin(){ return origin; }
     public void unmark(){
         for(Character xLabel : positions.keySet()){
-            HashMap<Integer, Position> inner = positions.get(xLabel);
+            Map<Integer, Position> inner = positions.get(xLabel);
             for(Integer yLabel : inner.keySet()){
                 Position position = inner.get(yLabel);
                 position.mark = false;
@@ -116,7 +154,53 @@ public abstract class Board implements BoardDimension {
             positions.put(xLabel, new HashMap<Integer, Position>());
         }
 
-        HashMap<Integer, Position> inner = positions.get(xLabel);
+        Map<Integer, Position> inner = positions.get(xLabel);
         inner.put(yLabel, position);
+    }
+
+    public abstract Mill createMill(List<Piece> pieces);
+
+    /*
+     * Mill inner class
+     */
+    public abstract class Mill {
+        private List<Piece> pieces;
+        private PieceColor color;
+
+        public Mill(List<Piece> pieces) throws InvalidMill, InvalidMillSize, InvalidMillColor {
+            if(pieces.size() != 3){
+                throw  new InvalidMillSize(pieces);
+            }
+
+            color = pieces.get(0).getColor();
+
+            for(Piece piece : pieces){
+                if(piece.getColor() != color){
+                    throw new InvalidMillColor(pieces);
+                }
+            }
+
+            if(!isValid(pieces)){
+                throw new InvalidMill(pieces);
+            }
+            this.pieces = pieces;
+        }
+
+        protected abstract boolean isValid(List<Piece> pieces);
+        //public void addPiece(Piece piece) { pieces.add(piece); }
+        public boolean hasPiece (Piece piece) { return pieces.contains(piece); }
+
+        @Override
+        public String toString() {
+            String out="";
+
+            out += "Mill(color=" + color + ", Positions=[";
+            for(Piece piece : pieces){
+                out += piece.getPosition() + ", ";
+            }
+            out += "])";
+
+            return out;
+        }
     }
 }

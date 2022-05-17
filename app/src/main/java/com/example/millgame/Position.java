@@ -2,37 +2,25 @@ package com.example.millgame;
 
 import com.example.millgame.actions.EventAction;
 import com.example.millgame.logging.TraceLogger;
-import com.example.millgame.logging.TraceMessage;
+import com.example.millgame.misc.ObjectIcon;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.EventListenerList;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.logging.Level;
 
-interface PositionEventAction{
-    public void setEventAction(EventAction eventAction);
-}
-
-public class Position extends JButton implements PositionEventAction, ObjectIcon {
-    public static final ImageIcon NORMAL_ICON = new ImageIcon("src/main/resources/textures/nmm_point-normal.png");
-    public static final ImageIcon PRESSED_ICON = new ImageIcon("src/main/resources/textures/nmm_point-pressed.png");
-    public static final ImageIcon ROLLOVER_ICON = new ImageIcon("src/main/resources/textures/nmm_point-hover.png");
+public class Position extends JButton implements ObjectIcon {
+    private static final ImageIcon NORMAL_ICON = new ImageIcon("src/main/resources/textures/point-normal.png");
+    private static final ImageIcon PRESSED_ICON = new ImageIcon("src/main/resources/textures/point-pressed.png");
+    private static final ImageIcon ROLLOVER_ICON = new ImageIcon("src/main/resources/textures/point-hover.png");
 
     private char xLabel;
     private int yLabel;
     private Piece piece;
     private ArrayList<Position> neighbours;
     public boolean mark = false;
-
     private EventAction eventAction = null;
 
     public Position(char xLabel, int yLabel) {
@@ -73,9 +61,9 @@ public class Position extends JButton implements PositionEventAction, ObjectIcon
         return piece;
     }
 
-    public boolean hasPiece(){ return !(piece == null) ; }
-    public void setPoint(Point point){}
-    public void setMark(boolean value){}
+    public boolean hasPiece(){ return piece != null ; }
+
+    public boolean hasNeighbour(Position position) { return neighbours.contains(position); }
 
     public char getXLabel(){ return xLabel; }
     public int getYLabel(){ return yLabel; }
@@ -106,11 +94,12 @@ public class Position extends JButton implements PositionEventAction, ObjectIcon
 
     @Override
     public void paintComponent(Graphics g){
+        ObjectIcon objectIcon = this;
         if(piece != null){
-            changePositionIcons(piece);
-        } else {
-            changePositionIcons(this);
+            objectIcon = piece;
         }
+
+        changePositionIcons(objectIcon);
         super.paintComponent(g);
     }
 

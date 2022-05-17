@@ -33,12 +33,34 @@ public abstract class CircularIterator<T> implements Cloneable {
         return iterationState;
     }
 
-    public void reset(){
-        iterationIndex = initIterationIndex;
-        iterationState = null;
+    protected void addIterationState(T state){
+        /*
+         * This method is used inside methods of subclasses of CircularIterator<T>
+         */
+        collection.add(state);
     }
 
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public int size(){
+        return collection.size();
+    }
+
+    public List<T> values(){ return collection; }
+
+    public void reset(){
+        iterationState = null;
+        iterationIndex = initIterationIndex;
+    }
+
+    public void reset(boolean random){
+        iterationState = null;
+        if(random){
+            Random rand = new Random();
+            int size = collection.size();
+            iterationIndex = rand.nextInt(size);
+        }
+    }
+
+    public CircularIterator<T> clone() throws CloneNotSupportedException {
+        return (CircularIterator<T>) super.clone();
     }
 }

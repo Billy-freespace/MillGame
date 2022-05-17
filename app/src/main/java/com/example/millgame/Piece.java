@@ -1,5 +1,6 @@
 package com.example.millgame;
 
+import com.example.millgame.misc.ObjectIcon;
 import com.example.millgame.pieces.PieceColor;
 
 import java.util.ArrayList;
@@ -26,8 +27,27 @@ public abstract class Piece implements ObjectIcon {
     public Position getPosition(){ return position; }
     public PieceColor getColor(){ return color; }
 
+
+    public ArrayList<Position> getEmptyNeighbours(){
+        ArrayList<Position> emptyNeighbours = new ArrayList<Position>();
+
+        for(Position position : position.getNeighbours()){
+            if(position.getPiece() == null)
+                continue;
+            emptyNeighbours.add(position);
+        }
+
+        return emptyNeighbours;
+    }
+
     public ImageIcon getNormalIcon(){ return icon; };
     abstract public ImageIcon getPressedIcon();
 
     abstract public ImageIcon getRolloverIcon();
+
+    @Override
+    public String toString() {
+        String out = "Piece(color=" + color + ")";
+        return out;
+    }
 }
