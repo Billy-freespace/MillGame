@@ -2,6 +2,10 @@ package com.example.millgame;
 
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
+import com.example.millgame.exceptions.InvalidMovement;
+import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.exceptions.NoPiecesError;
+import com.example.millgame.exceptions.NotEmptyPosition;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.pieces.PieceFactory;
@@ -28,7 +32,7 @@ class PlayerOperationTest {
 
     //PLACE TESTS
     @Test
-    public void placePieceTest() throws NoEmptyPosition, InvalidPositionCoordinate{
+    public void placePieceTest() throws NotEmptyPosition, InvalidPositionCoordinate{
         /*
          * Test for AC3.1
          */
@@ -66,7 +70,7 @@ class PlayerOperationTest {
             // DONOTHING
         }
 
-        assertThrows(NoEmptyPosition.class, () -> {
+        assertThrows(NotEmptyPosition.class, () -> {
             player.placePiece('a', 7);
         });
     }
@@ -120,6 +124,29 @@ class PlayerOperationTest {
         assertEquals(player.getPiece(origin.getXLabel(), (char) origin.getYLabel()), board.getOrigin().getPiece());
         assertNull(position.getPiece());
     }
+
+    @Test
+    public void movePieceNotNeighbourTest() throws RankedException {
+        Position origin = board.getOrigin();
+        Position position = board.getPosition('a', 7);
+        player.placePiece(position);
+        assertThrows(InvalidMovement.class, () -> {
+            player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin);
+        });
+
+        /*assertNotEquals(player.getPiece(origin.getXLabel(), (char) origin.getYLabel()), board.getOrigin().getPiece());
+        assertNotNull(position.getPiece());*/
+    }
+
+    /*@Test
+    public void movePieceOnInvalidPositionTest() throws RankedException {
+        Position origin = board.getOrigin();
+        Position position = board.getPosition('a', 7);
+        player.placePiece(position);
+        assertThrows(InvalidMovement.class, () -> {
+            player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin);
+        });
+    }*/
 
     /*
     @Test
