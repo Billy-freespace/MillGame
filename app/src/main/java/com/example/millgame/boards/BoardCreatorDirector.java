@@ -2,13 +2,20 @@ package com.example.millgame.boards;
 
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.Board;
+import com.example.millgame.logging.TraceLogger;
+
+import java.util.logging.Level;
 
 import static com.example.millgame.MillGame.GameVariant.*;
 
 public class BoardCreatorDirector {
     public static Board makeMMBoard(GameVariant variant){
+        TraceLogger.log(Level.INFO, "Building " + variant + " board variant", BoardCreatorDirector.class);
         Board board;
         switch (variant){
+            case SIX_MEN_MORRIS:
+                board = new SixMMBoardBuilder().build();
+                break;
             case NINE_MEN_MORRIS:
                 board = new NineMMBoardBuilder().build();
                 break;
@@ -19,6 +26,11 @@ public class BoardCreatorDirector {
                 board = null;
         }
 
+        return board;
+    }
+
+    public SixMMBoard makeSixMMBoard(SixMMBoardBuilder builder){
+        SixMMBoard board = builder.build();
         return board;
     }
 

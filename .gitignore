@@ -1,9 +1,14 @@
 .gradle
 .idea
 *~
+.*
+*.class
 
+millgame.log
+app/millgame.log
+app/millgame.log.*
 app/build
 app/target
+app/bin
 
-test
 tmp

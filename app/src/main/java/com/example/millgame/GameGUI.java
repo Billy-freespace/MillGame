@@ -1,25 +1,32 @@
 package com.example.millgame;
 
-import com.example.millgame.gameObjects.Constants;
+import com.example.millgame.boards.BoardPanel;
+import com.example.millgame.exceptions.RankedException;
+import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.misc.Constants;
 import com.example.millgame.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.logging.Level;
 
 public class GameGUI extends JFrame {
     private JPanel controlPanel;
     private GameLayout gameLayout;
 
-    public GameGUI(){
+    public GameGUI() throws RankedException { // NOTE: handle this exception (ASAP)
         super();
+        TraceLogger.log(Level.INFO, "Initializing GameGUI");
 
-        MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS);
+        // NOTE: This game will be initialized in ConfigPanel
+        MillGame game = new MillGameBuilder().build(MillGame.GameVariant.NINE_MEN_MORRIS, MillGame.GameMode.HUMAN_HUMAN);
+        game.nextTurn(); // init game turn
 
         setTitle(Constants.title);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         getContentPane().setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         pack();
-        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         gameLayout = new GameLayout();
@@ -28,8 +35,27 @@ public class GameGUI extends JFrame {
 //        controlPanel.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
 
         WelcomePanel welcomePanel = new WelcomePanel();
+        TraceLogger.log(Level.FINE, "Initializing WelcomePanel");
+
         ConfigPanel configPanel = new ConfigPanel();
+        TraceLogger.log(Level.FINE, "Initializing ConfigPanel");
         GamePanel gamePanel = new GamePanel(game);
+
+        // REMOTE THIS STUFF - ONLY FOR TESTING PURPOSE
+        // BEGIN
+
+        BoardPanel boardPanel = game.getBoardPanel();
+        //boardPanel.add(new JLabel("GAME BOARD"));
+        boardPanel.setBackground(new Color(128, 64, 32));
+
+        //Position position = new Position('a', 1);
+
+        //boardPanel.add(position);
+
+        //JButton button = new JButton(Position.NORMAL_ICON);
+        //board.add(button);
+        controlPanel.add(boardPanel);
+        // END
 
         controlPanel.add(welcomePanel);
         controlPanel.add(configPanel);
@@ -43,9 +69,15 @@ public class GameGUI extends JFrame {
         configPanel.addActionStartButton(gameLayoutAction);
         configPanel.addActionStartButton(configPanel.getBuildMillGameAction());
 
-        gamePanel.addActionResetButton(gameLayoutAction);
+        //gamePanel.addActionResetButton(gameLayoutAction);
 
         Container mainPanel = this.getContentPane();
+<<<<<<< HEAD
         mainPanel.add(controlPanel);
+=======
+        TraceLogger.log(Level.FINE, "Adding controlPanel in Frame Panel");
+        mainPanel.add(controlPanel, BorderLayout.CENTER);
+        setVisible(true);
+>>>>>>> test
     }
 }

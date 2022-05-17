@@ -2,74 +2,133 @@ package com.example.millgame;
 
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
+import com.example.millgame.exceptions.EmptyPositionError;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.exceptions.NotEmptyPosition;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.pieces.PieceColor;
 import com.example.millgame.pieces.PieceFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class NineMMBoardOperationTest {
-    private final MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
     private  NineMMBoard board;
 
     @BeforeEach
-    public void createNineMMBoard(){
+    public void createNineMMBoard() {
+        MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
         board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
     }
 
     @Test
-    public void getPositionTest() throws InvalidPositionCoordinate {
-        char originXLabel = 'a';
-        int originYLabel = 1;
+    public void placePieceTest() throws InvalidPositionCoordinate, NotEmptyPosition {
+        /*
+         * Test for AC1.2
+         */
 
-        Position origin = board.getOrigin();
-        Position originPosition = board.getPosition(originXLabel, originYLabel);
-
-        assertEquals(origin, originPosition);
-    }
-
-    @Test
-    public void getInvalidPositionTest(){
-        char xLabel = 'c';
+        char xLabel = 'a';
         int yLabel = 1;
 
-        assertThrows(InvalidPositionCoordinate.class, () -> {
-            board.getPosition(xLabel, yLabel);
-        });
-    }
-
-    /*
-    @Test
-    public void placePieceTest() throws InvalidPositionCoordinate{
-        char xLabel = 'c';
-        int yLabel = 3;
-
         Piece piece = PieceFactory.create(PieceColor.WHITE);
 
-        Position c3 = board.getPosition(xLabel, yLabel);
-        assertNull(c3.getPiece());
-
         board.placePiece(piece, xLabel, yLabel);
-        c3 = board.getPosition(xLabel, yLabel);
+        Position origin = board.getOrigin();
 
-        assertEquals(piece, c3.getPiece());
+        assertEquals(piece, origin.getPiece());
     }
-     */
 
     @Test
-    public void removePieceTest() throws InvalidPositionCoordinate{
-        char xLabel = 'c';
-        int yLabel = 3;
+    public void placePieceOnInvalidPositionTest(){
+        /*
+         * Test for AC1.3
+         */
+    }
+
+    @Test
+    public void getPieceTest() throws InvalidPositionCoordinate, NotEmptyPosition {
+        /*
+         * Test for AC1.4
+         */
+
+        char xLabel = 'a';
+        int yLabel = 1;
 
         Piece piece = PieceFactory.create(PieceColor.WHITE);
         board.placePiece(piece, xLabel, yLabel);
-        Position c3 = board.getPosition(xLabel, yLabel);
-        assertEquals(piece, c3.getPiece());
+        Position origin = board.getOrigin();
 
+        assertEquals(piece, origin.getPiece());
+    }
+
+    @Test
+    public void getPieceInvalidPositionTest(){
+        /*
+         * Test for AC1.5
+         */
+
+        char xLabel = 'a';
+        int yLabel = -1;
+
+        InvalidPositionCoordinate thrown = assertThrows(
+                InvalidPositionCoordinate.class,
+                () -> board.getPosition(xLabel, yLabel));
+        assertEquals(InvalidPositionCoordinate.getErrorMessage(xLabel, yLabel), thrown.getMessage());
+    }
+
+
+    @Test
+    public void removePieceTest() throws RankedException {
+        /*
+         * Test for AC1.6
+         */
+
+        char xLabel = 'a';
+        int yLabel = 1;
+
+        // place a piece on origin position
+        Piece piece = PieceFactory.create(PieceColor.WHITE);
+        board.placePiece(piece, xLabel, yLabel);
+        Position origin = board.getOrigin();
+        assertEquals(piece, origin.getPiece());
+
+        // remove placed piece on origin position
         board.removePiece(xLabel, yLabel);
-        c3 = board.getPosition(xLabel, yLabel);
-        assertNull(c3.getPiece());
+        origin = board.getOrigin();
+
+        assertNull(origin.getPiece());
+        assertNull(piece.getPosition());
+    }
+
+    @Test
+    public void removePieceEmptyPositionTest(){
+        /*
+         * Test for AC1.7
+         */
+
+        char xLabel = 'a';
+        int yLabel = 1;
+
+        EmptyPositionError thrown = assertThrows(
+                EmptyPositionError.class,
+                () -> board.removePiece(xLabel, yLabel));
+        assertEquals(EmptyPositionError.getErrorMessage(xLabel, yLabel), thrown.getMessage());
+    }
+
+    @Test
+    public void removePieceInvalidPositionTest(){
+        /*
+         * Test for AC1.8
+         */
+
+        char xLabel = 'a';
+        int yLabel = -1;
+
+        InvalidPositionCoordinate thrown = assertThrows(
+                InvalidPositionCoordinate.class,
+                () -> board.removePiece(xLabel, yLabel));
+        assertEquals(InvalidPositionCoordinate.getErrorMessage(xLabel, yLabel), thrown.getMessage());
     }
 }

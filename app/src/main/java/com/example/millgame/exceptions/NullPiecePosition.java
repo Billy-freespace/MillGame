@@ -2,15 +2,18 @@ package com.example.millgame.exceptions;
 
 import com.example.millgame.Piece;
 
-public class NullPiecePosition extends Exception{
+import java.util.logging.Level;
+
+public class NullPiecePosition extends RankedException{
     public NullPiecePosition(Piece piece){
         super(NullPiecePosition.getErrorMessage(piece));
     }
+    public NullPiecePosition(Piece piece, Level rank){
+        super(NullPiecePosition.getErrorMessage(piece), rank);
+    }
 
     private static String getErrorMessage(Piece piece){
-        String message = "Piece position is null";
-        message += " (Piece wasn't placed in board or was deleted)";
-
-        return message;
+        return "Piece position is null" +
+                " (Piece wasn't placed in board or was deleted)";
     }
 }

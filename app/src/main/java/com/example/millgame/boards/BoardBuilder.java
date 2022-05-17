@@ -4,5 +4,6 @@ import com.example.millgame.Board;
 
 public interface BoardBuilder {
     void reset();
+    void createPositions();
     Board build();
 }

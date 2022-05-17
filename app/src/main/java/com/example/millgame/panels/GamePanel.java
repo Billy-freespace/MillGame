@@ -1,9 +1,7 @@
 package com.example.millgame.panels;
 
-import com.example.millgame.Board;
-import com.example.millgame.gameObjects.Constants;
+import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.MillGame;
-import com.example.millgame.graphicsAndSounds.Assets;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -43,80 +41,25 @@ public class GamePanel extends JPanel {
         quit.setVerticalTextPosition(JButton.CENTER);
         quit.setPreferredSize(new Dimension(120, 60));
 
+        /*
         setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         setMaximumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         setMinimumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         setFocusable(true);
+         */
 
-        setLayout(new GridBagLayout());
+        BoardPanel boardPanel = game.getBoardPanel();
+        add(boardPanel);
 
-        Border blackBorder = BorderFactory.createLineBorder(Color.black);
-
-        JPanel panelTop = new JPanel();
-        panelTop.setPreferredSize(new Dimension(600, 20));
-        panelTop.setOpaque(false);
-
-        JPanel panelLeft = new JPanel();
-        panelLeft.setPreferredSize(new Dimension(100, 400));
-        panelLeft.setOpaque(false);
-
-        JPanel panelRight = new JPanel();
-        panelRight.setPreferredSize(new Dimension(100, 400));
-        panelRight.setOpaque(false);
-
-        JPanel panelBottom = new JPanel();
-        panelBottom.setPreferredSize(new Dimension(600, 180));
-        panelBottom.setOpaque(false);
-
-//        JPanel panelBottomLeft = new JPanel();
-//        panelBottomLeft.setPreferredSize(new Dimension(160, 180));
-//        panelBottomLeft.setOpaque(false);
-//        panelBottomLeft.setBorder(blackBorder);
-//
-//        JPanel panelBottomRight = new JPanel();
-//        panelBottomRight.setPreferredSize(new Dimension(80, 180));
-//        panelBottomRight.setOpaque(false);
-//        panelBottomRight.setBorder(blackBorder);
-
-        Board board = game.getBoard();
-        board.setPreferredSize(new Dimension(400, 400));
-        board.setBorder(blackBorder);
-        board.setOpaque(false);
-
-        addComponent(panelTop, 0, 0, 60, 2, GridBagConstraints.CENTER, GridBagConstraints.NONE);
-        addComponent(panelLeft, 0, 2, 10, 40, GridBagConstraints.CENTER, GridBagConstraints.NONE);
-        addComponent(board, 10, 2, 40, 40, GridBagConstraints.CENTER, GridBagConstraints.NONE);
-        addComponent(panelRight, 50, 2, 10, 40, GridBagConstraints.CENTER, GridBagConstraints.NONE);
-//        addComponent(panelBottomLeft, 0, 42, 16, 18, GridBagConstraints.CENTER, GridBagConstraints.NONE);
-        addComponent(panelBottom, 0, 42, 60, 18, GridBagConstraints.CENTER, GridBagConstraints.NONE);
-//        addComponent(panelBottomRight, 48, 42, 8, 18, GridBagConstraints.CENTER, GridBagConstraints.NONE);
-
-        panelBottom.setLayout(new GridBagLayout());
-        logPanel = new JPanel();
-        logPanel.setPreferredSize(new Dimension(300, 160));
-        logPanel.setBorder(blackBorder);
-        logPanel.setOpaque(false);
-
-        panelBottom.add(reset, new GridBagConstraints(0, 0, 14, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, insets, 0, 0));
-        panelBottom.add(logPanel, new GridBagConstraints(14, 0, 32, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, insets, 0, 0));
-        panelBottom.add(quit, new GridBagConstraints(46, 0, 14, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, insets, 0, 0));
-//        addComponent(reset, 50, 2, 12, 6, GridBagConstraints.CENTER, GridBagConstraints.NONE);
-//        addComponent(quit, 50, 46, 12, 6, GridBagConstraints.CENTER, GridBagConstraints.NONE);
-
-//        add(board);
-//        add(reset, BorderLayout.SOUTH);
     }
 
-    private void addComponent(Component component, int gridx, int gridy, int gridwidth, int gridheight, int anchor, int fill) {
-        GridBagConstraints gbc = new GridBagConstraints(gridx, gridy, gridwidth, gridheight, 0.0, 0.0, anchor, fill, insets, 0, 0);
-        add(component, gbc);
-    }
-
+    /*
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         g.drawImage(Assets.background, 0, 0, null);
     }
+     */
 
     public void addActionResetButton(AbstractAction action){
         reset.addActionListener(action);
