@@ -1,8 +1,10 @@
 package com.example.millgame;
 
 import com.example.millgame.exceptions.RankedException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled("No X11 enable")
 public class GameGUIMinimalTest {
     @Test
     public void emptyNineMMBoardTest() throws RankedException {
