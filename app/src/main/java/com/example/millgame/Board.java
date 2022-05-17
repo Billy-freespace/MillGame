@@ -1,16 +1,12 @@
 package com.example.millgame;
 
 import com.example.millgame.MillGame.GameVariant;
+import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.exceptions.NotEmptyPosition;
 import com.example.millgame.boards.BoardDimension;
-import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.exceptions.*;
-import com.example.millgame.logging.TraceLogger;
-import com.example.millgame.misc.CardinalDirection;
-import com.example.millgame.misc.Direction;
 import com.example.millgame.pieces.PieceColor;
-
 import java.util.*;
-import java.util.logging.Level;
 
 public abstract class Board implements BoardDimension {
     protected Position origin;

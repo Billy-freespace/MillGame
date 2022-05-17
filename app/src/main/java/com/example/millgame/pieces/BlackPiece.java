@@ -14,7 +14,6 @@ class BlackPiece extends Piece{
         super(PieceColor.BLACK, NORMAL_ICON);
     }
 
-    public ImageIcon getNormalIcon(){ return NORMAL_ICON; }
     public ImageIcon getPressedIcon(){ return PRESSED_ICON; }
     public ImageIcon getRolloverIcon(){ return ROLLOVER_ICON; }
 }

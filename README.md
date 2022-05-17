@@ -32,7 +32,7 @@ Build game and run unit tests (exclude **pmd** static analysis)
 ./gradlew build
 ```
 
-Static Analysis (PMD)
+Static Analysis (pmd tasks)
 ```bash
 ./gradlew check
 ```

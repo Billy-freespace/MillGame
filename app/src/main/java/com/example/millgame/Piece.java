@@ -23,6 +23,10 @@ public abstract class Piece implements ObjectIcon {
         this.icon = pieceIcon;
     }
 
+    public void setPosition(Position position){ this.position = position; }
+    public Position getPosition(){ return position; }
+    public PieceColor getColor(){ return color; }
+
 
     public ArrayList<Position> getEmptyNeighbours(){
         ArrayList<Position> emptyNeighbours = new ArrayList<Position>();
@@ -36,11 +40,7 @@ public abstract class Piece implements ObjectIcon {
         return emptyNeighbours;
     }
 
-    public PieceColor getColor(){ return color; }
-    public void setPosition(Position position){this.position = position;}
-    public Position getPosition(){return position;}
-
-    abstract public ImageIcon getNormalIcon();
+    public ImageIcon getNormalIcon(){ return icon; };
     abstract public ImageIcon getPressedIcon();
 
     abstract public ImageIcon getRolloverIcon();

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class NineMMBoardBuildTest {
+
     private static NineMMBoard board;
 
     @BeforeAll
@@ -27,6 +28,7 @@ public class NineMMBoardBuildTest {
     public void originPositionTest() {
         char xLabel = 'a';
         int yLabel = 1;
+
         Position origin = board.getOrigin();
 
         assertEquals(xLabel, origin.getXLabel());
