@@ -22,7 +22,7 @@ Run game
 # To get available game configuration options
 ./gradlew minimal --args="-h"
 ```
-* Complete GUI version (include panels to configure your game)[STATE: in development]
+* Complete GUI version (include panels to configure your game)**[STATE: in development]**
 ```bash
 ./gradlew run
 ```
