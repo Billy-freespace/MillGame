@@ -14,8 +14,9 @@
 Mill Game - java
 
 ## Quickstart
-NOTE: If you prefer use maven, we include alternative maven commands.
-Run game
+**NOTE:** If you prefer use maven, we include alternative maven commands.
+
+#### Run game
 * Minimal GUI version (include cli arguments to configure your game)
 ```bash
 ./gradlew minimal
@@ -35,8 +36,9 @@ mvn compile exec:java -Dexec.mainClass=com.example.millgame.AppMinimal -Dexec.ar
 mvn compile exec:java -Dexec.mainClass=com.example.millgame.App
 ```
 
-Build game and run unit tests (include **pmd** static analysis tasks: pmdMain, pmdTest)
+#### Build game and run unit tests
 ```bash
+# include pmd static analysis tasks: pmdMain, pmdTest
 ./gradlew build
 
 # maven does not include pmd tasks yet
@@ -46,7 +48,7 @@ mvn test
 ./gradlew build -x pmdMain -x pmdTest
 ```
 
-Static Analysis (pmd tasks)
+#### Static Analysis (pmd tasks)
 ```bash
 ./gradlew check
 ```
