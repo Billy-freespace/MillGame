@@ -30,6 +30,9 @@ Run game
 Build game and run unit tests (include **pmd** static analysis tasks: pmdMain, pmdTest)
 ```bash
 ./gradlew build
+
+# exclude pmd tasks (only build game and run unit tests)
+./gradlew build -x pmdMain -x pmdTest
 ```
 
 Static Analysis (pmd tasks)
