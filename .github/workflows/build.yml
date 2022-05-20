@@ -13,5 +13,8 @@ jobs:
       - uses: gradle/gradle-build-action@v2
       - uses: actions/checkout@v3
       
-      - name: tests
-        run: ./gradlew test -x pmdMain -x pmdTest
+      - name: build
+        run: ./gradlew build -x pmdMain -x pmdTest
+
+      - name: mvn-build
+        run: mvn package
