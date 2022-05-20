@@ -14,7 +14,7 @@
 Mill Game - java
 
 ## Quickstart
-**NOTE:** If you prefer use maven, we include alternative maven commands.
+**NOTE:** If you prefer use maven instead of gradle, we include alternative commands to build, test and run the game.
 
 #### Run game
 * Minimal GUI version (include cli arguments to configure your game)
@@ -52,6 +52,31 @@ mvn test
 ```bash
 ./gradlew check
 ```
+
+### Demo
+
+**AVAILABLE GAME VARIANTS**: NINE_MEN_MORRIS, TWELVE_MEN_MORRIS, SIX_MEN_MORRIS  
+**AVALIABLE GAME MODES**: HUMAN_HUMAN, HUMAN_ROBOT  
+**AVAILABLE ROBOT LEVELS**: NOOB, NINJA  
+
+
+* Game variant`NINE_MEN_MORRIS` and mode `HUMAN_HUMAN`
+
+*command*: `./gradlew minimal` (similar: `./gradlew minimal --args='--variant=NINE_MEN_MORRIS --mode=HUMAN_HUMAN'`)
+
+![nine-men-morris](demo/nine-men-morris-board.png)
+
+* Game variant`TWELVE_MEN_MORRIS` and mode `HUMAN_HUMAN`
+
+*command*: `./gradlew minimal --args='--variant=TWELVE_MEN_MORRIS --mode=HUMAN_HUMAN'`
+
+![twelve-men-morris](demo/twelve-men-morris-board.png)
+
+* Game variant`SIX_MEN_MORRIS` and mode `HUMAN_HUMAN`
+
+*command*: `./gradlew minimal --args='--variant=SIX_MEN_MORRIS --mode=HUMAN_HUMAN'`
+
+![six-men-morris](demo/six-men-morris-board.png)
 
 
 ## Documentation
