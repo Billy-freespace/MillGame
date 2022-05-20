@@ -80,4 +80,11 @@ mvn test
 
 
 ## Documentation
-Check our design diagrams on the [wiki](https://github.com/Billy-freespace/MillGame/wiki)
+
+If you want to know what rules are allowed in `Nine men's morris` variants, then refer to [Nine men morris - wikipedia](https://en.wikipedia.org/wiki/Nine_men%27s_morris)
+
+### Software diagrams
+If you want to know how we structure our game and what design patterns we have used, then check our [class diagram](https://drive.google.com/file/d/1n-DbAE6KlZCJpNmzb_OeIX2zQQ1GxHFz/view?usp=sharing)
+
+
+Finally, all sugestions to improve the project are welcome! Just open an issue - Group 11
