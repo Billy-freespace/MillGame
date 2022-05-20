@@ -13,7 +13,7 @@
 </div>
 
 
-Mill Game - java
+**MillGame** is a game that implement the `Nine men's morris` strategy board game. But it also include several variants of this game. So if you get bored, just change the game's variant or challenge you with the `NINJA` robot player.
 
 ## Quickstart
 **NOTE:** If you prefer use maven instead of gradle, we include alternative commands to build, test and run the game.
