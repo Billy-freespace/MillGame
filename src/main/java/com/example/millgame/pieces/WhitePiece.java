@@ -1,6 +1,7 @@
 package com.example.millgame.pieces;
 
 import com.example.millgame.Piece;
+import com.example.millgame.misc.Color;
 
 import javax.swing.*;
 
@@ -10,7 +11,7 @@ class WhitePiece extends Piece {
     public static final ImageIcon ROLLOVER_ICON = new ImageIcon("src/main/resources/textures/coin-white-hover.png");
 
     public WhitePiece(){
-        super(PieceColor.WHITE, NORMAL_ICON);
+        super(Color.WHITE, NORMAL_ICON);
     }
 
     public ImageIcon getPressedIcon(){ return PRESSED_ICON; }

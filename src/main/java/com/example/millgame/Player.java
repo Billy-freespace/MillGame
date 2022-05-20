@@ -3,7 +3,7 @@ package com.example.millgame;
 import com.example.millgame.exceptions.*;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.players.PlayerType;
-import com.example.millgame.pieces.PieceColor;
+import com.example.millgame.misc.Color;
 import com.example.millgame.pieces.PieceFactory;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,32 +14,22 @@ public abstract class Player {
     public final int npieces;
     private int placedPieces;
 
-    private final PlayerType playerType;
+    private final PlayerType type;
 
-    private final PieceColor pieceColor;
+    private final Color color;
     protected final MillGame game;
 
     private final Board board;
 
 
-    public Player(PlayerType playerType, PieceColor color, MillGame game) {
+    public Player(PlayerType playerType, Color color, MillGame game) {
         this.game = game;
         board = game.getBoard();
 
-        npieces = board.getNumberPlayerPieces();
-        this.playerType = playerType;
-        pieceColor = color;
+        npieces = game.getNumberPlayerPieces();
+        this.type = playerType;
+        this.color = color;
         pieces = new ArrayList<Piece>(); // no pieces were placed to board
-        placedPieces = 0;
-    }
-
-    public Player(PlayerType playerType, PieceColor color, Board board){
-        game = null;
-        this.board = board;
-        npieces = board.getNumberPlayerPieces();
-        this.playerType = playerType;
-        pieceColor = color;
-        pieces = new ArrayList<Piece>(); 
         placedPieces = 0;
     }
 
@@ -54,11 +44,11 @@ public abstract class Player {
             throw new InvalidPositionCoordinate(x, y);
         }*/
 
-        if(placedPieces >= board.getNumberPlayerPieces()) {
-            throw new NoPiecesError(pieceColor, MillGame.GameStage.POSITIONING, Level.WARNING);
+        if(placedPieces >= npieces) {
+            throw new NoPiecesError(color, MillGame.GameStage.POSITIONING, Level.WARNING);
         }
 
-        Piece piece = PieceFactory.create(pieceColor);
+        Piece piece = PieceFactory.create(color);
         board.placePiece(piece, x, y);
         pieces.add(piece);
         placedPieces += 1;
@@ -110,19 +100,19 @@ public abstract class Player {
 
         movePiece(piece, xLabel, yLabel);
     }
-    public int removePiece(char xLabel, int yLabel) throws RankedException { // create a specific exception (ASAP)
+    public int removePiece(char x, int y) throws RankedException { // create a specific exception (ASAP)
         // this code was wrote just for testing RemovingEventAction (REMOVE or REUSE)
         // this code is not intended to handle all the possible cases, just to work
         // NOTE: remove throws RankedException and specify the specific exceptions
         // * verify that active turn belongs to the opponent
         // BEGIN
-        Position position = board.getPosition(xLabel, yLabel);
+        Position position = board.getPosition(x, y);
         Piece piece = position.getPiece();
         if(piece == null || !hasPiece(piece)){
             throw new RankedException("Selected position is empty or piece does not belong to player");
         }
 
-        board.removePiece(xLabel, yLabel);
+        board.removePiece(x, y);
         pieces.remove(piece);
 
         return pieces.size();
@@ -136,39 +126,15 @@ public abstract class Player {
         return removePiece(xLabel, yLabel);
     }
 
-    public List<Position> getPossibleMovements(Piece piece){
-        ArrayList<Position> possibleMovements = new ArrayList<Position>();
-
-        if(pieces.size() == 3){
-            possibleMovements.addAll(board.getEmptyPositions());
-        } else {
-            Position position = piece.getPosition();
-            possibleMovements.addAll(position.getNeighbours());
-        }
-
-        return possibleMovements;
-    }
-
     public int countBoardPieces(){ return pieces.size(); }
 
-    public Piece getPiece(char x, char y) throws InvalidPositionCoordinate {
-        Position position = board.getPosition(x, y);
-        Piece piece = null;
-
-        if(position != null){
-            piece = position.getPiece();
-        }
-
-        return piece;
-    }
-
-    public PieceColor getColor(){  return pieceColor; }
+    public Color getColor(){  return color; }
 
     public boolean hasPiece(Piece piece){ return pieces.contains(piece); }
 
     @Override
     public String toString() {
-        String out = "Player(color:" + pieceColor + ", type: " + playerType +
+        String out = "Player(color:" + color + ", type: " + type +
                 ", placedPieces: " + placedPieces + ", boardPieces: " + pieces.size() + ")";
         return out;
     }

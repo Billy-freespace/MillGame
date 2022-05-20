@@ -1,9 +1,10 @@
 package com.example.millgame.pieces;
 
 import com.example.millgame.Piece;
+import com.example.millgame.misc.Color;
 
 public class PieceFactory {
-    public static Piece create(PieceColor color){
+    public static Piece create(Color color){
         Piece piece = null;
         switch (color)
         {

@@ -17,7 +17,7 @@ import java.util.logging.Level;
 
 public abstract class BoardWithoutDiagonals extends Board {
 
-    public BoardWithoutDiagonals(MillGame.GameVariant variant){
+    public BoardWithoutDiagonals(BoardVariant variant){
         super(variant);
         radar = new PieceRadar(List.of(Direction.values()), this);
     }

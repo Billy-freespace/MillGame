@@ -17,7 +17,7 @@ import java.util.List;
 public abstract class BoardWithDiagonals extends Board {
 
 
-    public BoardWithDiagonals(MillGame.GameVariant variant){
+    public BoardWithDiagonals(BoardVariant variant){
         super(variant);
         radar = new PieceRadar(List.of(Direction.values()), this);
     }

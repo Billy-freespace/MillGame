@@ -6,7 +6,8 @@ import com.example.millgame.Position;
 
 import java.util.ArrayList;
 
-public class SixMMBoard extends BoardWithoutDiagonals {
+public class ThreeMMBoard extends BoardWithDiagonals {
+    // COPIED FROM SixMMBoard (UPDATE)
     static final char MIN_XLABEL = 'a';
     static final char MAX_XLABEL = 'e';
     static final int MIN_YLABEL = 1;
@@ -14,7 +15,7 @@ public class SixMMBoard extends BoardWithoutDiagonals {
 
     public static final int NUMBER_PIECES = 6;
 
-    public SixMMBoard() {
+    public ThreeMMBoard() {
         super(BoardVariant.NINE_MEN_MORRIS);
     }
 

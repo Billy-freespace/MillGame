@@ -14,6 +14,8 @@ public class GameGUIMinimal extends JFrame {
      * Minimal GUI version of game (only GamePanel)
      */
 
+    private BoardPanel boardPanel;
+
     public GameGUIMinimal(MillGame.GameVariant variant,
                           MillGame.GameMode mode) throws RankedException { // NOTE: handle this exception (ASAP)
         super();
@@ -21,7 +23,7 @@ public class GameGUIMinimal extends JFrame {
 
         MillGame game = new MillGameBuilder().build(variant, mode);
 
-        BoardPanel boardPanel = game.getBoardPanel();
+        boardPanel = game.getBoardPanel();
         boardPanel.setBackground(new Color(128, 64, 32));
 
         Container mainPanel = getContentPane();
@@ -33,7 +35,7 @@ public class GameGUIMinimal extends JFrame {
         super();
         frameConfig();
 
-        BoardPanel boardPanel = game.getBoardPanel();
+        boardPanel = game.getBoardPanel();
         boardPanel.setBackground(new Color(128, 64, 32));
 
         Container mainPanel = getContentPane();

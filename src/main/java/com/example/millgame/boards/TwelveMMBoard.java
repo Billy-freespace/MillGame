@@ -12,7 +12,7 @@ public class TwelveMMBoard extends BoardWithDiagonals {
 
     public static final int NUMBER_PIECES = 12;
     public TwelveMMBoard() {
-        super(GameVariant.TWELVE_MEN_MORRIS);
+        super(BoardVariant.TWELVE_MEN_MORRIS);
     }
 
     public boolean isValidMill(Mill mill) {

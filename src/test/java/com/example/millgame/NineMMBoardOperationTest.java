@@ -6,7 +6,7 @@ import com.example.millgame.exceptions.EmptyPositionError;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NotEmptyPosition;
 import com.example.millgame.exceptions.RankedException;
-import com.example.millgame.pieces.PieceColor;
+import com.example.millgame.misc.Color;
 import com.example.millgame.pieces.PieceFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,7 +32,7 @@ public class NineMMBoardOperationTest {
         char xLabel = 'a';
         int yLabel = 1;
 
-        Piece piece = PieceFactory.create(PieceColor.WHITE);
+        Piece piece = PieceFactory.create(Color.WHITE);
 
         board.placePiece(piece, xLabel, yLabel);
         Position origin = board.getOrigin();
@@ -56,7 +56,7 @@ public class NineMMBoardOperationTest {
         char xLabel = 'a';
         int yLabel = 1;
 
-        Piece piece = PieceFactory.create(PieceColor.WHITE);
+        Piece piece = PieceFactory.create(Color.WHITE);
         board.placePiece(piece, xLabel, yLabel);
         Position origin = board.getOrigin();
 
@@ -89,7 +89,7 @@ public class NineMMBoardOperationTest {
         int yLabel = 1;
 
         // place a piece on origin position
-        Piece piece = PieceFactory.create(PieceColor.WHITE);
+        Piece piece = PieceFactory.create(Color.WHITE);
         board.placePiece(piece, xLabel, yLabel);
         Position origin = board.getOrigin();
         assertEquals(piece, origin.getPiece());

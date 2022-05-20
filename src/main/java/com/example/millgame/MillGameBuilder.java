@@ -7,7 +7,7 @@ import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.logging.TraceMessage;
-import com.example.millgame.pieces.PieceColor;
+import com.example.millgame.misc.Color;
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.players.PlayerLevel;
 import com.example.millgame.players.PlayerType;
@@ -34,10 +34,13 @@ public class MillGameBuilder {
         game.setBoard(board);
     }
 
+    /*
     public void buildBoardPanel(){ // depends of buildBoard step
         boardPanel = new BoardPanel(board);
         game.setBoardPanel(boardPanel);
     }
+
+     */
 
     public void setRobotLevel(PlayerLevel level){
         robotLevel = level;
@@ -52,11 +55,11 @@ public class MillGameBuilder {
 
         reset();
         buildBoard(variant);
-        buildBoardPanel();
+        //buildBoardPanel();
 
         // create 2 players
-        game.addPlayer(PlayerType.HUMAN, PieceColor.WHITE);
-        PieceColor opponentColor = PieceColor.BLACK;
+        game.addPlayer(PlayerType.HUMAN, Color.WHITE);
+        Color opponentColor = Color.BLACK;
         PlayerType opponentType = PlayerType.HUMAN;
 
         if(gameMode == GameMode.HUMAN_ROBOT){

@@ -54,6 +54,14 @@ public class CmdParser {
                 .type(MillGame.GameMode.class)
                 .help("Game mode");
 
+        /*
+        game.addArgument("--robot-level")
+                .choices(MillGame.GameMode.values()).setDefault(MillGame.GameMode.HUMAN_HUMAN)
+                .type(MillGame.GameMode.class)
+                .help("Game mode");
+
+         */
+
         return  parser;
     }
 }

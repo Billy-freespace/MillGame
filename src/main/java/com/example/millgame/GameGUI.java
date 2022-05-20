@@ -13,6 +13,7 @@ import java.util.logging.Level;
 public class GameGUI extends JFrame {
     private JPanel controlPanel;
     private GameLayout gameLayout;
+    private BoardPanel boardPanel;
 
     public GameGUI() throws RankedException { // NOTE: handle this exception (ASAP)
         super();
@@ -44,7 +45,7 @@ public class GameGUI extends JFrame {
         // REMOTE THIS STUFF - ONLY FOR TESTING PURPOSE
         // BEGIN
 
-        BoardPanel boardPanel = game.getBoardPanel();
+        boardPanel = game.getBoardPanel();
         //boardPanel.add(new JLabel("GAME BOARD"));
         boardPanel.setBackground(new Color(128, 64, 32));
 

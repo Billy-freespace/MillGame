@@ -3,7 +3,7 @@ package com.example.millgame;
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.exceptions.*;
-import com.example.millgame.pieces.PieceColor;
+import com.example.millgame.misc.Color;
 import com.example.millgame.players.PlayerFactory;
 import com.example.millgame.players.PlayerType;
 
@@ -23,7 +23,7 @@ class PlayerOperationTest {
     public void createPlayers() {
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
         board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
-        player = PlayerFactory.create(PlayerType.HUMAN, PieceColor.WHITE, board);
+        player = PlayerFactory.create(PlayerType.HUMAN, Color.WHITE, board);
     }
 
     //PLACE TESTS
@@ -167,7 +167,7 @@ class PlayerOperationTest {
 //    Test for AC6.6
     @Test
     public void movePieceNotOwnPieceTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
-        player2 = PlayerFactory.create(PlayerType.HUMAN, PieceColor.BLACK, board);
+        player2 = PlayerFactory.create(PlayerType.HUMAN, Color.BLACK, board);
         Position origin = board.getOrigin();
         player.placePiece(origin);
 
