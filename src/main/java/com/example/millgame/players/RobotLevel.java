@@ -1,6 +1,6 @@
 package com.example.millgame.players;
 
-public enum PlayerLevel {
+public enum RobotLevel {
     NOOB,
     NINJA
 }

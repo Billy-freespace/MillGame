@@ -1,14 +1,12 @@
 package com.example.millgame.boards;
 
 import com.example.millgame.Board;
-import com.example.millgame.MillGame;
 import com.example.millgame.Piece;
 import com.example.millgame.PieceRadar;
 import com.example.millgame.exceptions.InvalidMill;
 import com.example.millgame.exceptions.InvalidMillColor;
 import com.example.millgame.exceptions.InvalidMillSize;
 import com.example.millgame.logging.TraceLogger;
-import com.example.millgame.misc.CardinalDirection;
 import com.example.millgame.misc.Direction;
 
 import java.util.ArrayList;

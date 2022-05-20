@@ -1,10 +1,14 @@
 package com.example.millgame.misc;
 
 import com.example.millgame.MillGame;
+import com.example.millgame.players.RobotLevel;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.impl.Arguments;
 import net.sourceforge.argparse4j.inf.ArgumentGroup;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CmdParser {
     public static ArgumentParser debugArgumentParser(){
@@ -54,13 +58,36 @@ public class CmdParser {
                 .type(MillGame.GameMode.class)
                 .help("Game mode");
 
-        /*
-        game.addArgument("--robot-level")
-                .choices(MillGame.GameMode.values()).setDefault(MillGame.GameMode.HUMAN_HUMAN)
-                .type(MillGame.GameMode.class)
-                .help("Game mode");
+        game.addArgument("--random-turn")
+                .action(Arguments.storeTrue())
+                .help("The first player is choices randomly");
 
-         */
+        game.addArgument("--turn-time")
+                .type(Integer.class)
+                .setDefault(-1)
+                .help("Maximum player turn time (seconds) [default: infinite time]");
+
+        List<Color> defaultPieceColor = new ArrayList<Color>(2);
+        defaultPieceColor.add(Color.WHITE);
+        defaultPieceColor.add(Color.BLACK);
+
+        game.addArgument("--piece-color")
+                .nargs(2)
+                .choices(Color.values())
+                .type(Color.class)
+                .setDefault(defaultPieceColor)
+                .help("Players piece color");
+
+        game.addArgument("--board-color")
+                .choices(Color.values())
+                .setDefault(defaultPieceColor)
+                .help("Board color");
+
+        game.addArgument("--robot-level")
+                .choices(RobotLevel.values())
+                .type(RobotLevel.class)
+                .setDefault(RobotLevel.NOOB)
+                .help("Robot player difficulty");
 
         return  parser;
     }

@@ -9,8 +9,4 @@ public class HumanPlayer extends Player {
     public HumanPlayer(Color color, MillGame game) {
         super(PlayerType.HUMAN, color, game);
     }
-
-    public HumanPlayer(Color color, Board board){
-        super(PlayerType.HUMAN, color, board);
-    }
 }

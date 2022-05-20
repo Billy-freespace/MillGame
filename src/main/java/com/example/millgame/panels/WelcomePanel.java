@@ -1,7 +1,5 @@
 package com.example.millgame.panels;
 
-import com.example.millgame.graphicsAndSounds.Assets;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,6 +25,6 @@ public class WelcomePanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(Assets.background, 0, 0, null);
+        //g.drawImage(Assets.background, 0, 0, null);
     }
 }

@@ -3,12 +3,13 @@ package com.example.millgame.boards;
 import com.example.millgame.Board;
 import com.example.millgame.Position;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
-import com.example.millgame.graphicsAndSounds.Assets;
+import com.example.millgame.misc.Assets;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class BoardPanel extends JPanel {
+
 
     private GridBagLayout layoutManager;
     protected Board board;

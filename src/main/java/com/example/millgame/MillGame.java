@@ -28,12 +28,13 @@ public class MillGame {
     private static Map<GameVariant, Integer> gameVariant2PlayerPieces = MillGame.getMapPlayerPieces();
 
 
-    public MillGame(){ // useless constructor, to create a MillGame object use MillGameBuilder class
+    public MillGame(GameVariant variant){ // useless constructor, to create a MillGame object use MillGameBuilder class
         turnIter = new TurnIterator();
         players = new ArrayList<Player>();
         board = null;
         stageIter = GameStageIterator.init();
         eventAction = null;
+        this.variant = variant;
     }
 
     public void initTurn(boolean random){
@@ -89,7 +90,7 @@ public class MillGame {
             }
         }
 
-        Player player = PlayerFactory.create(playerType, color, board);
+        Player player = PlayerFactory.create(playerType, color, this);
         turnIter.addPlayer(player);
     }
     public void setBoard(Board board){ this.board = board; }

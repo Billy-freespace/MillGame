@@ -1,4 +1,4 @@
-package com.example.millgame.graphicsAndSounds;
+package com.example.millgame.misc;
 
 import java.awt.image.*;
 import java.io.IOException;

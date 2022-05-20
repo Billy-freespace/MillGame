@@ -3,13 +3,12 @@ package com.example.millgame;
 import com.example.millgame.MillGame.GameMode;
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.actions.PositioningEventAction;
-import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.logging.TraceMessage;
 import com.example.millgame.misc.Color;
 import com.example.millgame.boards.BoardCreatorDirector;
-import com.example.millgame.players.PlayerLevel;
+import com.example.millgame.players.RobotLevel;
 import com.example.millgame.players.PlayerType;
 
 
@@ -18,14 +17,12 @@ import java.util.logging.Level;
 public class MillGameBuilder {
     private MillGame game;
     private Board board;
-    private BoardPanel boardPanel;
     private GameMode mode;
-    private PlayerLevel robotLevel = PlayerLevel.NOOB;
+    private RobotLevel robotLevel = RobotLevel.NOOB;
 
-    public void reset(){
-        game = new MillGame();
+    public void reset(GameVariant variant){
+        game = new MillGame(variant);
         board = null;
-        boardPanel = null;
         TraceLogger.log(Level.INFO, "Reset MillGame, Players and Board objects", MillGameBuilder.class);
     }
 
@@ -34,15 +31,7 @@ public class MillGameBuilder {
         game.setBoard(board);
     }
 
-    /*
-    public void buildBoardPanel(){ // depends of buildBoard step
-        boardPanel = new BoardPanel(board);
-        game.setBoardPanel(boardPanel);
-    }
-
-     */
-
-    public void setRobotLevel(PlayerLevel level){
+    public void setRobotLevel(RobotLevel level){
         robotLevel = level;
     } // sprint 2
 
@@ -53,11 +42,11 @@ public class MillGameBuilder {
                 MillGameBuilder.class);
         TraceLogger.log(traceMessage);
 
-        reset();
+        reset(variant);
         buildBoard(variant);
-        //buildBoardPanel();
 
         // create 2 players
+        //TraceLogger.log(Level.INFO,"GAME: "+ game);
         game.addPlayer(PlayerType.HUMAN, Color.WHITE);
         Color opponentColor = Color.BLACK;
         PlayerType opponentType = PlayerType.HUMAN;
@@ -68,9 +57,12 @@ public class MillGameBuilder {
 
         game.addPlayer(opponentType, opponentColor);
 
+
         // initialize event action
         game.changeEventAction(new PositioningEventAction());
         game.initTurn(false);
+
+        //TraceLogger.log(Level.INFO, "MIllGameBuilder.build() was build game: "+ game);
 
         return game;
     }

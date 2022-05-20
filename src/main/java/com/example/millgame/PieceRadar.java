@@ -1,7 +1,5 @@
 package com.example.millgame;
 
-import com.example.millgame.logging.TraceLogger;
-import com.example.millgame.misc.CardinalDirection;
 import com.example.millgame.misc.Direction;
 
 import java.util.ArrayList;
@@ -77,7 +75,6 @@ public  class PieceRadar {
          */
 
         Position position = piece.getPosition();
-        Map<CardinalDirection, List<Piece>> mappedPieces = new HashMap<CardinalDirection, List<Piece>>();
 
         char x = position.getXLabel();
         int y = position.getYLabel();

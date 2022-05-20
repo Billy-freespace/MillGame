@@ -1,4 +1,6 @@
-package com.example.millgame.graphicsAndSounds;
+package com.example.millgame.misc;
+
+import com.example.millgame.misc.Loader;
 
 import javax.sound.sampled.Clip;
 import java.awt.image.BufferedImage;
