@@ -1,7 +1,9 @@
-# MillGame
-
-<div>
-
+ # MillGame
+ 
+ <!-- someone can help me to align these badges to the center! I'm so bad in html -->
+<div style="text-align: center;margin-left:auto;margin-right:auto;width:500px">  
+  
+  
 [![build](https://github.com/Billy-freespace/MillGame/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/Billy-freespace/MillGame/actions/workflows/build.yml)
 [![pmd](https://github.com/Billy-freespace/MillGame/actions/workflows/pmd.yml/badge.svg?branch=test)](https://github.com/Billy-freespace/MillGame/actions/workflows/pmd.yml)
 [![codecov](https://codecov.io/gh/Billy-freespace/MillGame/branch/main/graph/badge.svg?token=NJZOQUKC0T)](https://codecov.io/gh/Billy-freespace/MillGame)
