@@ -5,10 +5,9 @@
 *.class
 
 millgame.log
-app/millgame.log
-app/millgame.log.*
-app/build
-app/target
-app/bin
-
-tmp
+millgame.log
+millgame.log.*
+build/
+target/
+bin/
+tmp/

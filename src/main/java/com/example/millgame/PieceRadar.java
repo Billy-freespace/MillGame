@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
 public  class PieceRadar {
     private Map<Direction, List<Piece>> pieces;
     private final List<Direction> directions;
-    private Board board;
+    private final Board board;
 
     public PieceRadar(List<Direction> directions, Board board){
         pieces = new HashMap<Direction, List<Piece>>();
@@ -113,8 +112,7 @@ public  class PieceRadar {
         String out="\n";
 
         for(Direction direction : directions){
-            out += direction + " : " + pieces.get(direction).size();
-            out += "\nPositions:";
+            out += direction + " : ";
             for(Piece piece : pieces.get(direction)){
                 out += piece.getPosition() + ", ";
             }
