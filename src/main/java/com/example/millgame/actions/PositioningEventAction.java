@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.logging.Level;
 
 public class PositioningEventAction extends EventAction {
+
+    public PositioningEventAction(){super(ActionType.POSITIONING);}
     @Override
     public void actionPerformed(ActionEvent event) {
         Position position = (Position) event.getSource();

@@ -8,8 +8,10 @@ import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.logging.TraceMessage;
 import com.example.millgame.misc.Color;
 import com.example.millgame.boards.BoardCreatorDirector;
+import com.example.millgame.players.PlayerFactory;
 import com.example.millgame.players.RobotLevel;
 import com.example.millgame.players.PlayerType;
+import com.example.millgame.players.RobotPlayerFactory;
 
 
 import java.util.logging.Level;
@@ -18,7 +20,7 @@ public class MillGameBuilder {
     private MillGame game;
     private Board board;
     private GameMode mode;
-    private RobotLevel robotLevel = RobotLevel.NOOB;
+    private RobotLevel robotLevel;
 
     public void reset(GameVariant variant){
         game = new MillGame(variant);
@@ -33,7 +35,7 @@ public class MillGameBuilder {
 
     public void setRobotLevel(RobotLevel level){
         robotLevel = level;
-    } // sprint 2
+    }
 
     public MillGame build(GameVariant variant, GameMode gameMode) throws RankedException {
         TraceMessage traceMessage = new TraceMessage(Level.INFO,
@@ -47,15 +49,19 @@ public class MillGameBuilder {
 
         // create 2 players
         //TraceLogger.log(Level.INFO,"GAME: "+ game);
-        game.addPlayer(PlayerType.HUMAN, Color.WHITE);
-        Color opponentColor = Color.BLACK;
-        PlayerType opponentType = PlayerType.HUMAN;
+        Player player;
+        player = PlayerFactory.createHuman(Color.WHITE, game);
+        game.addPlayer(player);
 
+        Color opponentColor = Color.BLACK;
         if(gameMode == GameMode.HUMAN_ROBOT){
-            opponentType = PlayerType.ROBOT;
+            player = PlayerFactory.createRobot(opponentColor, game, robotLevel);
+
+        } else {
+            player = PlayerFactory.createHuman(opponentColor, game);
         }
 
-        game.addPlayer(opponentType, opponentColor);
+        game.addPlayer(player);
 
 
         // initialize event action

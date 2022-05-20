@@ -12,6 +12,5 @@ public class HumanPlayerFactory extends PlayerFactory {
         return new HumanPlayer(color, game);
     }
 
-    public Player createByLevel(Color color, MillGame game, RobotLevel level) { return null; }
-    public Player createByLevel(Color color, Board board, RobotLevel level) { return null; }
+    public Player createByLevel(Color color, MillGame game, RobotLevel level) { return create(color, game); }
 }

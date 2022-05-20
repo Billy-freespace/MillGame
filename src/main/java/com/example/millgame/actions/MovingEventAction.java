@@ -15,6 +15,8 @@ import java.util.logging.Level;
 public class MovingEventAction extends EventAction {
     private Position selectedPosition = null;
 
+    public MovingEventAction(){super(ActionType.MOVING);}
+
     @Override
     public void actionPerformed(ActionEvent event) {
         Position position = (Position) event.getSource();

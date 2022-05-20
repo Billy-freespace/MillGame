@@ -8,21 +8,16 @@ public abstract class PlayerFactory {
     public abstract Player create(Color color, MillGame game);
     public abstract Player createByLevel(Color color, MillGame game, RobotLevel level);
 
-
-    static public Player create(PlayerType playerType, Color color, MillGame game){
+    static public Player createHuman(Color color, MillGame game){
         Player player;
+        player = new HumanPlayerFactory().create(color, game);
 
-        switch (playerType){
-            case HUMAN:
-                player = new HumanPlayerFactory().create(color, game);
-                break;
-            case ROBOT:
-                player = new RobotPlayerFactory().create(color, game);
-                break;
-            default:
-                player = null;
-                break;
-        }
+        return player;
+    }
+
+    static public Player createRobot(Color color, MillGame game, RobotLevel level){
+        Player player;
+        player = new RobotPlayerFactory().createByLevel(color, game, level);
 
         return player;
     }

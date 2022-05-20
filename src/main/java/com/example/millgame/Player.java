@@ -19,7 +19,7 @@ public abstract class Player {
     private final Color color;
     protected final MillGame game;
 
-    private final Board board;
+    protected final Board board;
 
 
     public Player(PlayerType playerType, Color color, MillGame game) {

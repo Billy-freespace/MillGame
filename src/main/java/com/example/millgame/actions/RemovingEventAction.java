@@ -9,6 +9,7 @@ import java.util.logging.Level;
 
 public class RemovingEventAction extends EventAction {
 
+    public RemovingEventAction(){super(ActionType.REMOVING);}
     @Override
     public void actionPerformed(ActionEvent event){
         Position position = (Position) event.getSource();

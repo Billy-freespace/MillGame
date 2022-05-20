@@ -8,6 +8,8 @@ import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Color;
 import com.example.millgame.players.PlayerFactory;
 import com.example.millgame.players.PlayerType;
+import com.example.millgame.players.RobotLevel;
+import com.example.millgame.players.RobotPlayer;
 
 
 import java.util.ArrayList;
@@ -79,24 +81,29 @@ public class MillGame {
 
     public List<Board.Mill> getMills(Piece piece) throws RankedException { return board.getMills(piece); }
 
-    public void addPlayer(PlayerType playerType, Color color) throws RankedException{
+    public void addPlayer(Player player) throws RankedException{
         if(turnIter.size() > 2){
             throw new RankedException("Limit of players reached", Level.WARNING); // NOTE: write an exception for handle this case
         }
 
-        for(Player player : turnIter.values()){
-            if(player.getColor() == color){
+        Color color = player.getColor();
+        for(Player playerItr : turnIter.values()){
+            if(color == playerItr.getColor()){
                 throw new RankedException("Color " + color + " was already taken by a player", Level.WARNING); // NOTE: write an exception for handle this case
             }
         }
 
-        Player player = PlayerFactory.create(playerType, color, this);
         turnIter.addPlayer(player);
     }
+
+
+
     public void setBoard(Board board){ this.board = board; }
     public Board getBoard(){ return board; }
 
     public BoardPanel getBoardPanel(){ return new BoardPanel(board); }
+
+    public EventAction getEventAction() { return eventAction; }
 
     public void changeEventAction(EventAction eventAction){
         this.eventAction = eventAction;
