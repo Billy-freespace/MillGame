@@ -7,6 +7,8 @@ import com.example.millgame.misc.Assets;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BoardPanel extends JPanel {
 
@@ -59,4 +61,34 @@ public class BoardPanel extends JPanel {
             }
         }
     }
+
+    /*
+     * inner enumerations
+     */
+
+
+/*
+    public class BoardBackground {
+
+        private Map<BoardColor, Color> color;
+
+        public enum BoardColor {
+            ORANGE,
+            GRAY,
+            BROWN
+        }
+
+        public BoardBackground(){
+            color = new HashMap<BoardColor, Color>();
+            color.put(BoardColor.ORANGE, new Color(128, 64, 32));
+            color.put(BoardColor.GRAY, new Color(0, 0, 0));
+            color.put(BoardColor.BROWN, new Color(0, 0, 0));
+        }
+
+        public Color getColor(BoardColor boardColor){
+            return color.get(boardColor);
+        }
+    }
+
+ */
 }

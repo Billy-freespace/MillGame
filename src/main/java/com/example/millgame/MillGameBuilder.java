@@ -14,6 +14,8 @@ import com.example.millgame.players.PlayerType;
 import com.example.millgame.players.RobotPlayerFactory;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 public class MillGameBuilder {
@@ -24,6 +26,8 @@ public class MillGameBuilder {
     private boolean randomTurn = false;
     private GameVariant variant;
 
+    private List<Color> defaultColors;
+
     public MillGameBuilder(GameVariant variant) {
         this.variant = variant;
     }
@@ -32,6 +36,9 @@ public class MillGameBuilder {
         game = new MillGame(variant);
         board = null;
         randomTurn = false;
+        defaultColors = new ArrayList<Color>(2);
+        defaultColors.add(Color.WHITE);
+        defaultColors.add(Color.BLACK);
         TraceLogger.log(Level.INFO, "Reset MillGame, Players and Board objects", MillGameBuilder.class);
 
         return this;
@@ -57,7 +64,30 @@ public class MillGameBuilder {
         return this;
     }
 
-    public MillGameBuilder createPlayer(PlayerType playerType, Color color) throws RankedException{
+    public MillGameBuilder createPlayers(GameMode mode) throws RankedException {
+        return createPlayers(mode, defaultColors);
+    }
+
+    public MillGameBuilder createPlayers(GameMode mode, List<Color> colors) throws RankedException{
+        if(colors.size() < 2){
+            throw new RankedException("Needed 2 player color. Supplied: " + colors.size());
+        }
+
+        Color color = colors.get(0);
+        createPlayer(PlayerType.HUMAN, color);
+
+        PlayerType playerType = PlayerType.HUMAN;
+        if(mode == GameMode.HUMAN_ROBOT){
+            playerType = PlayerType.ROBOT;
+        }
+
+        color = colors.get(1);
+        createPlayer(playerType, color);
+
+        return this;
+    }
+
+    private MillGameBuilder createPlayer(PlayerType playerType, Color color) throws RankedException{
         Player player;
 
         if(playerType == PlayerType.ROBOT){

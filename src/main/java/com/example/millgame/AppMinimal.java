@@ -1,10 +1,9 @@
 package com.example.millgame;
 
+import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.RankedException;
-import com.example.millgame.misc.Assets;
 import com.example.millgame.misc.CmdParser;
 import com.example.millgame.misc.Color;
-import com.example.millgame.players.PlayerType;
 import com.example.millgame.players.RobotLevel;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
@@ -25,7 +24,11 @@ public class AppMinimal extends App {
 
     protected static int turnTime;
 
-    protected static List<Color> colorList;
+    protected static List<Color> pieceColor;
+
+    private static java.awt.Color boardBackgroundColor;
+
+
 
     public static void main(String[] args){
         Runnable runner = new Runnable(){
@@ -46,25 +49,15 @@ public class AppMinimal extends App {
                         gameBuilder.setTurnTime(turnTime);
                     }
 
-                    gameBuilder.initTurnIterator();
+                    gameBuilder.initTurnIterator(); // turn iterator has to be initialized before create player of game
 
-                    com.example.millgame.misc.Color color = com.example.millgame.misc.Color.WHITE;
-                    gameBuilder.createPlayer(PlayerType.HUMAN, color);
-
-                    color = com.example.millgame.misc.Color.BLACK;
-                    if(mode == MillGame.GameMode.HUMAN_ROBOT){
-                        // GET OTHER SUPPLIED COLOR
-                        gameBuilder.setRobotLevel(robotLevel)
-                                .createPlayer(PlayerType.ROBOT, color);
-                    } else{
-                        gameBuilder.createPlayer(PlayerType.HUMAN, color);
-                    }
-
-                    MillGame game = gameBuilder.build();
+                    MillGame game = gameBuilder
+                            .createPlayers(mode, pieceColor)
+                            .build();
 
                     GameGUIMinimal gameGUI = new GameGUIMinimal()
                             .setGame(game)
-                            .setBoardBackground(new java.awt.Color(128, 64, 32));
+                            .setBoardBackground(boardBackgroundColor);
                     gameGUI.setVisible(true);
 
                 } catch (ArgumentParserException error){
@@ -87,7 +80,10 @@ public class AppMinimal extends App {
         randomTurn = ns.get("randomTurn");
         turnTime = ns.get("turnTime");
         robotLevel = ns.get("robotLevel");
-
+        pieceColor = ns.get("pieceColor");
+        //BoardPanel.BoardBackground boardBackground = new BoardPanel.BoardBackground();
+        //boardBackgroundColor = boardBackground.getColor(ns.get("boardColor"));
+        boardBackgroundColor = new java.awt.Color(128, 64, 32);
 
         return ns;
     }

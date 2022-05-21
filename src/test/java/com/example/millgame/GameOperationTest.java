@@ -14,9 +14,11 @@ public class GameOperationTest {
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
         MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
 
-        game = new MillGameBuilder().build(variant, mode);
-        game.nextTurn(); // init player turn
-        board = game.getBoard();
+        MillGameBuilder gameBuilder = new MillGameBuilder(variant)
+                .reset()
+                .buildBoard();
+
+
     }
 
     /*
@@ -28,7 +30,6 @@ public class GameOperationTest {
         /*
          * Test for AC3.1
          */
-        int i = 1;
     }
 
 

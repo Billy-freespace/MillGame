@@ -1,6 +1,8 @@
 package com.example.millgame.misc;
 
+import com.example.millgame.Board;
 import com.example.millgame.MillGame;
+import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.players.RobotLevel;
 import net.sourceforge.argparse4j.ArgumentParsers;
 import net.sourceforge.argparse4j.impl.Arguments;
@@ -80,12 +82,17 @@ public class CmdParser {
                 .setDefault(defaultPieceColor)
                 .dest("pieceColor")
                 .help("Players piece color");
+/*
+        BoardPanel.BoardBackgroundColor defaultBackgroundColor = BoardPanel.BoardBackgroundColor.ORANGE;
 
         game.addArgument("--board-color")
-                .choices(Color.values())
-                .setDefault(defaultPieceColor)
+                .choices(BoardPanel.BoardBackgroundColor.values())
+                .type(BoardPanel.BoardBackgroundColor.class)
+                .setDefault(defaultBackgroundColor)
                 .dest("boardColor")
                 .help("Board color");
+                
+ */
 
         game.addArgument("--robot-level")
                 .choices(RobotLevel.values())

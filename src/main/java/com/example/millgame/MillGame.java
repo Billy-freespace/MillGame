@@ -8,6 +8,7 @@ import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Color;
 import com.example.millgame.players.PlayerType;
 import com.example.millgame.players.RobotPlayer;
+//import com.example.millgame.turns.TimedTurnIterator;
 import com.example.millgame.turns.TurnIterator;
 
 
@@ -41,7 +42,7 @@ public class MillGame {
 
     public void setTurnTime(int seconds){
         if(seconds > 0){
-            // DECORATOR of TurnIterator
+            //turnIter = new TimedTurnIterator(turnIter, seconds);
         }
     }
 
