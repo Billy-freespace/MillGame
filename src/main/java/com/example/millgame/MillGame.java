@@ -6,10 +6,8 @@ import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Color;
-import com.example.millgame.players.PlayerFactory;
-import com.example.millgame.players.PlayerType;
-import com.example.millgame.players.RobotLevel;
-import com.example.millgame.players.RobotPlayer;
+import com.example.millgame.panels.GamePanel;
+import com.example.millgame.turns.TurnIterator;
 
 
 import java.util.ArrayList;
@@ -39,8 +37,8 @@ public class MillGame {
         this.variant = variant;
     }
 
-    public void initTurn(boolean random){
-        turnIter.reset(random);
+    public void initTurn(){
+        turnIter.reset();
         turnIter.next();
     }
 

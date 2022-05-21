@@ -5,18 +5,20 @@ import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.players.PlayerType;
 import com.example.millgame.misc.Color;
 import com.example.millgame.pieces.PieceFactory;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
 public abstract class Player {
-    private List<Piece> pieces;
-    public final int npieces;
-    private int placedPieces;
+    protected List<Piece> pieces;
+    public final int gamePieces;
+    protected int placedPieces;
 
-    private final PlayerType type;
+    protected final PlayerType type;
 
-    private final Color color;
+    protected final Color color;
     protected final MillGame game;
 
     protected final Board board;
@@ -26,7 +28,7 @@ public abstract class Player {
         this.game = game;
         board = game.getBoard();
 
-        npieces = game.getNumberPlayerPieces();
+        gamePieces = game.getNumberPlayerPieces();
         this.type = playerType;
         this.color = color;
         pieces = new ArrayList<Piece>(); // no pieces were placed to board
@@ -34,6 +36,8 @@ public abstract class Player {
     }
 
     public int getPlacedPieces(){ return placedPieces; }
+
+    public List<Piece> getBoardPieces(){ return pieces; }
 
     public void placePiece(char x, int y)
             throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
@@ -44,7 +48,7 @@ public abstract class Player {
             throw new InvalidPositionCoordinate(x, y);
         }*/
 
-        if(placedPieces >= npieces) {
+        if(placedPieces >= gamePieces) {
             throw new NoPiecesError(color, MillGame.GameStage.POSITIONING, Level.WARNING);
         }
 
@@ -131,6 +135,11 @@ public abstract class Player {
     public Color getColor(){  return color; }
 
     public boolean hasPiece(Piece piece){ return pieces.contains(piece); }
+
+    public ImageIcon getPieceIcon(){
+        Piece piece = PieceFactory.create(color);
+        return piece.getNormalIcon();
+    }
 
     @Override
     public String toString() {

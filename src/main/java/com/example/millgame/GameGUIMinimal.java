@@ -1,7 +1,6 @@
 package com.example.millgame;
 
 import com.example.millgame.boards.BoardPanel;
-import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Constants;
 
@@ -16,40 +15,29 @@ public class GameGUIMinimal extends JFrame {
 
     private BoardPanel boardPanel;
 
-    public GameGUIMinimal(MillGame.GameVariant variant,
-                          MillGame.GameMode mode) throws RankedException { // NOTE: handle this exception (ASAP)
+    private Color defaultColor = new Color(128, 64, 32);
+
+    public GameGUIMinimal(){
         super();
-        frameConfig();
-
-        MillGame game = new MillGameBuilder().build(variant, mode);
-
-        boardPanel = game.getBoardPanel();
-        boardPanel.setBackground(new Color(128, 64, 32));
-
-        Container mainPanel = getContentPane();
-        mainPanel.add(boardPanel, BorderLayout.CENTER);
-        setVisible(true);
-    }
-
-    public GameGUIMinimal(MillGame game){
-        super();
-        frameConfig();
-
-        boardPanel = game.getBoardPanel();
-        boardPanel.setBackground(new Color(128, 64, 32));
-
-        Container mainPanel = getContentPane();
-        mainPanel.add(boardPanel, BorderLayout.CENTER);
-        setVisible(true);
-    }
-
-    private void frameConfig(){
-        TraceLogger.log(Level.INFO, "Initializing GameGUIMinimal");
+        //TraceLogger.log(Level.INFO, "Initializing GameGUIMinimal");
         setTitle(Constants.title);
         Container mainPanel = getContentPane();
         mainPanel.setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+    }
+
+    public GameGUIMinimal setGame(MillGame game){
+        boardPanel = game.getBoardPanel();
+        boardPanel.setBackground(defaultColor);
+        Container mainPanel = getContentPane();
+        mainPanel.add(boardPanel, BorderLayout.CENTER);
+        return this;
+    }
+
+    public GameGUIMinimal setBoardBackground(Color color){
+        boardPanel.setBackground(color);
+        return this;
     }
 }

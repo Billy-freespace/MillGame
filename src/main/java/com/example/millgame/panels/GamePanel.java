@@ -1,6 +1,5 @@
 package com.example.millgame.panels;
 
-import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.MillGame;
 
 import javax.swing.JPanel;
@@ -28,7 +27,7 @@ public class GamePanel extends JPanel {
         setFocusable(true);
          */
 
-        BoardPanel boardPanel = game.getBoardPanel();
+        com.example.millgame.GamePanel boardPanel = game.getBoardPanel();
         add(boardPanel);
     }
 

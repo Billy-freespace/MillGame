@@ -1,6 +1,5 @@
 package com.example.millgame;
 
-import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Constants;
@@ -13,7 +12,7 @@ import java.util.logging.Level;
 public class GameGUI extends JFrame {
     private JPanel controlPanel;
     private GameLayout gameLayout;
-    private BoardPanel boardPanel;
+    private GamePanel boardPanel;
 
     public GameGUI() throws RankedException { // NOTE: handle this exception (ASAP)
         super();
@@ -40,7 +39,7 @@ public class GameGUI extends JFrame {
 
         ConfigPanel configPanel = new ConfigPanel();
         TraceLogger.log(Level.FINE, "Initializing ConfigPanel");
-        GamePanel gamePanel = new GamePanel(game);
+        com.example.millgame.panels.GamePanel gamePanel = new com.example.millgame.panels.GamePanel(game);
 
         // REMOTE THIS STUFF - ONLY FOR TESTING PURPOSE
         // BEGIN

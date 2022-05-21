@@ -1,12 +1,13 @@
 package com.example.millgame;
 
 import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.turns.CircularIterator;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-public class GameStageIterator extends CircularIterator<MillGame.GameStage>{
+public class GameStageIterator extends CircularIterator<MillGame.GameStage> {
     private GameStageIterator(List<MillGame.GameStage> gameStages){
         super(gameStages, false);
     }

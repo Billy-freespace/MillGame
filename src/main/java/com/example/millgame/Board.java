@@ -121,6 +121,29 @@ public abstract class Board implements BoardDimension {
         return count;
     }
 
+    // Override this method if fly is not allow in a specific board
+    public List<Position> getPossibleMovements(Piece piece){
+        Position position = piece.getPosition();
+
+        List<Position> possibleMovements = new ArrayList<Position>();
+
+        Color color = piece.getColor();
+
+        int count = countPieces(color);
+
+        if(count <= 3){
+            possibleMovements.addAll(getEmptyPositions());
+        } else {
+            for(Position neighbour : position.getNeighbours()){
+                if(!neighbour.hasPiece()){
+                    possibleMovements.add(neighbour);
+                }
+            }
+        }
+
+        return possibleMovements;
+    }
+
     public int countPositions(){
         int count =0;
         for(Map<Integer, Position> inner : positions.values()){
@@ -153,6 +176,23 @@ public abstract class Board implements BoardDimension {
 
         Map<Integer, Position> inner = positions.get(xLabel);
         inner.put(yLabel, position);
+    }
+
+    public boolean inAnyMill(Piece piece){
+        Color color = piece.getColor();
+
+        List<Mill> colorMills = mills.get(color);
+
+        boolean result = false;
+
+        for(Mill mill : colorMills){
+            if(mill.hasPiece(piece)){
+                result = true;
+                break;
+            }
+        }
+
+        return result;
     }
 
     public abstract Mill createMill(List<Piece> pieces);

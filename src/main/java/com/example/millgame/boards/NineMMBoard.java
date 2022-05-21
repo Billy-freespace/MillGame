@@ -2,6 +2,12 @@ package com.example.millgame.boards;
 
 
 import com.example.millgame.MillGame.GameVariant;
+import com.example.millgame.Piece;
+import com.example.millgame.Position;
+import com.example.millgame.misc.Color;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class NineMMBoard extends BoardWithoutDiagonals {

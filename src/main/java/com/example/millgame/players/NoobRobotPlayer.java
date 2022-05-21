@@ -1,6 +1,8 @@
 package com.example.millgame.players;
 
 import com.example.millgame.MillGame;
+import com.example.millgame.Piece;
+import com.example.millgame.Player;
 import com.example.millgame.Position;
 import com.example.millgame.actions.ActionType;
 import com.example.millgame.actions.EventAction;
@@ -32,10 +34,59 @@ public class NoobRobotPlayer extends RobotPlayer{
     @Override
     public void autoMovePiece(){
         TraceLogger.log(Level.INFO, "executing autoMovePiece method", NoobRobotPlayer.class);
+        Player player = game.getActivePlayer();
+
+        int randomIndex;
+        Piece piece;
+        List<Position> possibleMovements;
+
+        do {
+            randomIndex = random.nextInt(pieces.size());
+            piece = pieces.get(randomIndex);
+            possibleMovements = board.getPossibleMovements(piece);
+        } while (possibleMovements.size() == 0);
+
+        EventAction eventAction = game.getEventAction();
+
+        if(eventAction.getActionType() == ActionType.MOVING){
+            ActionEvent event;
+
+            Position piecePosition = piece.getPosition();
+            event = new ActionEvent(piecePosition, -1,
+                    "RobotPlayer.autoMovePiece (First Selection): "+ piecePosition);
+            eventAction.actionPerformed(event);
+
+            randomIndex = random.nextInt(possibleMovements.size());
+            event = new ActionEvent(possibleMovements.get(randomIndex), -1,
+                    "RobotPlayer.autoMovePiece (Second Selection): "+ piecePosition);
+
+            eventAction.actionPerformed(event);
+        }
     }
 
     @Override
     public void autoRemovePiece(){
         TraceLogger.log(Level.INFO, "executing autoRemovePiece method", NoobRobotPlayer.class);
+
+        Player opponent = game.getOpponentPlayer();
+
+        int randomIndex;
+        Piece piece;
+        List<Piece> opponentPieces = opponent.getBoardPieces();
+
+        do{
+            randomIndex = random.nextInt();
+            piece = opponentPieces.get(randomIndex);
+        }while(!board.inAnyMill(piece));
+
+        EventAction eventAction = game.getEventAction();
+
+        if(eventAction.getActionType() == ActionType.REMOVING){
+            Position piecePosition = piece.getPosition();
+            ActionEvent event = new ActionEvent(piecePosition, -1,
+                    "RobotPlayer.autoRemovePiece : " + piecePosition);
+
+            eventAction.actionPerformed(event);
+        }
     }
 }

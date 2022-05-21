@@ -32,8 +32,10 @@ public class PositioningEventAction extends EventAction {
                 game.changeEventAction(new RemovingEventAction());
             } else {
                 Player opponent = game.getOpponentPlayer();
-                if(player.getPlacedPieces() == player.npieces &&
-                        opponent.getPlacedPieces() == opponent.npieces){
+                int gamePieces = game.getNumberPlayerPieces();
+
+                if(player.getPlacedPieces() == gamePieces &&
+                        opponent.getPlacedPieces() == gamePieces){
                     // both players have positioned all their pieces, so change event action to Moving
                     // for the next play
                     game.changeEventAction(new MovingEventAction());

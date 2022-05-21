@@ -19,56 +19,73 @@ import java.util.logging.Level;
 public class MillGameBuilder {
     private MillGame game;
     private Board board;
-    private GameMode mode;
     private RobotLevel robotLevel;
+    private boolean randomTurn;
+    private GameMode gameMode;
+    private GameVariant variant;
 
-    public void reset(GameVariant variant){
+    public MillGameBuilder(GameVariant variant){
+        this.variant = variant;
+    }
+
+    public MillGameBuilder reset(){
         game = new MillGame(variant);
         board = null;
+        randomTurn = false;
         TraceLogger.log(Level.INFO, "Reset MillGame, Players and Board objects", MillGameBuilder.class);
+
+        return this;
     }
 
-    public void buildBoard(GameVariant variant){
+    public MillGameBuilder buildBoard(){
         board = BoardCreatorDirector.makeMMBoard(variant);
         game.setBoard(board);
+
+        return this;
     }
 
-    public void setRobotLevel(RobotLevel level){
+
+    public MillGameBuilder setTurnTime(int seconds){
+
+        return this;
+    }
+
+    public MillGameBuilder setGameMode(GameMode mode){
+        gameMode = mode;
+
+        return this;
+    }
+    public MillGameBuilder setRobotLevel(RobotLevel level){
         robotLevel = level;
+
+        return this;
     }
 
-    public MillGame build(GameVariant variant, GameMode gameMode) throws RankedException {
-        TraceMessage traceMessage = new TraceMessage(Level.INFO,
-                "Building MillGame: GameVariant=" +
-                variant + ", GameMode=" + gameMode,
-                MillGameBuilder.class);
-        TraceLogger.log(traceMessage);
-
-        reset(variant);
-        buildBoard(variant);
-
-        // create 2 players
-        //TraceLogger.log(Level.INFO,"GAME: "+ game);
+    public MillGameBuilder createPlayer(PlayerType playerType, Color color) throws RankedException{
         Player player;
-        player = PlayerFactory.createHuman(Color.WHITE, game);
-        game.addPlayer(player);
 
-        Color opponentColor = Color.BLACK;
-        if(gameMode == GameMode.HUMAN_ROBOT){
-            player = PlayerFactory.createRobot(opponentColor, game, robotLevel);
+        if(playerType == PlayerType.ROBOT){
+            player = PlayerFactory.createRobot(color, game, robotLevel);
 
         } else {
-            player = PlayerFactory.createHuman(opponentColor, game);
+            player = PlayerFactory.createHuman(color, game);
         }
 
         game.addPlayer(player);
 
+        return this;
+    }
 
+    public MillGameBuilder setRandomTurn(boolean random){
+        randomTurn = random;
+
+        return this;
+    }
+
+    public MillGame build() throws RankedException {
+        game.initTurn(randomTurn);
         // initialize event action
         game.changeEventAction(new PositioningEventAction());
-        game.initTurn(false);
-
-        //TraceLogger.log(Level.INFO, "MIllGameBuilder.build() was build game: "+ game);
 
         return game;
     }

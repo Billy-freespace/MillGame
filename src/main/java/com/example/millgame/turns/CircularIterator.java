@@ -1,4 +1,4 @@
-package com.example.millgame;
+package com.example.millgame.turns;
 
 import java.util.List;
 import java.util.Random;
@@ -10,8 +10,11 @@ public abstract class CircularIterator<T> implements Cloneable {
 
     private int initIterationIndex = -1;
 
-    CircularIterator(List<T> collection, boolean randomPosition){
+    private boolean randomPosition;
+
+    public  CircularIterator(List<T> collection, boolean random){
         iterationIndex = -1;
+        randomPosition = random;
         if(randomPosition){
             Random rand = new Random();
             int size = collection.size();
@@ -48,12 +51,7 @@ public abstract class CircularIterator<T> implements Cloneable {
 
     public void reset(){
         iterationState = null;
-        iterationIndex = initIterationIndex;
-    }
-
-    public void reset(boolean random){
-        iterationState = null;
-        if(random){
+        if(randomPosition){
             Random rand = new Random();
             int size = collection.size();
             iterationIndex = rand.nextInt(size);

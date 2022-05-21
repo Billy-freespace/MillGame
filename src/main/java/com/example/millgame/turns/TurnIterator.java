@@ -1,5 +1,6 @@
-package com.example.millgame;
+package com.example.millgame.turns;
 
+import com.example.millgame.Player;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 
@@ -7,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-public class TurnIterator extends CircularIterator<Player>{
+public class TurnIterator extends CircularIterator<Player> {
 
-    TurnIterator(){ super(new ArrayList<Player>(), false); }
-    TurnIterator(List<Player> collection) {
-        super(collection, false);
+    TurnIterator(boolean random){ super(new ArrayList<Player>(), random); }
+    TurnIterator(List<Player> collection, boolean random) {
+        super(collection, random);
     }
     public Player getOpponent(){
         Player opponent = null;

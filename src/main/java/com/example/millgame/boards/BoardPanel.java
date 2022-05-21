@@ -10,7 +10,6 @@ import java.awt.*;
 
 public class BoardPanel extends JPanel {
 
-
     private GridBagLayout layoutManager;
     protected Board board;
 

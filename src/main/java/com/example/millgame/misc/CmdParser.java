@@ -45,7 +45,7 @@ public class CmdParser {
         return parser;
     }
 
-    public static ArgumentParser minimalAppArgumentParser(){
+    public static ArgumentParser appMInimalArgumentParser(){
         ArgumentParser parser = debugArgumentParser();
         ArgumentGroup game = parser.addArgumentGroup("Game Configuration Options");
         game.addArgument("--variant")
