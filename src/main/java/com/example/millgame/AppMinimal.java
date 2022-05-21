@@ -1,15 +1,19 @@
 package com.example.millgame;
 
 import com.example.millgame.exceptions.RankedException;
+import com.example.millgame.misc.Assets;
 import com.example.millgame.misc.CmdParser;
+import com.example.millgame.misc.Color;
 import com.example.millgame.players.PlayerType;
 import com.example.millgame.players.RobotLevel;
 import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 
+
 import java.awt.*;
 import java.io.IOException;
+import java.util.List;
 
 public class AppMinimal extends App {
     // game options
@@ -20,6 +24,8 @@ public class AppMinimal extends App {
     protected static RobotLevel robotLevel;
 
     protected static int turnTime;
+
+    protected static List<Color> colorList;
 
     public static void main(String[] args){
         Runnable runner = new Runnable(){
@@ -58,7 +64,7 @@ public class AppMinimal extends App {
 
                     GameGUIMinimal gameGUI = new GameGUIMinimal()
                             .setGame(game)
-                            .setBoardBackground(new Color(128, 64, 32));
+                            .setBoardBackground(new java.awt.Color(128, 64, 32));
                     gameGUI.setVisible(true);
 
                 } catch (ArgumentParserException error){

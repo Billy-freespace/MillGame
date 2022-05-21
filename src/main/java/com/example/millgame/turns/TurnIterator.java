@@ -40,13 +40,19 @@ public class TurnIterator extends CircularIterator<Player> {
         addIterationState(player);
     }
 
-    public void addTurnListener(EventListener turnListener){
-        turnListeners.add(EventListener.class, turnListener);
+    public void addTurnListener(ActionListener turnListener){
+        turnListeners.add(ActionListener.class, turnListener);
     }
 
     private void fireTurnListeners(ActionEvent actionEvent){
+        TraceLogger.log(Level.INFO, "turnListeners: " + turnListeners.getListeners(ActionListener.class), TurnIterator.class);
+        TraceLogger.log(Level.INFO, "actionEvent: " + actionEvent, TurnIterator.class);
         for(ActionListener listener : turnListeners.getListeners(ActionListener.class)){
             listener.actionPerformed(actionEvent);
         }
+    }
+
+    public void removeAllTurnListener(){ // only use this method to avoid call the turn listeners when next method is called
+        turnListeners = new EventListenerList();
     }
 }

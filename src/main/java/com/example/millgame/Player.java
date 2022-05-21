@@ -16,7 +16,7 @@ public abstract class Player {
     public final int gamePieces;
     protected int placedPieces;
 
-    protected final PlayerType type;
+    protected PlayerType type;
 
     protected final Color color;
     protected final MillGame game;

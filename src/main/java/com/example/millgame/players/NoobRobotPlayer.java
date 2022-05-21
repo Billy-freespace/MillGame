@@ -23,6 +23,8 @@ public class NoobRobotPlayer extends RobotPlayer{
         int index = random.nextInt(emptyPositions.size());
         Object position = emptyPositions.get(index);
 
+        TraceLogger.log(Level.INFO, "autoPlacePiece execution: "+ position, NoobRobotPlayer.class);
+
         EventAction eventAction = game.getEventAction();
 
         if(eventAction.getActionType() == ActionType.POSITIONING){

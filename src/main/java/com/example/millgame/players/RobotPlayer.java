@@ -3,19 +3,22 @@ package com.example.millgame.players;
 import com.example.millgame.MillGame;
 import com.example.millgame.Player;
 import com.example.millgame.actions.EventAction;
+import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Color;
 import com.example.millgame.actions.*;
+import com.example.millgame.turns.TurnIterator;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.EventListener;
 import java.util.Random;
+import java.util.logging.Level;
 
 public abstract class RobotPlayer extends Player {
     private RobotLevel level;
     protected Random random;
 
-    protected EventListener turnListener;
+    protected ActionListener turnListener;
 
     public RobotPlayer(Color color, MillGame game, RobotLevel level)
     {
@@ -27,7 +30,10 @@ public abstract class RobotPlayer extends Player {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 Player activePlayer = (Player) actionEvent.getSource();
-                if( getCls() == (RobotPlayer) activePlayer){
+
+                TraceLogger.log(Level.INFO, "RobotPlayer.ActionListener : " + actionEvent);
+                if( activePlayer.getType() == PlayerType.ROBOT &&
+                    getCls() == (RobotPlayer) activePlayer){
                     autoPlay();
                 }
             }
@@ -38,7 +44,7 @@ public abstract class RobotPlayer extends Player {
 
     public void autoPlay(){
         EventAction currentEventAction = game.getEventAction();
-
+        TraceLogger.log(Level.INFO, "RobotPlayer.autoPlay method, currentEventAction: " + currentEventAction);
         switch (currentEventAction.getActionType()){
             case POSITIONING:
                 autoPlacePiece();
@@ -52,7 +58,7 @@ public abstract class RobotPlayer extends Player {
         }
     }
 
-    public EventListener getTurnListener(){ return turnListener; }
+    public ActionListener getTurnListener(){ return turnListener; }
 
     public abstract void autoPlacePiece();
     public abstract void autoMovePiece();

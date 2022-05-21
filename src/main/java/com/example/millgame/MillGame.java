@@ -59,6 +59,7 @@ public class MillGame {
         Player opponent = null;
         try{
             TurnIterator itr = (TurnIterator) turnIter.clone();
+            itr.removeAllTurnListener(); // avoid call turn listener when calling to next method
             opponent = itr.next();
         } catch (CloneNotSupportedException error){
             RankedException exception = new RankedException(error, Level.SEVERE);
@@ -110,6 +111,9 @@ public class MillGame {
         turnIter.addPlayer(player);
 
         if(player.getType() == PlayerType.ROBOT){
+            System.out.println("============== RESTRICT ZONE ==============");
+            System.out.println("PLAYER: " + player);
+            System.out.println("========================================================");
             turnIter.addTurnListener(((RobotPlayer) player).getTurnListener());
         }
     }
