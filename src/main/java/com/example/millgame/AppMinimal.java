@@ -10,7 +10,6 @@ import net.sourceforge.argparse4j.inf.Namespace;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.logging.Level;
 
 public class AppMinimal extends App {
     // game options
@@ -35,19 +34,20 @@ public class AppMinimal extends App {
                     MillGameBuilder gameBuilder = new MillGameBuilder(variant)
                             .reset()
                             .buildBoard()
-                            .setGameMode(mode)
                             .setRandomTurn(randomTurn);
 
                     if(turnTime > 0){ // this is a timed turn game
                         gameBuilder.setTurnTime(turnTime);
                     }
 
+                    gameBuilder.initTurnIterator();
+
                     com.example.millgame.misc.Color color = com.example.millgame.misc.Color.WHITE;
                     gameBuilder.createPlayer(PlayerType.HUMAN, color);
 
+                    color = com.example.millgame.misc.Color.BLACK;
                     if(mode == MillGame.GameMode.HUMAN_ROBOT){
                         // GET OTHER SUPPLIED COLOR
-                        color = com.example.millgame.misc.Color.BLACK;
                         gameBuilder.setRobotLevel(robotLevel)
                                 .createPlayer(PlayerType.ROBOT, color);
                     } else{
@@ -76,15 +76,12 @@ public class AppMinimal extends App {
 
     public static Namespace parseCmdArguments(ArgumentParser parser, String[] args) throws ArgumentParserException, IOException, RankedException {
         Namespace ns = App.parseCmdArguments(parser, args);
-        variant = (MillGame.GameVariant) ns.get("variant");
-        mode = (MillGame.GameMode) ns.get("mode");
+        variant = ns.get("variant");
+        mode = ns.get("mode");
+        randomTurn = ns.get("randomTurn");
+        turnTime = ns.get("turnTime");
+        robotLevel = ns.get("robotLevel");
 
-        //TraceMessage message = new TraceMessage(
-                Level.INFO,
-                "variant: " + variant +
-                        "game mode: " + mode);
-
-        //TraceLogger.log(message);
 
         return ns;
     }

@@ -1,6 +1,7 @@
 package com.example.millgame.panels;
 
 import com.example.millgame.MillGame;
+import com.example.millgame.boards.BoardPanel;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -9,26 +10,24 @@ import javax.swing.*;
 public class GamePanel extends JPanel {
     private MillGame game;
     private JButton reset;
-    private JLabel message; // this label is only for testing purpose (DELETE)
+    private JLabel turnLabel;
+    private BoardPanel boardPanel;
 
     public GamePanel(MillGame game) {
         super();
 
-        message = new JLabel("GAME PANEL");
-        add(message);
+        boardPanel = game.getBoardPanel();
+        add(boardPanel, BorderLayout.CENTER);
+
+        turnLabel = new JLabel("Active Turn");
+        //add(turnLabel, BorderLayout.SOUTH);
 
         reset = new JButton("reset");
-        add(reset, BorderLayout.SOUTH);
+        //add(reset, BorderLayout.NORTH);
+    }
 
-        /*
-        setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
-        setMaximumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
-        setMinimumSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
-        setFocusable(true);
-         */
-
-        com.example.millgame.GamePanel boardPanel = game.getBoardPanel();
-        add(boardPanel);
+    public void setBoardBackground(Color color){
+        boardPanel.setBackground(color);
     }
 
     /*

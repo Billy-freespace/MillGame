@@ -20,15 +20,15 @@ public class MillGameBuilder {
     private MillGame game;
     private Board board;
     private RobotLevel robotLevel;
-    private boolean randomTurn;
-    private GameMode gameMode;
+    private int turnTime = -1;
+    private boolean randomTurn = false;
     private GameVariant variant;
 
-    public MillGameBuilder(GameVariant variant){
+    public MillGameBuilder(GameVariant variant) {
         this.variant = variant;
     }
 
-    public MillGameBuilder reset(){
+    public MillGameBuilder reset() {
         game = new MillGame(variant);
         board = null;
         randomTurn = false;
@@ -41,20 +41,16 @@ public class MillGameBuilder {
         board = BoardCreatorDirector.makeMMBoard(variant);
         game.setBoard(board);
 
+        System.out.println("GAME: "+ game);
         return this;
     }
 
 
     public MillGameBuilder setTurnTime(int seconds){
-
+        turnTime = seconds;
         return this;
     }
 
-    public MillGameBuilder setGameMode(GameMode mode){
-        gameMode = mode;
-
-        return this;
-    }
     public MillGameBuilder setRobotLevel(RobotLevel level){
         robotLevel = level;
 
@@ -82,10 +78,19 @@ public class MillGameBuilder {
         return this;
     }
 
+    public MillGameBuilder initTurnIterator(){
+        game.initTurnIterator(randomTurn);
+
+        return this;
+    }
+
     public MillGame build() throws RankedException {
-        game.initTurn(randomTurn);
         // initialize event action
         game.changeEventAction(new PositioningEventAction());
+
+        // initialize turn iterator
+        game.setTurnTime(turnTime);
+        game.nextTurn();
 
         return game;
     }

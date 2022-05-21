@@ -10,6 +10,7 @@ import java.awt.*;
 import java.util.logging.Level;
 
 public class GameGUI extends JFrame {
+/*
     private JPanel controlPanel;
     private GameLayout gameLayout;
     private GamePanel boardPanel;
@@ -44,7 +45,7 @@ public class GameGUI extends JFrame {
         // REMOTE THIS STUFF - ONLY FOR TESTING PURPOSE
         // BEGIN
 
-        boardPanel = game.getBoardPanel();
+        //boardPanel = game.getBoardPanel();
         //boardPanel.add(new JLabel("GAME BOARD"));
         boardPanel.setBackground(new Color(128, 64, 32));
 
@@ -76,4 +77,6 @@ public class GameGUI extends JFrame {
         mainPanel.add(controlPanel, BorderLayout.CENTER);
         setVisible(true);
     }
+
+ */
 }

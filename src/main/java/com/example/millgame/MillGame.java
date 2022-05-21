@@ -7,6 +7,8 @@ import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Color;
 import com.example.millgame.panels.GamePanel;
+import com.example.millgame.players.PlayerType;
+import com.example.millgame.players.RobotPlayer;
 import com.example.millgame.turns.TurnIterator;
 
 
@@ -18,7 +20,6 @@ import java.util.logging.Level;
 
 public class MillGame {
     private TurnIterator turnIter;
-    private List<Player> players;
     private Board board;
     private EventAction eventAction;
     private GameStageIterator stageIter;
@@ -29,19 +30,22 @@ public class MillGame {
 
 
     public MillGame(GameVariant variant){ // useless constructor, to create a MillGame object use MillGameBuilder class
-        turnIter = new TurnIterator();
-        players = new ArrayList<Player>();
+        turnIter = null;
         board = null;
         stageIter = GameStageIterator.init();
         eventAction = null;
         this.variant = variant;
     }
 
-    public void initTurn(){
-        turnIter.reset();
-        turnIter.next();
+    public void initTurnIterator(boolean randomTurn){
+        turnIter = new TurnIterator(randomTurn);
     }
 
+    public void setTurnTime(int seconds){
+        if(seconds > 0){
+            // DECORATOR of TurnIterator
+        }
+    }
 
 
     public int countPieces(Color color) { return board.countPieces(color); }
@@ -51,7 +55,18 @@ public class MillGame {
     public Player getActivePlayer(){
         return turnIter.getIterationState();
     }
-    public Player getOpponentPlayer(){ return turnIter.getOpponent(); }
+    public Player getOpponentPlayer(){
+        Player opponent = null;
+        try{
+            TurnIterator itr = (TurnIterator) turnIter.clone();
+            opponent = itr.next();
+        } catch (CloneNotSupportedException error){
+            RankedException exception = new RankedException(error, Level.SEVERE);
+            TraceLogger.log(exception, TurnIterator.class);
+        }
+
+        return opponent;
+    }
 
     public Piece getPiece(char x, int y) throws InvalidPositionCoordinate {
         Position position = board.getPosition(x, y);
@@ -86,12 +101,17 @@ public class MillGame {
 
         Color color = player.getColor();
         for(Player playerItr : turnIter.values()){
+            System.out.println("Player: " + playerItr);
             if(color == playerItr.getColor()){
                 throw new RankedException("Color " + color + " was already taken by a player", Level.WARNING); // NOTE: write an exception for handle this case
             }
         }
 
         turnIter.addPlayer(player);
+
+        if(player.getType() == PlayerType.ROBOT){
+            turnIter.addTurnListener(((RobotPlayer) player).getTurnListener());
+        }
     }
 
 

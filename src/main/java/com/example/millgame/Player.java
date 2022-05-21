@@ -35,6 +35,8 @@ public abstract class Player {
         placedPieces = 0;
     }
 
+    public PlayerType getType(){ return type; }
+
     public int getPlacedPieces(){ return placedPieces; }
 
     public List<Piece> getBoardPieces(){ return pieces; }
