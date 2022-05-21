@@ -6,13 +6,11 @@ import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Color;
-import com.example.millgame.panels.GamePanel;
 import com.example.millgame.players.PlayerType;
 import com.example.millgame.players.RobotPlayer;
 import com.example.millgame.turns.TurnIterator;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +57,7 @@ public class MillGame {
         Player opponent = null;
         try{
             TurnIterator itr = (TurnIterator) turnIter.clone();
-            itr.removeAllTurnListener(); // avoid call turn listener when calling to next method
+            itr.removeAllTurnListeners(); // avoid call turn listener when calling to next method
             opponent = itr.next();
         } catch (CloneNotSupportedException error){
             RankedException exception = new RankedException(error, Level.SEVERE);

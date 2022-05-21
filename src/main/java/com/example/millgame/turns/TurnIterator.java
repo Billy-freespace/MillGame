@@ -7,7 +7,6 @@ import javax.swing.event.EventListenerList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -52,7 +51,7 @@ public class TurnIterator extends CircularIterator<Player> {
         }
     }
 
-    public void removeAllTurnListener(){ // only use this method to avoid call the turn listeners when next method is called
+    public void removeAllTurnListeners(){ // only use this method to avoid call the turn listeners when next method is called
         turnListeners = new EventListenerList();
     }
 }
