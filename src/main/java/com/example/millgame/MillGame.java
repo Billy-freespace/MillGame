@@ -8,7 +8,6 @@ import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Color;
 import com.example.millgame.players.PlayerType;
 import com.example.millgame.players.RobotPlayer;
-//import com.example.millgame.turns.TimedTurnIterator;
 import com.example.millgame.turns.TurnIterator;
 
 
@@ -25,6 +24,8 @@ public class MillGame {
 
     private GameVariant variant;
 
+    private Player winner;
+
     private static Map<GameVariant, Integer> gameVariant2PlayerPieces = MillGame.getMapPlayerPieces();
 
 
@@ -34,23 +35,35 @@ public class MillGame {
         stageIter = GameStageIterator.init();
         eventAction = null;
         this.variant = variant;
+        winner = null;
     }
 
     public void initTurnIterator(boolean randomTurn){
         turnIter = new TurnIterator(randomTurn);
     }
 
-    public void setTurnTime(int seconds){
-        if(seconds > 0){
-            //turnIter = new TimedTurnIterator(turnIter, seconds);
-        }
-    }
-
 
     public int countPieces(Color color) { return board.countPieces(color); }
     public GameStage nextStage(){ return stageIter.next(); }
     public GameStage getStage(){ return  stageIter.getIterationState(); }
-    public Player nextTurn(){ return turnIter.next(); }
+    public Player nextTurn(){
+        Player nextOpponent;
+        Player opponent = getOpponentPlayer();
+
+        if(opponent.getPlacedPieces() == getNumberPlayerPieces() && (
+                opponent.countBoardPieces() == 2 ||
+                        !opponent.hasPossibleMovement())){
+            winner = getActivePlayer();
+            nextOpponent = winner;
+
+            TraceLogger.log(Level.INFO, "Winner player: " + winner);
+            TraceLogger.log(Level.INFO, "Active PLayer: " + getActivePlayer());
+        } else {
+            nextOpponent = turnIter.next();
+        }
+
+        return nextOpponent;
+    }
     public Player getActivePlayer(){
         return turnIter.getIterationState();
     }
@@ -90,7 +103,9 @@ public class MillGame {
 
         return playerPieces;
     }
-    public boolean isGameOver(){ return false; }
+    public boolean isGameOver(){ return winner != null; }
+
+    public Player getWinner(){ return winner; }
 
     public List<Board.Mill> getMills(Piece piece) throws RankedException { return board.getMills(piece); }
 

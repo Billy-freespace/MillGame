@@ -16,8 +16,6 @@ import java.util.List;
 
 @Disabled("MillGameBuilder was changed - UPDATE test case")
 public class PieceRadarNineMMBoardTest {
-    private final MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
-    private final MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
     private MillGame game;
 
     /*
@@ -36,7 +34,16 @@ public class PieceRadarNineMMBoardTest {
 
     @BeforeEach
     public void initGame() throws RankedException {
-        game = new MillGameBuilder().build(variant, mode);
+        MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
+        MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
+
+        game = new MillGameBuilder(variant)
+                .reset()
+                .buildBoard()
+                .setRandomTurn(false)
+                .initTurnIterator()
+                .createPlayers(mode)
+                .build();
     }
 
     private void placePieces(List<BoardCoordinate> coordinates) throws RankedException{

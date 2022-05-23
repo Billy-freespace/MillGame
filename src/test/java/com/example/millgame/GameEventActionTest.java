@@ -1,27 +1,22 @@
 package com.example.millgame;
 
-import com.example.millgame.boards.BoardCreatorDirector;
+import com.example.millgame.actions.EventAction;
 import com.example.millgame.exceptions.RankedException;
-import com.example.millgame.misc.Color;
-import com.example.millgame.players.PlayerFactory;
-import com.example.millgame.players.PlayerType;
-
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.example.millgame.turns.TurnIterator;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import java.awt.event.ActionEvent;
 
-import java.util.ArrayList;
+public class GameEventActionTest {
 
-
-@Disabled("PlayerFactory.create(PlayerType, Color, Board) method was delete - UPDATE")
-public class TurnIteratorTest {
     private MillGame game;
+    private Board board;
+    private EventAction eventAction;
+    private ActionEvent event;
 
     @BeforeEach
-    public void initTurnIterator() throws RankedException {
+    public void buildGame() throws RankedException {
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS; //default game variant
         MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
 
@@ -32,16 +27,20 @@ public class TurnIteratorTest {
                 .initTurnIterator()
                 .createPlayers(mode)
                 .build();
+        board = game.getBoard();
     }
 
     @Test
-    public void nextTurnTest()
-    {
-        Player player = game.getActivePlayer();
+    public void nextTurnTest(){
+        Position position = board.getOrigin();
         Player opponent = game.getOpponentPlayer();
 
-        assertEquals(opponent, game.nextTurn());
+        event = new ActionEvent(position, -1, "nextTurnTest unit test: " + position);
+
+        eventAction = game.getEventAction();
+        eventAction.actionPerformed(event); // place a piece in origin position
+
         assertEquals(opponent, game.getActivePlayer());
-        assertEquals(player, game.nextTurn());
     }
+
 }

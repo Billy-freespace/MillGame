@@ -3,10 +3,12 @@ package com.example.millgame;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
+@Disabled("Remove test for useless GameStageIterator class")
 public class GameStageIteratorTest {
     private GameStageIterator itr;
 

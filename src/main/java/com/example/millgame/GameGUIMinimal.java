@@ -19,7 +19,7 @@ public class GameGUIMinimal extends JFrame {
 
     private Color defaultColor = new Color(128, 64, 32);
 
-    public GameGUIMinimal(){
+    public GameGUIMinimal(MillGame game){
         super();
         //TraceLogger.log(Level.INFO, "Initializing GameGUIMinimal");
         setTitle(Constants.title);
@@ -28,17 +28,11 @@ public class GameGUIMinimal extends JFrame {
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-    }
 
-    public GameGUIMinimal setGame(MillGame game){
-        //gamePanel = new GamePanel(game);
-        //gamePanel.setBoardBackground(defaultColor);
         boardPanel = game.getBoardPanel();
-        Container mainPanel = getContentPane();
         mainPanel.add(boardPanel, BorderLayout.CENTER);
-
-        return this;
     }
+
 
     public GameGUIMinimal setBoardBackground(Color color){
         //gamePanel.setBackground(color);

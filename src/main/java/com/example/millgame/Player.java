@@ -23,7 +23,6 @@ public abstract class Player {
 
     protected final Board board;
 
-
     public Player(PlayerType playerType, Color color, MillGame game) {
         this.game = game;
         board = game.getBoard();
@@ -38,6 +37,15 @@ public abstract class Player {
     public PlayerType getType(){ return type; }
 
     public int getPlacedPieces(){ return placedPieces; }
+
+    public Piece getPiece(char x, int y){
+        // iterate over pieces -> piece.getPosition() == (x, y) -> return piece
+        Piece piece=null;
+
+        // SOMETHING
+
+        return piece;
+    }
 
     public List<Piece> getBoardPieces(){ return pieces; }
 
@@ -137,6 +145,19 @@ public abstract class Player {
     public Color getColor(){  return color; }
 
     public boolean hasPiece(Piece piece){ return pieces.contains(piece); }
+
+    public boolean hasPossibleMovement(){
+        boolean result = false;
+        for(Piece piece : pieces){
+            List<Position> possibleMovements = board.getPossibleMovements(piece);
+            if(possibleMovements.size() > 0){
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
 
     public ImageIcon getPieceIcon(){
         Piece piece = PieceFactory.create(color);

@@ -44,8 +44,8 @@ public class TurnIterator extends CircularIterator<Player> {
     }
 
     private void fireTurnListeners(ActionEvent actionEvent){
-        TraceLogger.log(Level.INFO, "turnListeners: " + turnListeners.getListeners(ActionListener.class), TurnIterator.class);
-        TraceLogger.log(Level.INFO, "actionEvent: " + actionEvent, TurnIterator.class);
+        //TraceLogger.log(Level.INFO, "turnListeners: " + turnListeners.getListeners(ActionListener.class), TurnIterator.class);
+        //TraceLogger.log(Level.INFO, "actionEvent: " + actionEvent, TurnIterator.class);
         for(ActionListener listener : turnListeners.getListeners(ActionListener.class)){
             listener.actionPerformed(actionEvent);
         }

@@ -4,6 +4,7 @@ import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.TwelveMMBoard;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,17 +35,11 @@ public class TwelveMMBoardBuildTest {
         assertEquals(yLabel, origin.getYLabel());
     }
 
+    @Disabled("Refactor test - BoardVariant enumeration was added")
     @Test
     public void boardVariantTest() {
         MillGame.GameVariant variant = MillGame.GameVariant.TWELVE_MEN_MORRIS;
 
         assertEquals(variant, board.getVariant());
-    }
-
-    @Test
-    public void numberPlayerPiecesTest(){
-        int playerPieces = 12;
-
-        assertEquals(playerPieces, board.getNumberPlayerPieces());
     }
 }

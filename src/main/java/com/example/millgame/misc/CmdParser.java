@@ -65,16 +65,12 @@ public class CmdParser {
                 .dest("randomTurn")
                 .help("The first player is choices randomly");
 
-        game.addArgument("--turn-time")
-                .type(Integer.class)
-                .setDefault(-1)
-                .dest("turnTime")
-                .help("Maximum player turn time (seconds) [default: infinite time]");
 
         List<Color> defaultPieceColor = new ArrayList<Color>(2);
         defaultPieceColor.add(Color.WHITE);
         defaultPieceColor.add(Color.BLACK);
 
+        // --piece-color RED GREEN
         game.addArgument("--piece-color")
                 .nargs(2)
                 .choices(Color.values())
@@ -91,7 +87,7 @@ public class CmdParser {
                 .setDefault(defaultBackgroundColor)
                 .dest("boardColor")
                 .help("Board color");
-                
+
  */
 
         game.addArgument("--robot-level")

@@ -26,6 +26,10 @@ public class MovingEventAction extends EventAction {
         try {
             Player player = game.getActivePlayer();
 
+            if(game.isGameOver()){
+                throw new GameOverError(player, position, MovingEventAction.class);
+            }
+
             if(selectedPosition == null){
                 if(!position.hasPiece()){
                     throw new EmptyPositionError(position);
@@ -65,7 +69,7 @@ public class MovingEventAction extends EventAction {
                     }
                 }
             }
-        } catch (InvalidPositionCoordinate | EmptyPositionError | NotEmptyPosition error) {
+        } catch (InvalidPositionCoordinate | EmptyPositionError | NotEmptyPosition | GameOverError error) {
             TraceLogger.log(error, MovingEventAction.class);
         } catch (RankedException error){ // REMOVE THIS catch (TOO GENERAL)
             TraceLogger.log(error, MovingEventAction.class);

@@ -5,13 +5,11 @@ import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.actions.PositioningEventAction;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
-import com.example.millgame.logging.TraceMessage;
 import com.example.millgame.misc.Color;
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.players.PlayerFactory;
 import com.example.millgame.players.RobotLevel;
 import com.example.millgame.players.PlayerType;
-import com.example.millgame.players.RobotPlayerFactory;
 
 
 import java.util.ArrayList;
@@ -22,7 +20,6 @@ public class MillGameBuilder {
     private MillGame game;
     private Board board;
     private RobotLevel robotLevel;
-    private int turnTime = -1;
     private boolean randomTurn = false;
     private GameVariant variant;
 
@@ -52,12 +49,6 @@ public class MillGameBuilder {
         return this;
     }
 
-
-    public MillGameBuilder setTurnTime(int seconds){
-        turnTime = seconds;
-        return this;
-    }
-
     public MillGameBuilder setRobotLevel(RobotLevel level){
         robotLevel = level;
 
@@ -72,7 +63,6 @@ public class MillGameBuilder {
         if(colors.size() < 2){
             throw new RankedException("Needed 2 player color. Supplied: " + colors.size());
         }
-
         Color color = colors.get(0);
         createPlayer(PlayerType.HUMAN, color);
 
@@ -119,7 +109,6 @@ public class MillGameBuilder {
         game.changeEventAction(new PositioningEventAction());
 
         // initialize turn iterator
-        game.setTurnTime(turnTime);
         game.nextTurn();
 
         return game;

@@ -21,6 +21,11 @@ public class PositioningEventAction extends EventAction {
 
         try{
             Player player = game.getActivePlayer();
+
+            if(game.isGameOver()){
+                throw new GameOverError(player, position, MovingEventAction.class);
+            }
+
             player.placePiece(position);
 
 
@@ -43,7 +48,7 @@ public class PositioningEventAction extends EventAction {
                 game.nextTurn();
             }
 
-        } catch (InvalidPositionCoordinate | NotEmptyPosition error) {
+        } catch (InvalidPositionCoordinate | NotEmptyPosition | GameOverError error) {
             TraceLogger.log(error, PositioningEventAction.class);
         } catch (NoPiecesError error){
             // the player was positioned all their pieces, so now it will move them
