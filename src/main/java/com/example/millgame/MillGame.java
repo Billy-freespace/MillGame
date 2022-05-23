@@ -11,6 +11,7 @@ import com.example.millgame.players.RobotPlayer;
 import com.example.millgame.turns.TurnIterator;
 
 
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,7 @@ public class MillGame {
         turnIter = new TurnIterator(randomTurn);
     }
 
+    public void addTurnListener(ActionListener listener){ turnIter.addTurnListener(listener); }
 
     public int countPieces(Color color) { return board.countPieces(color); }
     public GameStage nextStage(){ return stageIter.next(); }
