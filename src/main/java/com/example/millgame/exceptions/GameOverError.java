@@ -17,7 +17,7 @@ public class GameOverError extends RankedException {
 
     public static String getErrorMessage(Player player, Position position, Class eventAction){
         String error = "Game is over!";
-        error += " Invalid play: player="+ player + ", position=" + position + "event=" + eventAction;
+        error += " Invalid play: player="+ player + ", position=" + position + ", event=" + eventAction;
 
         return error;
     }

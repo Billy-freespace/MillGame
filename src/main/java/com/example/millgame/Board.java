@@ -64,6 +64,10 @@ public abstract class Board implements BoardDimension {
         position.setPiece(piece);
         piece.setPosition(position);
 
+        int count = pieceCount.get(piece.getColor());
+        count += 1;
+        pieceCount.put(piece.getColor(), count);
+
         List<Mill> pieceMills = getMills(piece);
         List<Mill> colorMills = mills.get(piece.getColor());
         colorMills.addAll(pieceMills);
@@ -88,6 +92,10 @@ public abstract class Board implements BoardDimension {
 
         piece.setPosition(null);
         position.setPiece(null);
+
+        int count = pieceCount.get(piece.getColor());
+        count -= 1;
+        pieceCount.put(piece.getColor(), count);
     }
 
     public List<Mill> getMills(Color color){ return mills.get(color); }
@@ -126,27 +134,7 @@ public abstract class Board implements BoardDimension {
     }
  */
 
-    public int countPieces(Color color){
-        int count = 0;
-
-        Iterator<Map.Entry<Integer, Position>> itr;
-
-        for(Character x : positions.keySet()){
-            Map<Integer, Position> inner = positions.get(x);
-            itr = inner.entrySet().iterator();
-            while(itr.hasNext()){
-                Map.Entry<Integer, Position> entry = itr.next();
-                Position position = entry.getValue();
-
-                Piece piece = position.getPiece();
-                if(piece != null && piece.getColor() == color){
-                    count += 1;
-                }
-            }
-        }
-
-        return count;
-    }
+    public int getCount(Color color){ return pieceCount.get(color); }
 
     // Override this method if fly is not allow in a specific board
     public List<Position> getPossibleMovements(Piece piece) {
@@ -159,7 +147,7 @@ public abstract class Board implements BoardDimension {
             }
 
             Color color = piece.getColor();
-            int count = countPieces(color);
+            int count = getCount(color);
 
             if(count == 3){
                 possibleMovements.addAll(getEmptyPositions());

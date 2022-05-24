@@ -3,6 +3,7 @@ package com.example.millgame.players;
 import com.example.millgame.MillGame;
 import com.example.millgame.Player;
 import com.example.millgame.actions.EventAction;
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Color;
 import com.example.millgame.actions.*;
@@ -45,16 +46,22 @@ public abstract class RobotPlayer extends Player {
     public void autoPlay(){
         EventAction currentEventAction = game.getEventAction();
         TraceLogger.log(Level.INFO, "RobotPlayer.autoPlay method, currentEventAction: " + currentEventAction);
-        switch (currentEventAction.getActionType()){
-            case POSITIONING:
-                autoPlacePiece();
-                break;
-            case MOVING:
-                autoMovePiece();
-                break;
-            case REMOVING:
-                autoRemovePiece();
-                break;
+        try {
+            Thread.sleep(60);
+            switch (currentEventAction.getActionType()) {
+                case POSITIONING:
+                    autoPlacePiece();
+                    break;
+                case MOVING:
+                    autoMovePiece();
+                    break;
+                case REMOVING:
+                    autoRemovePiece();
+                    break;
+            }
+        } catch (Exception error){
+            RankedException rankedException = new RankedException(error, Level.WARNING);
+            TraceLogger.log(rankedException);
         }
     }
 

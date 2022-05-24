@@ -57,6 +57,7 @@ public class GameGUIMinimal extends JFrame {
                 Icon activePlayerIcon = activePlayer.getPieceIcon();
                 if(game.isGameOver()){
                     activeTurn.setText("Winner: ");
+                    activePlayerIcon = game.getWinner().getPieceIcon();
                 }
 
                 activeTurn.setIcon(activePlayerIcon);

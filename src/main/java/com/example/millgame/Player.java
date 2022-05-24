@@ -100,8 +100,9 @@ public abstract class Player {
         }
 
         List<Position> possibleMovements = board.getPossibleMovements(piece);
+        //System.out.println("POSSIBLE MOVEMENTS (" + piece + "): " + possibleMovements);
 
-        if (!possibleMovements.contains(position)) {
+        if (!possibleMovements.contains(selectedPosition)) {
             throw new InvalidMovement(position, selectedPosition);
         }
 
@@ -170,8 +171,8 @@ public abstract class Player {
 
     @Override
     public String toString() {
-        String out = "Player(color:" + color + ", type: " + type +
-                ", placedPieces: " + placedPieces + ", boardPieces: " + pieces.size() + ")";
+        String out = "Player(color:" + color + ", type: " + type + ", gamePieces:" + gamePieces +
+        ", placedPieces: " + placedPieces + ", boardPieces: " + pieces.size() + ")";
         return out;
     }
 }
