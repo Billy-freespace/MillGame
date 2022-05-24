@@ -2,19 +2,9 @@ package com.example.millgame.boards;
 
 import com.example.millgame.Position;
 
-public class TwelveMMBoardBuilder implements BoardBuilder {
-    private TwelveMMBoard board;
-    private Position origin;
-
-    public TwelveMMBoard build() {
-        reset();
-        createPositions();
-        board.setOrigin(origin);
-        return board;
-    }
-
+public class TwelveMMBoardBuilder extends BoardBuilder {
     public void reset() {
-        board = new TwelveMMBoard();
+        board = new TwelveMMBoard(playerColors);
     }
 
     public void createPositions(){

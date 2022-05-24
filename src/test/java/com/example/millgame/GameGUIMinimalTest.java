@@ -4,7 +4,7 @@ import com.example.millgame.exceptions.RankedException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-
+@Disabled("No X11 configuration - Github Action server")
 public class GameGUIMinimalTest {
     @Test
     public void emptyNineMMBoardTest() throws RankedException {

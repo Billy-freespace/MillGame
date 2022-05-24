@@ -45,41 +45,27 @@ public class MillGame {
 
     public void addTurnListener(ActionListener listener){ turnIter.addTurnListener(listener); }
 
-    public int countPieces(Color color) { return board.countPieces(color); }
+    public int countPieces(Color color) { return board.getCount(color); }
     public GameStage nextStage(){ return stageIter.next(); }
     public GameStage getStage(){ return  stageIter.getIterationState(); }
     public Player nextTurn(){
-        Player nextOpponent;
         Player opponent = getOpponentPlayer();
 
         if(opponent.getPlacedPieces() == getNumberPlayerPieces() && (
                 opponent.countBoardPieces() == 2 ||
                         !opponent.hasPossibleMovement())){
             winner = getActivePlayer();
-            nextOpponent = winner;
 
             TraceLogger.log(Level.INFO, "Winner player: " + winner);
-            TraceLogger.log(Level.INFO, "Active PLayer: " + getActivePlayer());
-        } else {
-            nextOpponent = turnIter.next();
         }
 
-        return nextOpponent;
+        return turnIter.next();
     }
     public Player getActivePlayer(){
         return turnIter.getIterationState();
     }
     public Player getOpponentPlayer(){
-        Player opponent = null;
-        try{
-            TurnIterator itr = (TurnIterator) turnIter.clone();
-            itr.removeAllTurnListeners(); // avoid call turn listener when calling to next method
-            opponent = itr.next();
-        } catch (CloneNotSupportedException error){
-            RankedException exception = new RankedException(error, Level.SEVERE);
-            TraceLogger.log(exception, TurnIterator.class);
-        }
-
+        Player opponent = turnIter.getNextPlayer();
         return opponent;
     }
 

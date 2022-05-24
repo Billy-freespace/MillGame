@@ -4,8 +4,10 @@ import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NotEmptyPosition;
 import com.example.millgame.boards.BoardDimension;
 import com.example.millgame.exceptions.*;
+import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Color;
 import java.util.*;
+import java.util.logging.Level;
 
 public abstract class Board implements BoardDimension {
     protected Position origin;
@@ -15,15 +17,18 @@ public abstract class Board implements BoardDimension {
 
     protected PieceRadar radar;
 
-    public Board (BoardVariant variant) {
+    protected Map<Color, Integer> pieceCount;
+
+    public Board (BoardVariant variant, List<Color> playerColors) {
         this.variant = variant;
         this.positions = new HashMap<Character, Map<Integer, Position>>();
         this.origin = null;
 
         mills =  new HashMap<Color, List<Mill>>();
-
-        for(Color color : Color.values()){
+        pieceCount = new HashMap<Color, Integer>();
+        for(Color color : playerColors){
             mills.put(color, new ArrayList<Mill>());
+            pieceCount.put(color, 0);
         }
     }
 
@@ -59,6 +64,10 @@ public abstract class Board implements BoardDimension {
         position.setPiece(piece);
         piece.setPosition(position);
 
+        int count = pieceCount.get(piece.getColor());
+        count += 1;
+        pieceCount.put(piece.getColor(), count);
+
         List<Mill> pieceMills = getMills(piece);
         List<Mill> colorMills = mills.get(piece.getColor());
         colorMills.addAll(pieceMills);
@@ -83,6 +92,10 @@ public abstract class Board implements BoardDimension {
 
         piece.setPosition(null);
         position.setPiece(null);
+
+        int count = pieceCount.get(piece.getColor());
+        count -= 1;
+        pieceCount.put(piece.getColor(), count);
     }
 
     public List<Mill> getMills(Color color){ return mills.get(color); }
@@ -104,42 +117,34 @@ public abstract class Board implements BoardDimension {
         return inner.get(y);
     }
 
-    public int countPieces(Color color){
-        int count = 0;
-
-        for(Character x : positions.keySet()){
-            Map<Integer, Position> inner = positions.get(x);
-            for(int y : positions.keySet()){
-                Position position = inner.get(y);
-                Piece piece = position.getPiece();
-                if(piece != null && piece.getColor() == color){
-                    count += 1;
-                }
-            }
-        }
-
-        return count;
-    }
+    public int getCount(Color color){ return pieceCount.get(color); }
 
     // Override this method if fly is not allow in a specific board
-    public List<Position> getPossibleMovements(Piece piece){
+    public List<Position> getPossibleMovements(Piece piece) {
+        List<Position> possibleMovements = new ArrayList<Position>();
         Position position = piece.getPosition();
 
-        List<Position> possibleMovements = new ArrayList<Position>();
+        try{
+            if(position == null){
+                throw new InvalidBoardPiece(piece);
+            }
 
-        Color color = piece.getColor();
+            Color color = piece.getColor();
+            int count = getCount(color);
 
-        int count = countPieces(color);
-
-        if(count <= 3){
-            possibleMovements.addAll(getEmptyPositions());
-        } else {
-            for(Position neighbour : position.getNeighbours()){
-                if(!neighbour.hasPiece()){
-                    possibleMovements.add(neighbour);
+            if(count == 3){
+                possibleMovements.addAll(getEmptyPositions());
+            } else {
+                for(Position neighbour : position.getNeighbours()){
+                    if(!neighbour.hasPiece()){ // empty position
+                        possibleMovements.add(neighbour);
+                    }
                 }
             }
+        } catch (InvalidBoardPiece error){
+            TraceLogger.log(error);
         }
+
 
         return possibleMovements;
     }
@@ -169,12 +174,14 @@ public abstract class Board implements BoardDimension {
     public void addPosition(Position position){
         char xLabel = position.getXLabel();
         int yLabel = position.getYLabel();
+        Map<Integer, Position> inner;
 
         if(!positions.containsKey(xLabel)){
-            positions.put(xLabel, new HashMap<Integer, Position>());
+            inner = new HashMap<Integer, Position>();
+            positions.put(xLabel, inner);
         }
 
-        Map<Integer, Position> inner = positions.get(xLabel);
+        inner = positions.get(xLabel);
         inner.put(yLabel, position);
     }
 

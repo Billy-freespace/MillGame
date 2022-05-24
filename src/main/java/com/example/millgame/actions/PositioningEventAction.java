@@ -17,7 +17,9 @@ public class PositioningEventAction extends EventAction {
     public void actionPerformed(ActionEvent event) {
         Position position = (Position) event.getSource();
 
-        TraceLogger.log(Level.FINE, position + " was selected", PositioningEventAction.class);
+        //game.getBoard().listPositions();
+        TraceLogger.log(Level.INFO, position + " was selected", PositioningEventAction.class);
+        System.out.println("POSITION: " + position);
 
         try{
             Player player = game.getActivePlayer();
@@ -27,7 +29,6 @@ public class PositioningEventAction extends EventAction {
             }
 
             player.placePiece(position);
-
 
             // CHECK IF A MILL WAS FORMED
             List<Board.Mill> mills = game.getMills(position.getPiece());

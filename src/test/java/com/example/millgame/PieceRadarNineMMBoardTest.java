@@ -354,6 +354,23 @@ public class PieceRadarNineMMBoardTest {
     }
 
     @Test
+    public void horizontalMillUpperRow4Test(){
+        /*
+         * NINE_MEN_MORRIS board (EMPTY BOARD)
+         *  ---: empty position
+         *
+         * 7|---|   |   |---|   |   |---|
+         * 6|   |---|   |---|   |---|   |
+         * 5|   |   |---|---|---|   |   |
+         * 4| B | B | * |   |---|---|---|
+         * 3|   |   |---|---|---|   |   |
+         * 2|   |---|   |---|   |---|   |
+         * 1|---|   |   |---|   |   |---|
+         *    a   b   c   d   e   f   g
+         */
+    }
+
+    @Test
     public void notFoundMillOnePiecesTest() throws RankedException{
         /*
          * STATE: 1 white piece was placed in a1, so no mill was formed

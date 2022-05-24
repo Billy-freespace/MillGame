@@ -3,8 +3,10 @@ package com.example.millgame.boards;
 
 import com.example.millgame.MillGame.GameVariant;
 import com.example.millgame.Position;
+import com.example.millgame.misc.Color;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SixMMBoard extends BoardWithoutDiagonals {
     static final char MIN_XLABEL = 'a';
@@ -14,8 +16,8 @@ public class SixMMBoard extends BoardWithoutDiagonals {
 
     public static final int NUMBER_PIECES = 6;
 
-    public SixMMBoard() {
-        super(BoardVariant.NINE_MEN_MORRIS);
+    public SixMMBoard(List<Color> playerColors) {
+        super(BoardVariant.SIX_MEN_MORRIS, playerColors);
     }
 
     public ArrayList<Position> getPossibleMovements(char xLabel, int yLabel){

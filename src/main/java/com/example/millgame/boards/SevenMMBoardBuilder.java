@@ -2,21 +2,11 @@ package com.example.millgame.boards;
 
 import com.example.millgame.Position;
 
-public class SevenMMBoardBuilder implements BoardBuilder {
+public class SevenMMBoardBuilder extends BoardBuilder {
     // COPIED FROM SixMMBoardBuilder (ADD POSITION: c3)
-    private SevenMMBoard board;
-    private Position origin;
-
-
-    public SevenMMBoard build() {
-        reset();
-        createPositions();
-        board.setOrigin(origin);
-        return board;
-    }
 
     public void reset() {
-        board = new SevenMMBoard();
+        board = new SevenMMBoard(playerColors);
     }
 
 

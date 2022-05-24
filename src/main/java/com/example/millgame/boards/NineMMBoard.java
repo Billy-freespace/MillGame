@@ -16,7 +16,7 @@ public class NineMMBoard extends BoardWithoutDiagonals {
     static final int MIN_YLABEL = 1;
     static final int MAX_YLABEL = 7;
 
-    public NineMMBoard() { super(BoardVariant.NINE_MEN_MORRIS); }
+    public NineMMBoard(List<Color> playerColors) { super(BoardVariant.NINE_MEN_MORRIS, playerColors); }
 
     public char maxXLabel(){ return MAX_XLABEL; }
     public char minXLabel(){ return MIN_XLABEL; }

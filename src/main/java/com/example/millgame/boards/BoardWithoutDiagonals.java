@@ -7,6 +7,7 @@ import com.example.millgame.exceptions.InvalidMill;
 import com.example.millgame.exceptions.InvalidMillColor;
 import com.example.millgame.exceptions.InvalidMillSize;
 import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.misc.Color;
 import com.example.millgame.misc.Direction;
 
 import java.util.ArrayList;
@@ -14,8 +15,8 @@ import java.util.List;
 
 public abstract class BoardWithoutDiagonals extends Board {
 
-    public BoardWithoutDiagonals(BoardVariant variant){
-        super(variant);
+    public BoardWithoutDiagonals(BoardVariant variant, List<Color> colors){
+        super(variant, colors);
         radar = new PieceRadar(List.of(Direction.values()), this);
     }
     @Override
