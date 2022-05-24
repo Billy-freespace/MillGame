@@ -122,8 +122,12 @@ public abstract class Player {
         // BEGIN
         Position position = board.getPosition(x, y);
         Piece piece = position.getPiece();
-        if(piece == null || !hasPiece(piece)){
-            throw new RankedException("Selected position is empty or piece does not belong to player");
+        if (piece == null) {
+           throw new EmptyPositionError(x, y);
+        }
+
+        if (!hasPiece(piece)) {
+            throw new
         }
 
         board.removePiece(x, y);
@@ -148,7 +152,7 @@ public abstract class Player {
 
     public boolean hasPossibleMovement(){
         boolean result = false;
-        for(Piece piece : pieces){
+        for(Piece piece : pieces) {
             List<Position> possibleMovements = board.getPossibleMovements(piece);
             if(possibleMovements.size() > 0){
                 result = true;
@@ -159,7 +163,7 @@ public abstract class Player {
         return result;
     }
 
-    public ImageIcon getPieceIcon(){
+    public ImageIcon getPieceIcon() {
         Piece piece = PieceFactory.create(color);
         return piece.getNormalIcon();
     }

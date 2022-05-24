@@ -124,6 +124,12 @@ class PlayerOperationTest {
         });
     }
 
+//    Test for AC5.1
+    @Test
+    public void removePieceTest() {
+
+    }
+
 //    Test for AC6.1
     @Test
     public void movePieceTest() throws RankedException {
