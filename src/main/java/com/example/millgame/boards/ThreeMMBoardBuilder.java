@@ -2,23 +2,12 @@ package com.example.millgame.boards;
 
 import com.example.millgame.Position;
 
-public class ThreeMMBoardBuilder implements BoardBuilder {
+public class ThreeMMBoardBuilder extends BoardBuilder {
     // COPIED FROM SixMMBoardBuilder (UPDATE, REMOVE EXTRA POSITIONS)
-    private SixMMBoard board;
-    private Position origin;
-
-
-    public SixMMBoard build() {
-        reset();
-        createPositions();
-        board.setOrigin(origin);
-        return board;
-    }
 
     public void reset() {
-        board = new SixMMBoard();
+        board = new SixMMBoard(playerColors);
     }
-
 
     public void createPositions() {
         // DEFINIR POSITIONS

@@ -23,26 +23,41 @@ public class MillGameBuilder {
     private boolean randomTurn = false;
     private GameVariant variant;
 
-    private List<Color> defaultColors;
+    private List<Color> playerColors;
 
-    public MillGameBuilder(GameVariant variant) {
+    public MillGameBuilder(GameVariant variant){
+        this.playerColors = getDefaultColors();
         this.variant = variant;
+    }
+
+    public MillGameBuilder(GameVariant variant, List<Color> playerColors) throws RankedException {
+        if(playerColors.size() != 2){
+            throw new RankedException("Invalid number of player colors");
+        }
+
+        this.playerColors = playerColors;
+        this.variant = variant;
+    }
+
+    private List<Color> getDefaultColors(){
+        List<Color> defaultColors = new ArrayList<Color>(2);
+        defaultColors.add(Color.WHITE);
+        defaultColors.add(Color.BLACK);
+
+        return defaultColors;
     }
 
     public MillGameBuilder reset() {
         game = new MillGame(variant);
         board = null;
         randomTurn = false;
-        defaultColors = new ArrayList<Color>(2);
-        defaultColors.add(Color.WHITE);
-        defaultColors.add(Color.BLACK);
         TraceLogger.log(Level.INFO, "Reset MillGame, Players and Board objects", MillGameBuilder.class);
 
         return this;
     }
 
     public MillGameBuilder buildBoard(){
-        board = BoardCreatorDirector.makeMMBoard(variant);
+        board = BoardCreatorDirector.makeMMBoard(variant, playerColors);
         game.setBoard(board);
 
         System.out.println("GAME: "+ game);
@@ -56,7 +71,7 @@ public class MillGameBuilder {
     }
 
     public MillGameBuilder createPlayers(GameMode mode) throws RankedException {
-        return createPlayers(mode, defaultColors);
+        return createPlayers(mode, playerColors);
     }
 
     public MillGameBuilder createPlayers(GameMode mode, List<Color> colors) throws RankedException{

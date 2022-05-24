@@ -1,6 +1,9 @@
 package com.example.millgame.boards;
 
 import com.example.millgame.MillGame.GameVariant;
+import com.example.millgame.misc.Color;
+
+import java.util.List;
 
 
 public class TwelveMMBoard extends BoardWithDiagonals {
@@ -11,8 +14,8 @@ public class TwelveMMBoard extends BoardWithDiagonals {
     static final int MAX_YLABEL = 7;
 
     public static final int NUMBER_PIECES = 12;
-    public TwelveMMBoard() {
-        super(BoardVariant.TWELVE_MEN_MORRIS);
+    public TwelveMMBoard(List<Color> playerColors) {
+        super(BoardVariant.TWELVE_MEN_MORRIS, playerColors);
     }
 
     public boolean isValidMill(Mill mill) {

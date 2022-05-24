@@ -4,8 +4,6 @@ import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Constants;
 import com.example.millgame.panels.GamePanel;
-import com.example.millgame.players.PlayerType;
-import com.example.millgame.players.RobotPlayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,7 +54,12 @@ public class GameGUIMinimal extends JFrame {
                 Player activePlayer = (Player) actionEvent.getSource();
 
                 TraceLogger.log(Level.INFO, "GameGUI.activeTurn.ActionListener (turn bar: JLabel): " + actionEvent);
-                activeTurn.setIcon(activePlayer.getPieceIcon());
+                Icon activePlayerIcon = activePlayer.getPieceIcon();
+                if(game.isGameOver()){
+                    activeTurn.setText("Winner: ");
+                }
+
+                activeTurn.setIcon(activePlayerIcon);
             }
         };
 
@@ -65,14 +68,6 @@ public class GameGUIMinimal extends JFrame {
         contentPanel.add(boardPanel, BorderLayout.CENTER);
         contentPanel.add(activeTurn, BorderLayout.PAGE_END);
     }
-
-    /*
-    @Override
-    public void paintComponents(Graphics g) {
-        super.paintComponents(g);
-        //boardPanel.paintComponents(g);
-    }
-     */
 
 
     public GameGUIMinimal setBoardBackground(Color color){

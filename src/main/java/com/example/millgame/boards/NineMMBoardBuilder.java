@@ -2,20 +2,9 @@ package com.example.millgame.boards;
 
 import com.example.millgame.Position;
 
-public class NineMMBoardBuilder implements BoardBuilder {
-    private NineMMBoard board;
-    private Position origin;
+public class NineMMBoardBuilder extends BoardBuilder {
 
-    public NineMMBoard build() {
-        reset();
-        createPositions();
-        board.setOrigin(origin);
-        return board;
-    }
-
-    public void reset() {
-        board = new NineMMBoard();
-    }
+    public void reset() { board = new NineMMBoard(playerColors); }
 
     public void createPositions(){
         //board positions definition

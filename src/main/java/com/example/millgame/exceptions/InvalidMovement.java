@@ -22,7 +22,7 @@ public class InvalidMovement extends RankedException {
 
     public static String getErrorMessage(Position from, Position to) {
         return "Invalid movement from: " + from.toString() + ", to: " + to.toString()
-                + ". They're not neighbour positions.";
+                + ". " + to + " does not belong to possible movement positions.";
     }
 
 }

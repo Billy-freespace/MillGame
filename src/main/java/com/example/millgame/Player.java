@@ -80,7 +80,9 @@ public abstract class Player {
         placePiece(xLabel, yLabel);
     }
 
-    public void movePiece(Piece piece, char x, int y) throws NotOwnPiece, NotEmptyPosition, InvalidPositionCoordinate, EmptyPositionError, InvalidMovement {
+    public void movePiece(Piece piece, char x, int y)
+            throws NotOwnPiece, NotEmptyPosition,
+                InvalidPositionCoordinate, EmptyPositionError, InvalidMovement {
         // this code was wrote just for testing MovingEventAction (REMOVE or REUSE)
         // this code is not intended to handle all the possible cases, just to work
         // NOTE: remove throws RankedException and specify the specific exceptions
@@ -93,12 +95,14 @@ public abstract class Player {
         Position position = piece.getPosition();
         Position selectedPosition = board.getPosition(x, y);
 
-        if (!position.hasNeighbour(selectedPosition)) {
-            throw new InvalidMovement(position, selectedPosition);
-        }
-
         if (selectedPosition.hasPiece()) {
             throw new NotEmptyPosition(selectedPosition);
+        }
+
+        List<Position> possibleMovements = board.getPossibleMovements(piece);
+
+        if (!possibleMovements.contains(position)) {
+            throw new InvalidMovement(position, selectedPosition);
         }
 
         char pieceXLabel = position.getXLabel();
