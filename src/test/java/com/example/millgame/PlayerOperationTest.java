@@ -92,6 +92,7 @@ class PlayerOperationTest {
         /*
          * Test for AC3.4
          */
+        //Inicializar con jugador activo
         int j = 1;
         try {
             // 3 fichas
@@ -132,11 +133,12 @@ class PlayerOperationTest {
         int yLabel = 7;
         Position position = board.getPosition(xLabel, yLabel);
         player.placePiece(position);
+        Piece piece = position.getPiece();//
         assertThrows(InvalidMovement.class, () -> {
             player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin);
         });
         assertNotNull(position.getPiece());
-        assertEquals(player.getPiece(position.getXLabel(), (char) position.getYLabel()), board.getPosition(xLabel, yLabel).getPiece());
+        assertEquals(piece, position.getPiece());//
         assertNull(origin.getPiece());
     }
 
