@@ -104,10 +104,12 @@ public class SevenMMBoardBuilder extends BoardBuilder {
         board.addPosition(b2);
 
         // c2 neighbours
+        Position c3 = new Position('c', 3);
         Position d2 = new Position('d', 2);
 
         c2.addNeighbour(b2);
         c2.addNeighbour(c1);
+        c2.addNeighbour(c3);
         c2.addNeighbour(d2);
 
         board.addPosition(c2);
@@ -121,6 +123,7 @@ public class SevenMMBoardBuilder extends BoardBuilder {
         // d3 neighbours
         Position d4 = new Position('d', 4);
 
+        d3.addNeighbour(c3);
         d3.addNeighbour(d2);
         d3.addNeighbour(e3);
         d3.addNeighbour(d4);
@@ -137,6 +140,7 @@ public class SevenMMBoardBuilder extends BoardBuilder {
         Position b4 = new Position('b', 4);
 
         c4.addNeighbour(d4);
+        c4.addNeighbour(c3);
         c4.addNeighbour(c5);
         c4.addNeighbour(b4);
 
@@ -151,8 +155,17 @@ public class SevenMMBoardBuilder extends BoardBuilder {
         // b3 neighbours
         b3.addNeighbour(b4);
         b3.addNeighbour(a3);
+        b3.addNeighbour(c3);
         b3.addNeighbour(b2);
 
         board.addPosition(b3);
+
+        // c3 neighbours
+        c3.addNeighbour(b3);
+        c3.addNeighbour(c2);
+        c3.addNeighbour(d3);
+        c3.addNeighbour(c4);
+
+        board.addPosition(c3);
     }
 }
