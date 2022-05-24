@@ -38,14 +38,17 @@ public abstract class Player {
 
     public int getPlacedPieces(){ return placedPieces; }
 
-    public Piece getPiece(char x, int y){
+    public Piece getPiece(char x, int y) throws InvalidPositionCoordinate, NotOwnPiece {
         // iterate over pieces -> piece.getPosition() == (x, y) -> return piece
-        throws NotOwnPiece(piece)
-        Piece piece = null;
+        Piece piece = game.getPiece(x, y);
 
-        // SOMETHING
+        for (Piece p: pieces) {
+            if (p == piece) {
+                return piece;
+            }
+        }
 
-        return piece;
+        throw new NotOwnPiece(piece);
     }
 
     public List<Piece> getBoardPieces(){ return pieces; }
@@ -146,10 +149,9 @@ public abstract class Player {
     }
 
     public int removePiece(Position position) throws RankedException {
-        char xLabel = position.getXLabel();
-        int yLabel = position.getYLabel();
+        Piece piece = position.getPiece();
 
-        return removePiece(xLabel, yLabel);
+        return removePiece(piece);
     }
 
     public int countBoardPieces(){ return pieces.size(); }
