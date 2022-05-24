@@ -76,6 +76,11 @@ public class MillGame {
         return piece;
     }
 
+    public void removeOpponentPiece(Piece piece) throws RankedException {
+        Player opponent = getOpponentPlayer();
+        opponent.removePiece(piece);
+    }
+
     public GameVariant getVariant(){ return variant; }
     public int getNumberPlayerPieces(){ return MillGame.gameVariant2PlayerPieces.get(variant);}
 

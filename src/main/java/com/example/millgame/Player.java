@@ -40,7 +40,8 @@ public abstract class Player {
 
     public Piece getPiece(char x, int y){
         // iterate over pieces -> piece.getPosition() == (x, y) -> return piece
-        Piece piece=null;
+        throws NotOwnPiece(piece)
+        Piece piece = null;
 
         // SOMETHING
 
@@ -119,23 +120,25 @@ public abstract class Player {
 
         movePiece(piece, xLabel, yLabel);
     }
-    public int removePiece(char x, int y) throws RankedException { // create a specific exception (ASAP)
+    public int removePiece(Piece piece) throws RankedException { // create a specific exception (ASAP)
         // this code was wrote just for testing RemovingEventAction (REMOVE or REUSE)
         // this code is not intended to handle all the possible cases, just to work
         // NOTE: remove throws RankedException and specify the specific exceptions
         // * verify that active turn belongs to the opponent
         // BEGIN
-        Position position = board.getPosition(x, y);
-        Piece piece = position.getPiece();
-        if (piece == null) {
-           throw new EmptyPositionError(x, y);
-        }
+//        Position position = board.getPosition(x, y);
 
         if (!hasPiece(piece)) {
-            throw new
+            throw new RemoveOwnPieceError(piece);
         }
 
-        board.removePiece(x, y);
+        if (piece == null) {
+            throw new RankedException("Pieza nula"); // CREAR EXCEPCION PARA ESTE CASO
+        }
+
+        Position position = piece.getPosition();
+
+        board.removePiece(position.getXLabel(), position.getYLabel()); // Elimina la pieza de la lista de molinos a la que pertenece
         pieces.remove(piece);
 
         return pieces.size();
