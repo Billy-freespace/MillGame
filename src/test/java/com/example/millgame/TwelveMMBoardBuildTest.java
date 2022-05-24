@@ -1,11 +1,17 @@
 package com.example.millgame;
 
 import com.example.millgame.boards.BoardCreatorDirector;
+import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.boards.TwelveMMBoard;
 
+import com.example.millgame.misc.Color;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TwelveMMBoardBuildTest {
@@ -14,8 +20,12 @@ public class TwelveMMBoardBuildTest {
 
     @BeforeAll
     public static void initBoard(){
+        List<Color> playerColors = new ArrayList<Color>();
+        playerColors.add(Color.WHITE);
+        playerColors.add(Color.BLACK);
+
         MillGame.GameVariant variant = MillGame.GameVariant.TWELVE_MEN_MORRIS;
-        board = (TwelveMMBoard) BoardCreatorDirector.makeMMBoard(variant);
+        board = (TwelveMMBoard) BoardCreatorDirector.makeMMBoard(variant, playerColors);
     }
 
     @Test

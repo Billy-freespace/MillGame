@@ -116,23 +116,6 @@ public abstract class Board implements BoardDimension {
 
         return inner.get(y);
     }
-/*
-// REMOVE THIS METHOD - WROTE JUST FOR TESTING PURPOSE
-    public void listPositions(){
-        TraceLogger.log(Level.INFO, "============================= ListPositions() =============================");
-        Iterator<Map.Entry<Integer, Position>> itr;
-        for(Character x : positions.keySet()){
-            Map<Integer, Position> inner = positions.get(x);
-            itr = inner.entrySet().iterator();
-            while(itr.hasNext()){
-                Map.Entry<Integer, Position> entry = itr.next();
-                Position position = entry.getValue();
-                int y = entry.getKey();
-                TraceLogger.log(Level.INFO, "Position (" + x + ", " + y + "): " + position);
-            }
-        }
-    }
- */
 
     public int getCount(Color color){ return pieceCount.get(color); }
 
