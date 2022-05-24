@@ -45,18 +45,18 @@ public class AppMinimal extends App {
                             .buildBoard()
                             .setRandomTurn(randomTurn);
 
-                    if(turnTime > 0){ // this is a timed turn game
-                        gameBuilder.setTurnTime(turnTime);
-                    }
 
                     gameBuilder.initTurnIterator(); // turn iterator has to be initialized before create player of game
+
+                    if(mode == MillGame.GameMode.HUMAN_ROBOT){
+                        gameBuilder.setRobotLevel(robotLevel);
+                    }
 
                     MillGame game = gameBuilder
                             .createPlayers(mode, pieceColor)
                             .build();
 
-                    GameGUIMinimal gameGUI = new GameGUIMinimal()
-                            .setGame(game)
+                    GameGUIMinimal gameGUI = new GameGUIMinimal(game)
                             .setBoardBackground(boardBackgroundColor);
                     gameGUI.setVisible(true);
 
@@ -78,7 +78,7 @@ public class AppMinimal extends App {
         variant = ns.get("variant");
         mode = ns.get("mode");
         randomTurn = ns.get("randomTurn");
-        turnTime = ns.get("turnTime");
+        //turnTime = ns.get("turnTime");
         robotLevel = ns.get("robotLevel");
         pieceColor = ns.get("pieceColor");
         //BoardPanel.BoardBackground boardBackground = new BoardPanel.BoardBackground();

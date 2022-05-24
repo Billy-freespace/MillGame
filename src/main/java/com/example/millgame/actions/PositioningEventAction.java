@@ -17,12 +17,18 @@ public class PositioningEventAction extends EventAction {
     public void actionPerformed(ActionEvent event) {
         Position position = (Position) event.getSource();
 
-        TraceLogger.log(Level.FINE, position + " was selected", PositioningEventAction.class);
+        //game.getBoard().listPositions();
+        TraceLogger.log(Level.INFO, position + " was selected", PositioningEventAction.class);
+        System.out.println("POSITION: " + position);
 
         try{
             Player player = game.getActivePlayer();
-            player.placePiece(position);
 
+            if(game.isGameOver()){
+                throw new GameOverError(player, position, MovingEventAction.class);
+            }
+
+            player.placePiece(position);
 
             // CHECK IF A MILL WAS FORMED
             List<Board.Mill> mills = game.getMills(position.getPiece());
@@ -43,7 +49,7 @@ public class PositioningEventAction extends EventAction {
                 game.nextTurn();
             }
 
-        } catch (InvalidPositionCoordinate | NotEmptyPosition error) {
+        } catch (InvalidPositionCoordinate | NotEmptyPosition | GameOverError error) {
             TraceLogger.log(error, PositioningEventAction.class);
         } catch (NoPiecesError error){
             // the player was positioned all their pieces, so now it will move them

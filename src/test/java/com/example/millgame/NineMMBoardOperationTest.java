@@ -14,13 +14,20 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NineMMBoardOperationTest {
     private  NineMMBoard board;
 
     @BeforeEach
     public void createNineMMBoard() {
+        List<Color> playerColors = new ArrayList<Color>();
+        playerColors.add(Color.WHITE);
+        playerColors.add(Color.BLACK);
+
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
-        board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
+        board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant, playerColors);
     }
 
     @Test

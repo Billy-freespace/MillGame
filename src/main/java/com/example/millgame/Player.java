@@ -23,7 +23,6 @@ public abstract class Player {
 
     protected final Board board;
 
-
     public Player(PlayerType playerType, Color color, MillGame game) {
         this.game = game;
         board = game.getBoard();
@@ -38,6 +37,15 @@ public abstract class Player {
     public PlayerType getType(){ return type; }
 
     public int getPlacedPieces(){ return placedPieces; }
+
+    public Piece getPiece(char x, int y){
+        // iterate over pieces -> piece.getPosition() == (x, y) -> return piece
+        Piece piece=null;
+
+        // SOMETHING
+
+        return piece;
+    }
 
     public List<Piece> getBoardPieces(){ return pieces; }
 
@@ -72,7 +80,9 @@ public abstract class Player {
         placePiece(xLabel, yLabel);
     }
 
-    public void movePiece(Piece piece, char x, int y) throws NotOwnPiece, NotEmptyPosition, InvalidPositionCoordinate, EmptyPositionError, InvalidMovement {
+    public void movePiece(Piece piece, char x, int y)
+            throws NotOwnPiece, NotEmptyPosition,
+                InvalidPositionCoordinate, EmptyPositionError, InvalidMovement {
         // this code was wrote just for testing MovingEventAction (REMOVE or REUSE)
         // this code is not intended to handle all the possible cases, just to work
         // NOTE: remove throws RankedException and specify the specific exceptions
@@ -85,12 +95,15 @@ public abstract class Player {
         Position position = piece.getPosition();
         Position selectedPosition = board.getPosition(x, y);
 
-        if (!position.hasNeighbour(selectedPosition)) {
-            throw new InvalidMovement(position, selectedPosition);
-        }
-
         if (selectedPosition.hasPiece()) {
             throw new NotEmptyPosition(selectedPosition);
+        }
+
+        List<Position> possibleMovements = board.getPossibleMovements(piece);
+        //System.out.println("POSSIBLE MOVEMENTS (" + piece + "): " + possibleMovements);
+
+        if (!possibleMovements.contains(selectedPosition)) {
+            throw new InvalidMovement(position, selectedPosition);
         }
 
         char pieceXLabel = position.getXLabel();
@@ -138,6 +151,19 @@ public abstract class Player {
 
     public boolean hasPiece(Piece piece){ return pieces.contains(piece); }
 
+    public boolean hasPossibleMovement(){
+        boolean result = false;
+        for(Piece piece : pieces){
+            List<Position> possibleMovements = board.getPossibleMovements(piece);
+            if(possibleMovements.size() > 0){
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
     public ImageIcon getPieceIcon(){
         Piece piece = PieceFactory.create(color);
         return piece.getNormalIcon();
@@ -145,8 +171,8 @@ public abstract class Player {
 
     @Override
     public String toString() {
-        String out = "Player(color:" + color + ", type: " + type +
-                ", placedPieces: " + placedPieces + ", boardPieces: " + pieces.size() + ")";
+        String out = "Player(color:" + color + ", type: " + type + ", gamePieces:" + gamePieces +
+        ", placedPieces: " + placedPieces + ", boardPieces: " + pieces.size() + ")";
         return out;
     }
 }

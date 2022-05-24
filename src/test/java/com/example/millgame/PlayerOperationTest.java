@@ -17,15 +17,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Disabled("PlayerFactory.create(PlayerType, Color, Board) method was delete - UPDATE")
 class PlayerOperationTest {
+
+    private MillGame game;
     private NineMMBoard board;
     private Player player;
     private Player player2;
 
     @BeforeEach
-    public void createPlayers() {
+    public void createPlayers() throws RankedException {
+        MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
-        board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
-        player = PlayerFactory.create(PlayerType.HUMAN, Color.WHITE, board);
+
+        game = new MillGameBuilder(variant)
+                .reset()
+                .buildBoard()
+                .setRandomTurn(false)
+                .initTurnIterator()
+                .createPlayers(mode)
+                .build();
+
+        board = (NineMMBoard) game.getBoard();
     }
 
     //PLACE TESTS
@@ -116,12 +127,15 @@ class PlayerOperationTest {
 //    Test for AC6.1
     @Test
     public void movePieceTest() throws RankedException {
+        // place a4 (pieza) -> get pieza a4 -> mueve pieza al origin -> pieza == origin.getPiece()
         Position origin = board.getOrigin();
         Position position = board.getPosition('a', 4);
         player.placePiece(position);
+        Piece piece = position.getPiece();
+
         player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin);
 
-        assertEquals(player.getPiece(origin.getXLabel(), (char) origin.getYLabel()), board.getOrigin().getPiece());
+        assertEquals(piece, origin.getPiece());
         assertNull(position.getPiece());
     }
 
@@ -171,7 +185,7 @@ class PlayerOperationTest {
 //    Test for AC6.6
     @Test
     public void movePieceNotOwnPieceTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
-        player2 = PlayerFactory.create(PlayerType.HUMAN, Color.BLACK, board);
+        player2 = PlayerFactory.createHuman(Color.BLACK, game);
         Position origin = board.getOrigin();
         player.placePiece(origin);
 

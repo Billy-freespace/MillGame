@@ -1,6 +1,7 @@
 package com.example.millgame.actions;
 
 import com.example.millgame.*;
+import com.example.millgame.exceptions.GameOverError;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
 
@@ -21,21 +22,26 @@ public class RemovingEventAction extends EventAction {
 
         try {
             Player opponent = game.getOpponentPlayer();
-            opponent.removePiece(position);
 
-            if(opponent.getPlacedPieces() < game.getNumberPlayerPieces()){
-                game.changeEventAction(new PositioningEventAction());
-            } else { // all pieces were already placed
-                int count = opponent.countBoardPieces();
-                if(count == 2){
-                    TraceLogger.log(Level.INFO, "GAME OVER - winner: " + game.getActivePlayer());
-                } else {
-                    game.changeEventAction(new MovingEventAction());
-                }
+            if(game.isGameOver()){
+                Player player = game.getActivePlayer();
+                throw new GameOverError(player, position, MovingEventAction.class);
             }
 
+            opponent.removePiece(position);
+
+            EventAction eventAction;
+            if(opponent.getPlacedPieces() < game.getNumberPlayerPieces()){
+                eventAction = new PositioningEventAction();
+            } else { // all pieces were already placed
+                eventAction = new MovingEventAction();
+            }
+
+            game.changeEventAction(eventAction);
             game.nextTurn();
 
+        } catch (GameOverError error){
+            TraceLogger.log(error, RemovingEventAction.class);
         } catch (Exception error){
             RankedException exception = new RankedException(error, Level.WARNING);
             TraceLogger.log(exception, RemovingEventAction.class);

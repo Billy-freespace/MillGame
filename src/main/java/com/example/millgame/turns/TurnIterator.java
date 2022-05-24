@@ -35,6 +35,16 @@ public class TurnIterator extends CircularIterator<Player> {
         return player;
     }
 
+    public Player getNextPlayer(){ // get the next iteration state but without moving the iterator position
+        int nextIndex = iterationIndex +1;
+
+        if(nextIndex >= collection.size()){
+            nextIndex = 0;
+        }
+
+        return collection.get(nextIndex);
+    }
+
     public void addPlayer(Player player){
         addIterationState(player);
     }
@@ -44,14 +54,10 @@ public class TurnIterator extends CircularIterator<Player> {
     }
 
     private void fireTurnListeners(ActionEvent actionEvent){
-        TraceLogger.log(Level.INFO, "turnListeners: " + turnListeners.getListeners(ActionListener.class), TurnIterator.class);
-        TraceLogger.log(Level.INFO, "actionEvent: " + actionEvent, TurnIterator.class);
+        //TraceLogger.log(Level.INFO, "turnListeners: " + turnListeners.getListeners(ActionListener.class), TurnIterator.class);
+        //TraceLogger.log(Level.INFO, "actionEvent: " + actionEvent, TurnIterator.class);
         for(ActionListener listener : turnListeners.getListeners(ActionListener.class)){
             listener.actionPerformed(actionEvent);
         }
-    }
-
-    public void removeAllTurnListeners(){ // only use this method to avoid call the turn listeners when next method is called
-        turnListeners = new EventListenerList();
     }
 }

@@ -3,9 +3,14 @@ package com.example.millgame;
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
 
+import com.example.millgame.misc.Color;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @Disabled("PlayerFactory.create(PlayerType, Color, Board) method was delete - UPDATE")
@@ -15,8 +20,12 @@ public class NineMMBoardBuildTest {
 
     @BeforeAll
     public static void initBoard(){
+        List<Color> playerColors = new ArrayList<Color>();
+        playerColors.add(Color.WHITE);
+        playerColors.add(Color.BLACK);
+
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
-        board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant);
+        board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant, playerColors);
     }
 
     @Test
@@ -37,6 +46,7 @@ public class NineMMBoardBuildTest {
         assertEquals(yLabel, origin.getYLabel());
     }
 
+    @Disabled("Refactor test - BoardVariant enumeration was added")
     @Test
     public void boardVariantTest() {
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
