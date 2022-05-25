@@ -136,20 +136,7 @@ class PlayerOperationTest {
         /*
          * Test for AC3.4
          */
-        /*int j = 1;
-        try {
-            // 3 fichas
-            for (char i = 'a'; i <= 'g';  i++, j++) {
-                if (i == 'd') continue;
-                player.placePiece(i, j);
-            }
 
-            player.placePiece('a', 7);
-            player.placePiece('b', 6);
-            player.placePiece('c', 5);
-        } catch (NoPiecesError e){
-            // DONOTHING
-        }*/
         placeAllPieces();
 
         assertThrows(NoPiecesError.class, () -> {
@@ -178,7 +165,7 @@ class PlayerOperationTest {
     //@Disabled
     @Test
     public void movePieceNotNeighbourTest() throws RankedException {
-        Position origin = board.getOrigin();
+        //Position origin = board.getOrigin();
         Position startPosition = board.getOrigin();
         Position endPosition = board.getPosition('g', 1);
         placeAllPieces();
@@ -191,18 +178,18 @@ class PlayerOperationTest {
         assertNull(endPosition.getPiece());
     }
 
-    @Disabled
+    //@Disabled
     @Test
     public void movePieceNoEmptyPositionTest() throws InvalidPositionCoordinate, NotEmptyPosition, NoPiecesError {
-        Position origin = board.getOrigin();
-        Position position = board.getPosition('a', 4);
-        player.placePiece(position);
-        player.placePiece(origin);
+        //Position origin = board.getOrigin();
+        Position startPosition = board.getOrigin();
+        Position endPosition = board.getPosition('d', 1);
+        placeAllPieces();
+        Piece piece = startPosition.getPiece();
 
         NotEmptyPosition thrown = assertThrows(NotEmptyPosition.class,
-                () -> player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin)
-        );
-        assertEquals(NotEmptyPosition.getErrorMessage(origin.getXLabel(), origin.getYLabel()), thrown.getMessage());
+                () -> player.movePiece(piece, endPosition));
+        /*assertEquals(NotEmptyPosition.getErrorMessage(origin.getXLabel(), origin.getYLabel()), thrown.getMessage());*/
     }
 
 //    Test for AC6.5
