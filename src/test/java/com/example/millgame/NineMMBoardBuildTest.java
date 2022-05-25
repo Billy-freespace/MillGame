@@ -3,7 +3,6 @@ package com.example.millgame;
 import com.example.millgame.boards.NineMMBoard;
 
 import com.example.millgame.exceptions.RankedException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -55,7 +54,7 @@ public class NineMMBoardBuildTest {
     public void boardVariantTest() {
         Board.BoardVariant variant = Board.BoardVariant.NINE_MEN_MORRIS;
 
-        assertEquals(variant, board.getVariant());
+        assertEquals(variant, board.getBoardVariant());
     }
 
 //    @Disabled("Board.number.PlayerPiecesTest was deleted (this method was moved to MillGame class) - UPDATE TEST")
