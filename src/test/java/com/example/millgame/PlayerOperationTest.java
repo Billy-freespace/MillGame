@@ -175,20 +175,20 @@ class PlayerOperationTest {
         assertNull(startPosition.getPiece());
     }
 
-    @Disabled
+    //@Disabled
     @Test
     public void movePieceNotNeighbourTest() throws RankedException {
         Position origin = board.getOrigin();
-        char xLabel = 'a';
-        int yLabel = 7;
-        Position position = board.getPosition(xLabel, yLabel);
-        player.placePiece(position);
+        Position startPosition = board.getOrigin();
+        Position endPosition = board.getPosition('g', 1);
+        placeAllPieces();
+        Piece piece = startPosition.getPiece();
         assertThrows(InvalidMovement.class, () -> {
-            player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin);
+            player.movePiece(piece, endPosition);
         });
-        assertNotNull(position.getPiece());
-        assertEquals(player.getPiece(position.getXLabel(), (char) position.getYLabel()), board.getPosition(xLabel, yLabel).getPiece());
-        assertNull(origin.getPiece());
+        assertNotNull(startPosition.getPiece());
+        assertEquals(piece, startPosition.getPiece());
+        assertNull(endPosition.getPiece());
     }
 
     @Disabled
