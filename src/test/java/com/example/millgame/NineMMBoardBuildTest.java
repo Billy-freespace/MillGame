@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//@Disabled("PlayerFactory.create(PlayerType, Color, Board) method was delete - UPDATE")
 public class NineMMBoardBuildTest {
 
     private MillGame game;
