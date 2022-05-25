@@ -1,12 +1,9 @@
 package com.example.millgame;
 
-import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.exceptions.*;
 import com.example.millgame.misc.Color;
 import com.example.millgame.players.PlayerFactory;
-import com.example.millgame.players.PlayerType;
-
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;

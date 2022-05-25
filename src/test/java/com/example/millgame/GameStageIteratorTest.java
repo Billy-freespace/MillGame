@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 
-@Disabled("Remove test for useless GameStageIterator class")
+//@Disabled("Remove test for useless GameStageIterator class")
 public class GameStageIteratorTest {
     private GameStageIterator itr;
 
