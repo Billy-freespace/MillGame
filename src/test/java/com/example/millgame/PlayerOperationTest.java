@@ -158,20 +158,21 @@ class PlayerOperationTest {
     }
 
 //    Test for AC6.1
-    @Disabled
+    //@Disabled
     @Test
     public void movePieceTest() throws RankedException {
         // place a4 (pieza) -> get pieza a4 -> mueve pieza al origin -> pieza == origin.getPiece()
-        Position origin = board.getOrigin();
-        Position position = board.getPosition('d', 1);
+        //Position origin = board.getOrigin();
+        Position endPosition = board.getPosition('g', 1);
+        Position startPosition = board.getPosition('d', 1);
         //player.placePiece(position);
         placeAllPieces();
-        Piece piece = position.getPiece();
+        Piece piece = startPosition.getPiece();
 
-        player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin);
+        player.movePiece(piece, endPosition);
 
-        assertEquals(piece, origin.getPiece());
-        assertNull(position.getPiece());
+        assertEquals(piece, endPosition.getPiece());
+        assertNull(startPosition.getPiece());
     }
 
     @Disabled
