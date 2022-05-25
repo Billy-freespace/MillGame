@@ -28,7 +28,7 @@ public class RemovingEventAction extends EventAction {
                 throw new GameOverError(player, position, MovingEventAction.class);
             }
 
-            opponent.removePiece(position);
+            game.removeOpponentPiece(position.getPiece());
 
             EventAction eventAction;
             if(opponent.getPlacedPieces() < game.getNumberPlayerPieces()){
