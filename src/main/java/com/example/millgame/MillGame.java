@@ -21,7 +21,6 @@ public class MillGame {
     private TurnIterator turnIter;
     private Board board;
     private EventAction eventAction;
-    private GameStageIterator stageIter;
 
     private GameVariant variant;
 
@@ -33,7 +32,6 @@ public class MillGame {
     public MillGame(GameVariant variant){ // useless constructor, to create a MillGame object use MillGameBuilder class
         turnIter = null;
         board = null;
-        stageIter = GameStageIterator.init();
         eventAction = null;
         this.variant = variant;
         winner = null;
@@ -46,8 +44,6 @@ public class MillGame {
     public void addTurnListener(ActionListener listener){ turnIter.addTurnListener(listener); }
 
     public int countPieces(Color color) { return board.getCount(color); }
-    public GameStage nextStage(){ return stageIter.next(); }
-    public GameStage getStage(){ return  stageIter.getIterationState(); }
     public Player nextTurn(){
         Player opponent = getOpponentPlayer();
 
@@ -150,8 +146,7 @@ public class MillGame {
         String out;
 
         out = "MillGame(variant="+ variant +
-                ", board=" + board.getVariant() +
-                ", stage=" + stageIter.getIterationState() + ")";
+                ", board=" + board.getVariant() + ")";
         return out;
     }
 
