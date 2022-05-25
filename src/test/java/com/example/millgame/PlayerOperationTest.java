@@ -193,17 +193,23 @@ class PlayerOperationTest {
     }
 
 //    Test for AC6.5
-    @Disabled
+    //@Disabled
     @Test
     public void movePieceInvalidPositionTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
-        Position origin = board.getOrigin();
-        Position position = new Position('z', 100);
-        player.placePiece(origin);
+        //Position origin = board.getOrigin();
+        Position startPosition = board.getOrigin();
+        char xLabel = 'z';
+        int yLabel = 100;
+        placeAllPieces();
+        Piece piece = startPosition.getPiece();
 
         InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class,
+                () -> player.movePiece(piece, xLabel, yLabel));
+
+        /*InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class,
                 () -> player.placePiece(position)
         );
-        assertEquals(InvalidPositionCoordinate.getErrorMessage(position.getXLabel(), position.getYLabel()), thrown.getMessage());
+        assertEquals(InvalidPositionCoordinate.getErrorMessage(position.getXLabel(), position.getYLabel()), thrown.getMessage());*/
     }
 
 //    Test for AC6.6
