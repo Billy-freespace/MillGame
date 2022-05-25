@@ -50,6 +50,6 @@ public class TwelveMMBoardBuildTest {
     public void boardVariantTest() {
         MillGame.GameVariant variant = MillGame.GameVariant.TWELVE_MEN_MORRIS;
 
-        assertEquals(variant, board.getVariant());
+        assertEquals(variant, board.getBoardVariant());
     }
 }

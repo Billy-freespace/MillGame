@@ -51,7 +51,7 @@ public class NineMMBoardBuildTest {
     public void boardVariantTest() {
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
 
-        assertEquals(variant, board.getVariant());
+        assertEquals(variant, board.getBoardVariant());
     }
 
     @Disabled("Board.number.PlayerPiecesTest was deleted (this method was moved to MillGame class) - UPDATE TEST")
