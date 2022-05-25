@@ -43,6 +43,23 @@ class PlayerOperationTest {
         //int boardPieces = 0;
     }
 
+    public void placeAllPieces() throws NotEmptyPosition, InvalidPositionCoordinate {
+        int j = 1;
+        try {
+            // 3 fichas
+            for (char i = 'a'; i <= 'g';  i++, j++) {
+                if (i == 'd') continue;
+                player.placePiece(i, j);
+            }
+
+            player.placePiece('a', 7);
+            player.placePiece('d', 1);
+            player.placePiece('c', 5);
+        } catch (NoPiecesError e){
+            // DONOTHING
+        }
+    }
+
     //PLACE TESTS
     //@Disabled
     @Test
@@ -119,7 +136,7 @@ class PlayerOperationTest {
         /*
          * Test for AC3.4
          */
-        int j = 1;
+        /*int j = 1;
         try {
             // 3 fichas
             for (char i = 'a'; i <= 'g';  i++, j++) {
@@ -132,7 +149,8 @@ class PlayerOperationTest {
             player.placePiece('c', 5);
         } catch (NoPiecesError e){
             // DONOTHING
-        }
+        }*/
+        placeAllPieces();
 
         assertThrows(NoPiecesError.class, () -> {
             player.placePiece('e', 3);;
@@ -145,8 +163,9 @@ class PlayerOperationTest {
     public void movePieceTest() throws RankedException {
         // place a4 (pieza) -> get pieza a4 -> mueve pieza al origin -> pieza == origin.getPiece()
         Position origin = board.getOrigin();
-        Position position = board.getPosition('a', 4);
-        player.placePiece(position);
+        Position position = board.getPosition('d', 1);
+        //player.placePiece(position);
+        placeAllPieces();
         Piece piece = position.getPiece();
 
         player.movePiece(player.getPiece(position.getXLabel(), (char) position.getYLabel()), origin);
