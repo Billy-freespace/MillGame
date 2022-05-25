@@ -7,7 +7,6 @@ import com.example.millgame.exceptions.*;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Color;
 import java.util.*;
-import java.util.logging.Level;
 
 public abstract class Board implements BoardDimension {
     protected Position origin;
@@ -100,7 +99,7 @@ public abstract class Board implements BoardDimension {
 
     public List<Mill> getMills(Color color){ return mills.get(color); }
     public abstract List<Mill> getMills(Piece piece);
-    public BoardVariant getVariant() {
+    public BoardVariant getBoardVariant() {
         return variant;
     }
 
