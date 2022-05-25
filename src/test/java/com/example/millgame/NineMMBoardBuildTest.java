@@ -4,7 +4,6 @@ import com.example.millgame.boards.NineMMBoard;
 
 import com.example.millgame.exceptions.RankedException;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,9 +32,9 @@ public class NineMMBoardBuildTest {
 
     @Test
     public void numberPositionsTest() {
-        int numberPieces = 24;
+        int numberPositions = 24;
 
-        assertEquals(numberPieces, board.countPositions());
+        assertEquals(numberPositions, board.countPositions());
     }
 
     @Test
