@@ -15,8 +15,6 @@ public class NineMMBoardBuildTest {
 
     private MillGame game;
     private NineMMBoard board;
-    private Player player;
-    private Player player2;
 
     @BeforeEach
     public void initBoard() throws RankedException {
@@ -32,7 +30,6 @@ public class NineMMBoardBuildTest {
                 .build();
 
         board = (NineMMBoard) game.getBoard();
-        player = game.getActivePlayer();
     }
 
     @Test
@@ -56,9 +53,9 @@ public class NineMMBoardBuildTest {
 //    @Disabled("Refactor test - BoardVariant enumeration was added")
     @Test
     public void boardVariantTest() {
-        MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
+        Board.BoardVariant variant = Board.BoardVariant.NINE_MEN_MORRIS;
 
-        assertEquals(variant, game.getVariant());
+        assertEquals(variant, board.getVariant());
     }
 
 //    @Disabled("Board.number.PlayerPiecesTest was deleted (this method was moved to MillGame class) - UPDATE TEST")

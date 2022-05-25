@@ -146,7 +146,7 @@ public class MillGame {
         String out;
 
         out = "MillGame(variant="+ variant +
-                ", board=" + board.getVariant() + ")";
+                ", board=" + board.getBoardVariant() + ")";
         return out;
     }
 
