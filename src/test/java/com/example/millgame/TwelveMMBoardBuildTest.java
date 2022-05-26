@@ -59,5 +59,5 @@ public class TwelveMMBoardBuildTest {
         Board.BoardVariant variant = Board.BoardVariant.TWELVE_MEN_MORRIS;
 
         assertEquals(variant, board.getBoardVariant());
-   }
+    }
 }
