@@ -1,7 +1,6 @@
 package com.example.millgame;
 
 import com.example.millgame.boards.BoardCreatorDirector;
-import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.boards.TwelveMMBoard;
 
 import com.example.millgame.exceptions.RankedException;
@@ -60,12 +59,5 @@ public class TwelveMMBoardBuildTest {
         Board.BoardVariant variant = Board.BoardVariant.TWELVE_MEN_MORRIS;
 
         assertEquals(variant, board.getBoardVariant());
-    }
-
-    @Test
-    public void numberPlayerPiecesTest(){
-        int playerPieces = 12;
-
-        assertEquals(playerPieces, game.getNumberPlayerPieces());
     }
 }
