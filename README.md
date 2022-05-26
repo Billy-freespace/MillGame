@@ -57,9 +57,9 @@ mvn test
 
 ### Demo
 
-**AVAILABLE GAME VARIANTS**: NINE_MEN_MORRIS, TWELVE_MEN_MORRIS, SIX_MEN_MORRIS  
-**AVALIABLE GAME MODES**: HUMAN_HUMAN, HUMAN_ROBOT  
-**AVAILABLE ROBOT LEVELS**: NOOB, NINJA  
+**AVAILABLE GAME VARIANTS**: NINE_MEN_MORRIS, TWELVE_MEN_MORRIS, SIX_MEN_MORRIS, THREE_MEN_MORRIS, FIVE_MEN_MORRIS, SEVEN_MEN_MORRIS, ELEVEN_MEN_MORRIS
+**AVALIABLE GAME MODES**: HUMAN_HUMAN, HUMAN_ROBOT
+**AVAILABLE ROBOT LEVELS**: NOOB, NINJA
 
 
 * Game variant`NINE_MEN_MORRIS` and mode `HUMAN_HUMAN`
@@ -79,6 +79,12 @@ mvn test
 *command*: `./gradlew minimal --args='--variant=SIX_MEN_MORRIS --mode=HUMAN_HUMAN'`
 
 ![six-men-morris](demo/six-men-morris-board.png)
+
+* Game variant`THREE_MEN_MORRIS` and mode `HUMAN_HUMAN`
+
+*command*: `./gradlew minimal --args='--variant=THREE_MEN_MORRIS --mode=HUMAN_HUMAN'`
+
+![six-men-morris](demo/three-men-morris-board.png)
 
 
 ## Documentation
