@@ -158,20 +158,18 @@ class PlayerOperationTest {
         placeAllPieces();
         Piece piece = startPosition.getPiece();
 
-<<<<<<< HEAD
-        player.movePiece(piece, origin);
-=======
+
         player.movePiece(piece, endPosition);
->>>>>>> test-hpord-2
+
 
         assertEquals(piece, endPosition.getPiece());
         assertNull(startPosition.getPiece());
     }
 
-<<<<<<< HEAD
+/*
 //    Test for AC6.3
     @Test
-    public void movePieceNoEmptyPositionTest() throws InvalidPositionCoordinate, NotEmptyPosition, NoPiecesError {
+    public void movePieceNotEmptyPositionTest() throws InvalidPositionCoordinate, NotEmptyPosition, NoPiecesError {
         Position origin = board.getOrigin();
         Position position = board.getPosition('a', 4);
         player.placePiece(position);
@@ -201,8 +199,8 @@ class PlayerOperationTest {
         assertNull(origin.getPiece());
     }
 
-=======
-    //@Disabled
+ */
+
     @Test
     public void movePieceNotNeighbourTest() throws RankedException {
         //Position origin = board.getOrigin();
@@ -218,7 +216,6 @@ class PlayerOperationTest {
         assertNull(endPosition.getPiece());
     }
 
-    //@Disabled
     @Test
     public void movePieceNoEmptyPositionTest() throws InvalidPositionCoordinate, NotEmptyPosition, NoPiecesError {
         //Position origin = board.getOrigin();
@@ -232,12 +229,11 @@ class PlayerOperationTest {
         /*assertEquals(NotEmptyPosition.getErrorMessage(origin.getXLabel(), origin.getYLabel()), thrown.getMessage());*/
     }
 
->>>>>>> test-hpord-2
 //    Test for AC6.5
     //@Disabled
     @Test
     public void movePieceInvalidPositionTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
-<<<<<<< HEAD
+
         Position origin = board.getOrigin();
         Position position = new Position('a', -1);
         player.placePiece(origin);
@@ -245,22 +241,9 @@ class PlayerOperationTest {
 
         InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class,
                 () -> player.movePiece(piece, position)
-=======
-        //Position origin = board.getOrigin();
-        Position startPosition = board.getOrigin();
-        char xLabel = 'z';
-        int yLabel = 100;
-        placeAllPieces();
-        Piece piece = startPosition.getPiece();
-
-        InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class,
-                () -> player.movePiece(piece, xLabel, yLabel));
-
-        /*InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class,
-                () -> player.placePiece(position)
->>>>>>> test-hpord-2
         );
-        assertEquals(InvalidPositionCoordinate.getErrorMessage(position.getXLabel(), position.getYLabel()), thrown.getMessage());*/
+
+        assertEquals(InvalidPositionCoordinate.getErrorMessage(position.getXLabel(), position.getYLabel()), thrown.getMessage());
     }
 
 //    Test for AC6.6
