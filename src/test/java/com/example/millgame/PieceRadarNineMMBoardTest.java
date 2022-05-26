@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Disabled("MillGameBuilder was changed - UPDATE test case")
+//@Disabled("MillGameBuilder was changed - UPDATE test case")
 public class PieceRadarNineMMBoardTest {
     private MillGame game;
 
