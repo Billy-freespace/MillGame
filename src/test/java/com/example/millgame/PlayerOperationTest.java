@@ -123,8 +123,14 @@ class PlayerOperationTest {
 
 //    Test for AC5.1
     @Test
-    public void removePieceTest() {
+    public void removePieceTest() throws RankedException {
+        Position origin = board.getOrigin();
+        player.placePiece(origin);
+        game.nextTurn();
+        player2 =game.getActivePlayer();
+        if (game.getMills(origin.getPiece()) != null) {
 
+        }
     }
 
 //    Test for AC6.1
