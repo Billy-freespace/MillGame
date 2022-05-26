@@ -3,9 +3,7 @@ package com.example.millgame;
 import com.example.millgame.boards.NineMMBoard;
 
 import com.example.millgame.exceptions.RankedException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,8 +13,6 @@ public class NineMMBoardBuildTest {
 
     private MillGame game;
     private NineMMBoard board;
-    private Player player;
-    private Player player2;
 
     @BeforeEach
     public void initBoard() throws RankedException {
@@ -32,14 +28,13 @@ public class NineMMBoardBuildTest {
                 .build();
 
         board = (NineMMBoard) game.getBoard();
-        player = game.getActivePlayer();
     }
 
     @Test
     public void numberPositionsTest() {
-        int numberPieces = 24;
+        int numberPositions = 24;
 
-        assertEquals(numberPieces, board.countPositions());
+        assertEquals(numberPositions, board.countPositions());
     }
 
     @Test
@@ -56,9 +51,9 @@ public class NineMMBoardBuildTest {
 //    @Disabled("Refactor test - BoardVariant enumeration was added")
     @Test
     public void boardVariantTest() {
-        MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
+        Board.BoardVariant variant = Board.BoardVariant.NINE_MEN_MORRIS;
 
-        assertEquals(variant, game.getVariant());
+        assertEquals(variant, board.getBoardVariant());
     }
 
 //    @Disabled("Board.number.PlayerPiecesTest was deleted (this method was moved to MillGame class) - UPDATE TEST")

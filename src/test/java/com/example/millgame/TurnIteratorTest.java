@@ -1,22 +1,11 @@
 package com.example.millgame;
 
-import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.exceptions.RankedException;
-import com.example.millgame.misc.Color;
-import com.example.millgame.players.PlayerFactory;
-import com.example.millgame.players.PlayerType;
-
 import static org.junit.jupiter.api.Assertions.*;
-
-import com.example.millgame.turns.TurnIterator;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 
-
-@Disabled("PlayerFactory.create(PlayerType, Color, Board) method was delete - UPDATE")
 public class TurnIteratorTest {
     private MillGame game;
 
