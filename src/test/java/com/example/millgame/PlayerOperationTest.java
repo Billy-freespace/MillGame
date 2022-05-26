@@ -191,9 +191,10 @@ class PlayerOperationTest {
 //    Test for AC6.6
     @Test
     public void movePieceNotOwnPieceTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
-        player2 = PlayerFactory.createHuman(Color.BLACK, game);
         Position origin = board.getOrigin();
         player.placePiece(origin);
+        game.nextTurn();
+        player2 = game.getActivePlayer();
 
         NotOwnPiece thrown = assertThrows(NotOwnPiece.class,
                 () -> player2.movePiece(origin.getPiece(), 'a', 4)
