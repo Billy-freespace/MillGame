@@ -38,13 +38,17 @@ public abstract class Player {
 
     public int getPlacedPieces(){ return placedPieces; }
 
-    public Piece getPiece(char x, int y){
+    public Piece getPiece(char x, int y) throws InvalidPositionCoordinate, NotOwnPiece {
         // iterate over pieces -> piece.getPosition() == (x, y) -> return piece
-        Piece piece=null;
+        Piece piece = game.getPiece(x, y);
 
-        // SOMETHING
+        for (Piece p: pieces) {
+            if (p == piece) {
+                return piece;
+            }
+        }
 
-        return piece;
+        throw new NotOwnPiece(piece);
     }
 
     public List<Piece> getBoardPieces(){ return pieces; }
@@ -119,19 +123,25 @@ public abstract class Player {
 
         movePiece(piece, xLabel, yLabel);
     }
-    public int removePiece(char x, int y) throws RankedException { // create a specific exception (ASAP)
+    public int removePiece(Piece piece) throws RankedException { // create a specific exception (ASAP)
         // this code was wrote just for testing RemovingEventAction (REMOVE or REUSE)
         // this code is not intended to handle all the possible cases, just to work
         // NOTE: remove throws RankedException and specify the specific exceptions
         // * verify that active turn belongs to the opponent
         // BEGIN
-        Position position = board.getPosition(x, y);
-        Piece piece = position.getPiece();
-        if(piece == null || !hasPiece(piece)){
-            throw new RankedException("Selected position is empty or piece does not belong to player");
+//        Position position = board.getPosition(x, y);
+
+        if (!hasPiece(piece)) {
+            throw new RemoveOwnPieceError(piece);
         }
 
-        board.removePiece(x, y);
+        if (piece == null) {
+            throw new RankedException("Pieza nula"); // CREAR EXCEPCION PARA ESTE CASO
+        }
+
+        Position position = piece.getPosition();
+
+        board.removePiece(position.getXLabel(), position.getYLabel()); // Elimina la pieza de la lista de molinos a la que pertenece
         pieces.remove(piece);
 
         return pieces.size();
@@ -139,10 +149,9 @@ public abstract class Player {
     }
 
     public int removePiece(Position position) throws RankedException {
-        char xLabel = position.getXLabel();
-        int yLabel = position.getYLabel();
+        Piece piece = position.getPiece();
 
-        return removePiece(xLabel, yLabel);
+        return removePiece(piece);
     }
 
     public int countBoardPieces(){ return pieces.size(); }
@@ -153,7 +162,7 @@ public abstract class Player {
 
     public boolean hasPossibleMovement(){
         boolean result = false;
-        for(Piece piece : pieces){
+        for(Piece piece : pieces) {
             List<Position> possibleMovements = board.getPossibleMovements(piece);
             if(possibleMovements.size() > 0){
                 result = true;
@@ -164,7 +173,7 @@ public abstract class Player {
         return result;
     }
 
-    public ImageIcon getPieceIcon(){
+    public ImageIcon getPieceIcon() {
         Piece piece = PieceFactory.create(color);
         return piece.getNormalIcon();
     }

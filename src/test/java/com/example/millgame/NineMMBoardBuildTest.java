@@ -1,38 +1,40 @@
 package com.example.millgame;
 
-import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.NineMMBoard;
 
-import com.example.millgame.misc.Color;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
+import com.example.millgame.exceptions.RankedException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled("PlayerFactory.create(PlayerType, Color, Board) method was delete - UPDATE")
+//@Disabled("PlayerFactory.create(PlayerType, Color, Board) method was delete - UPDATE")
 public class NineMMBoardBuildTest {
 
-    private static NineMMBoard board;
+    private MillGame game;
+    private NineMMBoard board;
 
-    @BeforeAll
-    public static void initBoard(){
-        List<Color> playerColors = new ArrayList<Color>();
-        playerColors.add(Color.WHITE);
-        playerColors.add(Color.BLACK);
-
+    @BeforeEach
+    public void initBoard() throws RankedException {
+        MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
         MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
-        board = (NineMMBoard) BoardCreatorDirector.makeMMBoard(variant, playerColors);
+
+        game = new MillGameBuilder(variant)
+                .reset()
+                .buildBoard()
+                .setRandomTurn(false)
+                .initTurnIterator()
+                .createPlayers(mode)
+                .build();
+
+        board = (NineMMBoard) game.getBoard();
     }
 
     @Test
     public void numberPositionsTest() {
-        int numberPieces = 24;
+        int numberPositions = 24;
 
-        assertEquals(numberPieces, board.countPositions());
+        assertEquals(numberPositions, board.countPositions());
     }
 
     @Test
@@ -46,19 +48,19 @@ public class NineMMBoardBuildTest {
         assertEquals(yLabel, origin.getYLabel());
     }
 
-    @Disabled("Refactor test - BoardVariant enumeration was added")
+//    @Disabled("Refactor test - BoardVariant enumeration was added")
     @Test
     public void boardVariantTest() {
-        MillGame.GameVariant variant = MillGame.GameVariant.NINE_MEN_MORRIS;
+        Board.BoardVariant variant = Board.BoardVariant.NINE_MEN_MORRIS;
 
         assertEquals(variant, board.getBoardVariant());
     }
 
-    @Disabled("Board.number.PlayerPiecesTest was deleted (this method was moved to MillGame class) - UPDATE TEST")
+//    @Disabled("Board.number.PlayerPiecesTest was deleted (this method was moved to MillGame class) - UPDATE TEST")
     @Test
     public void numberPlayerPiecesTest(){
         int playerPieces = 9;
 
-        //assertEquals(playerPieces, board.getNumberPlayerPieces());
+        assertEquals(playerPieces, game.getNumberPlayerPieces());
     }
 }

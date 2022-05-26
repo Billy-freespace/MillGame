@@ -3,8 +3,10 @@ package com.example.millgame;
 import com.example.millgame.boards.BoardCreatorDirector;
 import com.example.millgame.boards.TwelveMMBoard;
 
+import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.misc.Color;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -15,23 +17,30 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TwelveMMBoardBuildTest {
 
-    private static TwelveMMBoard board;
+    private MillGame game;
+    private TwelveMMBoard board;
 
-    @BeforeAll
-    public static void initBoard(){
-        List<Color> playerColors = new ArrayList<Color>();
-        playerColors.add(Color.WHITE);
-        playerColors.add(Color.BLACK);
-
+    @BeforeEach
+    public void initBoard() throws RankedException {
+        MillGame.GameMode mode = MillGame.GameMode.HUMAN_HUMAN;
         MillGame.GameVariant variant = MillGame.GameVariant.TWELVE_MEN_MORRIS;
-        board = (TwelveMMBoard) BoardCreatorDirector.makeMMBoard(variant, playerColors);
+
+        game = new MillGameBuilder(variant)
+                .reset()
+                .buildBoard()
+                .setRandomTurn(false)
+                .initTurnIterator()
+                .createPlayers(mode)
+                .build();
+
+        board = (TwelveMMBoard) game.getBoard();
     }
 
     @Test
     public void numberPositionsTest() {
-        int numberPieces = 24;
+        int numberPositions = 24;
 
-        assertEquals(numberPieces, board.countPositions());
+        assertEquals(numberPositions, board.countPositions());
     }
 
     @Test
@@ -44,11 +53,11 @@ public class TwelveMMBoardBuildTest {
         assertEquals(yLabel, origin.getYLabel());
     }
 
-    @Disabled("Refactor test - BoardVariant enumeration was added")
+//    @Disabled("Refactor test - BoardVariant enumeration was added")
     @Test
     public void boardVariantTest() {
-        MillGame.GameVariant variant = MillGame.GameVariant.TWELVE_MEN_MORRIS;
+        Board.BoardVariant variant = Board.BoardVariant.TWELVE_MEN_MORRIS;
 
         assertEquals(variant, board.getBoardVariant());
-    }
+   }
 }
