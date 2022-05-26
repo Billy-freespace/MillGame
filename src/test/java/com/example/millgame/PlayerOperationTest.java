@@ -264,12 +264,12 @@ class PlayerOperationTest {
     //@Disabled
     @Test
     public void flyPieceTest() throws RankedException {
-        Position startPosition = board.getOrigin();
-        Position endPosition = board.getPosition('g', 1);
-         int j = 1;
+        Position endPosition = board.getOrigin();
+        Position startPosition = board.getPosition('e', 5);
+         int j = 2;
         try {
             // 3 fichas
-            for (char i = 'a'; i <= 'c';  i++, j++) {
+            for (char i = 'b'; i <= 'e';  i++, j++) {
                 if (i == 'd') continue;
                 player.placePiece(i, j);
             }
