@@ -263,7 +263,7 @@ class PlayerOperationTest {
 
     //@Disabled
     @Test
-    public void moveFlyPieceTest() throws RankedException {
+    public void flyPieceTest() throws RankedException {
         Position startPosition = board.getOrigin();
         Position endPosition = board.getPosition('g', 1);
          int j = 1;
