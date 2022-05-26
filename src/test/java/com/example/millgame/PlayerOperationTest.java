@@ -261,6 +261,27 @@ class PlayerOperationTest {
         assertEquals(NotOwnPiece.getErrorMessage(origin.getPiece()), thrown.getMessage());
     }
 
+    //@Disabled
+    @Test
+    public void moveFlyPieceTest() throws RankedException {
+        Position startPosition = board.getOrigin();
+        Position endPosition = board.getPosition('g', 1);
+         int j = 1;
+        try {
+            // 3 fichas
+            for (char i = 'a'; i <= 'c';  i++, j++) {
+                if (i == 'd') continue;
+                player.placePiece(i, j);
+            }
+        } catch (NoPiecesError e){
+            // DONOTHING
+        }
+        Piece piece = startPosition.getPiece();
+        player.movePiece(piece, endPosition);
+        assertEquals(piece, endPosition.getPiece());
+        assertNull(startPosition.getPiece());
+    }
+
     /*
     @Test
     public void testEmptyPosition() throws RankedException {
