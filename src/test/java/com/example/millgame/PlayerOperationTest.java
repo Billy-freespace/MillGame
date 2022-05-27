@@ -143,6 +143,22 @@ class PlayerOperationTest {
 //    Test for AC5.1
     @Test
     public void removePieceTest() {
+        /*
+         * W : TESTING (default color: WHITE, BLACK)
+         * CASO: B: a formado un molino [c5, d5, e5]
+         *       W: forma un molino [b2, b4, b6] -> REMOVER PIECE -> c5 (ERRROR: pieza en molino)
+         * MOVIMIETOS: (W: a1 - B: c5 - W: b6 - B: d5 - W: b4 - B: e5 (DELETE: a1) - W: b2 (DELETE: c5 - NO EVENT: MANUAL)
+         *
+         * NOTE: W#, B#: Pieza a eliminar
+         * 7|---|   |   |---|   |   |---|
+         * 6|   | W |   |---|   |---|   |
+         * 5|   |   | B#| B | B |   |   |
+         * 4|---| W |---|   |---|---|---|
+         * 3|   |   |---|---|---|   |   |
+         * 2|   | * |   |---|   |---|   |
+         * 1| W#|   |   |---|   |   |---|
+         *    a   b   c   d   e   f   g
+         */
 
     }
 

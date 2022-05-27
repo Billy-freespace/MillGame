@@ -1,5 +1,6 @@
 package com.example.millgame;
 
+import com.example.millgame.actions.EventAction;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NoPiecesError;
 import com.example.millgame.exceptions.NotEmptyPosition;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,10 +50,13 @@ public class PieceRadarNineMMBoardTest {
 
     private void placePieces(List<BoardCoordinate> coordinates) throws RankedException{
         Player player;
+        Board board = game.getBoard();
         for(BoardCoordinate coordinate : coordinates){
-            player = game.getActivePlayer();
-            player.placePiece(coordinate.getX(), coordinate.getY());
-            game.nextTurn();
+            Position position = board.getPosition(coordinate.getX(), coordinate.getY());
+
+            ActionEvent event = new ActionEvent(position, -1, "TESTING");
+            EventAction eventAction = game.getEventAction(); // PositioningEventAction
+            eventAction.actionPerformed(event);
         }
     }
 
