@@ -1,13 +1,15 @@
 package com.example.millgame;
 
+import com.example.millgame.actions.EventAction;
+import com.example.millgame.actions.RemovingEventAction;
 import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.exceptions.*;
-import com.example.millgame.misc.Color;
-import com.example.millgame.players.PlayerFactory;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.awt.event.ActionEvent;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +20,9 @@ class PlayerOperationTest {
     private MillGame game;
     private NineMMBoard board;
     private Player player;
-    private Player player2;
+    private Player opponent;
+    private EventAction eventAction;
+    private ActionEvent event;
 
     //@Disabled
     @BeforeEach
@@ -143,13 +147,17 @@ class PlayerOperationTest {
 //    Test for AC5.1
     @Test
     public void removePieceTest() throws RankedException {
+        opponent = game.getOpponentPlayer();
         Position origin = board.getOrigin();
-        player.placePiece(origin);
-        game.nextTurn();
-        player2 =game.getActivePlayer();
-        if (game.getMills(origin.getPiece()) != null) {
+        opponent.placePiece(origin);
+        game.changeEventAction(new RemovingEventAction());
 
-        }
+        event = new ActionEvent(origin, -1, "removePieceTest unit test: " + origin);
+        eventAction = game.getEventAction();
+        eventAction.actionPerformed(event); // Remove piece of the opponent player in the origin position
+
+        assertNull(origin.getPiece());
+        assertEquals(opponent, game.getActivePlayer());
     }
 
 //    Test for AC6.1
@@ -259,10 +267,10 @@ class PlayerOperationTest {
         Position origin = board.getOrigin();
         player.placePiece(origin);
         game.nextTurn();
-        player2 = game.getActivePlayer();
+        opponent = game.getActivePlayer();
 
         NotOwnPiece thrown = assertThrows(NotOwnPiece.class,
-                () -> player2.movePiece(origin.getPiece(), 'a', 4)
+                () -> opponent.movePiece(origin.getPiece(), 'a', 4)
         );
         assertEquals(NotOwnPiece.getErrorMessage(origin.getPiece()), thrown.getMessage());
     }
