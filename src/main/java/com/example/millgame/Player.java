@@ -124,10 +124,11 @@ public abstract class Player {
         movePiece(piece, xLabel, yLabel);
     }
 
-    public void removePiece(Piece piece) throws RemoveOwnPieceError, InvalidPositionCoordinate, EmptyPositionError, RemovePieceFromMillError {
+    public void removePiece(Piece piece)
+            throws NotOwnPiece, InvalidPositionCoordinate, EmptyPositionError, RemovePieceFromMillError {
 
         if (!hasPiece(piece)) {
-            throw new RemoveOwnPieceError(piece);
+            throw new NotOwnPiece(piece);
         }
 
         if (piece == null) {
