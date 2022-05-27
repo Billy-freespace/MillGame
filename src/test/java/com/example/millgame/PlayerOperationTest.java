@@ -146,18 +146,41 @@ class PlayerOperationTest {
 
 //    Test for AC5.1
     @Test
-    public void removePieceTest() throws RankedException {
+    public void removePieceTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
         opponent = game.getOpponentPlayer();
         Position origin = board.getOrigin();
         opponent.placePiece(origin);
-        game.changeEventAction(new RemovingEventAction());
 
+        game.changeEventAction(new RemovingEventAction());
         event = new ActionEvent(origin, -1, "removePieceTest unit test: " + origin);
         eventAction = game.getEventAction();
         eventAction.actionPerformed(event); // Remove piece of the opponent player in the origin position
 
         assertNull(origin.getPiece());
         assertEquals(opponent, game.getActivePlayer());
+    }
+
+//    Test for AC5.2
+    @Test
+    public void removePieceInMillTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
+        opponent = game.getOpponentPlayer();
+        Position origin = board.getOrigin();
+        Position a4 = board.getPosition('a', 4);
+        Position a7 = board.getPosition('a', 7);
+        Position g1 = board.getPosition('g', 1);
+        opponent.placePiece(origin);
+        opponent.placePiece(a4);
+        opponent.placePiece(a7);
+        opponent.placePiece(g1);
+        game.changeEventAction(new RemovingEventAction());
+
+        event = new ActionEvent(origin, -1, "removePieceTest unit test: " + origin);
+        eventAction = game.getEventAction();
+
+        RemovePieceFromMillError thrown = assertThrows(RemovePieceFromMillError.class,
+                () -> eventAction.actionPerformed(event)
+        );
+        assertEquals(RemovePieceFromMillError.getMessageError(origin.getPiece()), thrown.getMessage());
     }
 
 //    Test for AC6.1
