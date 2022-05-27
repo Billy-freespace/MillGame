@@ -5,11 +5,14 @@ import com.example.millgame.actions.RemovingEventAction;
 import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.exceptions.*;
 
+import com.example.millgame.misc.BoardCoordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,6 +60,17 @@ class PlayerOperationTest {
             player.placePiece('c', 5);
         } catch (NoPiecesError e){
             // DONOTHING
+        }
+    }
+
+    private void placePieces(List<BoardCoordinate> coordinates) throws InvalidPositionCoordinate {
+        Board board = game.getBoard();
+        for(BoardCoordinate coordinate : coordinates){
+            Position position = board.getPosition(coordinate.getX(), coordinate.getY());
+
+            ActionEvent event = new ActionEvent(position, -1, "TESTING");
+            EventAction eventAction = game.getEventAction(); // PositioningEventAction
+            eventAction.actionPerformed(event);
         }
     }
 
@@ -148,15 +162,36 @@ class PlayerOperationTest {
     @Test
     public void removePieceTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
         opponent = game.getOpponentPlayer();
-        Position origin = board.getOrigin();
-        opponent.placePiece(origin);
 
-        game.changeEventAction(new RemovingEventAction());
-        event = new ActionEvent(origin, -1, "removePieceTest unit test: " + origin);
+        /*
+         * STATE: 2 white pieces was already placed in b2 and b6 positions
+         * Placing a white piece in position b4, we will form a mill
+         * W: White, B: Black, *: position to be placed the white piece to form a mill
+         *
+         * 7|---|   |   |---|   |   |---|
+         * 6|   | W |   |---|   |---|   |
+         * 5|   |   | B |---| B |   |   |
+         * 4|---| * |---|   |---|---|---|
+         * 3|   |   |---|---|---|   |   |
+         * 2|   | W |   |---|   |---|   |
+         * 1|---|   |   |---|   |   |---|
+         *    a   b   c   d   e   f   g
+         */
+
+        List<BoardCoordinate> coordinates = new ArrayList<BoardCoordinate>();
+        coordinates.add(new BoardCoordinate('b', 2)); // first white piece placed
+        coordinates.add(new BoardCoordinate('c', 5)); // first black piece placed
+        coordinates.add(new BoardCoordinate('b', 6)); // second white piece placed
+        coordinates.add(new BoardCoordinate('e', 5)); // second black piece placed
+        coordinates.add(new BoardCoordinate('b', 4)); // third white piece placed
+        placePieces(coordinates);
+
+        Position position = board.getPosition('c', 5);
+        event = new ActionEvent(position, -1, "removePieceTest unit test: " + position);
         eventAction = game.getEventAction();
         eventAction.actionPerformed(event); // Remove piece of the opponent player in the origin position
 
-        assertNull(origin.getPiece());
+        assertNull(position.getPiece());
         assertEquals(opponent, game.getActivePlayer());
     }
 
