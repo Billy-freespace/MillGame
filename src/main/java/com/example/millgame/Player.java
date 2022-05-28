@@ -123,35 +123,35 @@ public abstract class Player {
 
         movePiece(piece, xLabel, yLabel);
     }
-    public int removePiece(Piece piece) throws RankedException { // create a specific exception (ASAP)
-        // this code was wrote just for testing RemovingEventAction (REMOVE or REUSE)
-        // this code is not intended to handle all the possible cases, just to work
-        // NOTE: remove throws RankedException and specify the specific exceptions
-        // * verify that active turn belongs to the opponent
-        // BEGIN
-//        Position position = board.getPosition(x, y);
+
+    public void removePiece(Piece piece)
+            throws NotOwnPiece, InvalidPositionCoordinate, EmptyPositionError, RemovePieceFromMillError {
 
         if (!hasPiece(piece)) {
-            throw new RemoveOwnPieceError(piece);
+            throw new NotOwnPiece(piece);
         }
 
         if (piece == null) {
-            throw new RankedException("Pieza nula"); // CREAR EXCEPCION PARA ESTE CASO
+            throw new NullPointerException("Pieza nula");
+        }
+
+        if (board.getMills(piece).size() != 0 && !VerifyAllPiecesFormMills()) {
+            throw new RemovePieceFromMillError(piece);
         }
 
         Position position = piece.getPosition();
 
-        board.removePiece(position.getXLabel(), position.getYLabel()); // Elimina la pieza de la lista de molinos a la que pertenece
+        board.removePiece(position.getXLabel(), position.getYLabel()); // Elimina también la pieza de la lista de molinos a la que pertenece
         pieces.remove(piece);
 
-        return pieces.size();
-        //END
     }
 
-    public int removePiece(Position position) throws RankedException {
-        Piece piece = position.getPiece();
-
-        return removePiece(piece);
+    public boolean VerifyAllPiecesFormMills() {
+        for (Piece piece: pieces) {
+            if (!board.inAnyMill(piece))
+                return false;
+        }
+        return true;
     }
 
     public int countBoardPieces(){ return pieces.size(); }

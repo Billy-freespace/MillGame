@@ -49,7 +49,6 @@ public class PieceRadarNineMMBoardTest {
     }
 
     private void placePieces(List<BoardCoordinate> coordinates) throws RankedException{
-        Player player;
         Board board = game.getBoard();
         for(BoardCoordinate coordinate : coordinates){
             Position position = board.getPosition(coordinate.getX(), coordinate.getY());
