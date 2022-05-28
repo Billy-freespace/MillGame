@@ -19,7 +19,7 @@ public class PositioningEventAction extends EventAction {
 
         //game.getBoard().listPositions();
         TraceLogger.log(Level.INFO, position + " was selected", PositioningEventAction.class);
-        System.out.println("POSITION: " + position);
+        //System.out.println("POSITION: " + position);
 
         try{
             Player player = game.getActivePlayer();

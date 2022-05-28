@@ -89,7 +89,7 @@ public abstract class Board implements BoardDimension {
             }
         }
 
-        piece.setPosition(null);
+        //piece.setPosition(null);
         position.setPiece(null);
 
         int count = pieceCount.get(piece.getColor());
@@ -134,6 +134,7 @@ public abstract class Board implements BoardDimension {
             if(count == 3){
                 possibleMovements.addAll(getEmptyPositions());
             } else {
+                System.out.println("NEIGHBOURS: " + position.getNeighbours());
                 for(Position neighbour : position.getNeighbours()){
                     if(!neighbour.hasPiece()){ // empty position
                         possibleMovements.add(neighbour);
