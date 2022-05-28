@@ -104,7 +104,7 @@ public abstract class Player {
         }
 
         List<Position> possibleMovements = board.getPossibleMovements(piece);
-        //System.out.println("POSSIBLE MOVEMENTS (" + piece + "): " + possibleMovements);
+        System.out.println("POSSIBLE MOVEMENTS (" + piece + "): " + possibleMovements);
 
         if (!possibleMovements.contains(selectedPosition)) {
             throw new InvalidMovement(position, selectedPosition);
@@ -131,17 +131,13 @@ public abstract class Player {
             throw new NotOwnPiece(piece);
         }
 
-        if (piece == null) {
-            throw new NullPointerException("Pieza nula");
-        }
-
         if (board.getMills(piece).size() != 0 && !VerifyAllPiecesFormMills()) {
             throw new RemovePieceFromMillError(piece);
         }
 
         Position position = piece.getPosition();
 
-        board.removePiece(position.getXLabel(), position.getYLabel()); // Elimina también la pieza de la lista de molinos a la que pertenece
+        board.removePiece(position.getXLabel(), position.getYLabel()); // Elimina tambien la pieza de la lista de molinos a la que pertenece
         pieces.remove(piece);
 
     }

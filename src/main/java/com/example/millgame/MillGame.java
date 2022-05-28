@@ -4,6 +4,7 @@ import com.example.millgame.actions.EventAction;
 import com.example.millgame.boards.BoardPanel;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.RankedException;
+import com.example.millgame.exceptions.RemoveOwnPieceError;
 import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Color;
 import com.example.millgame.players.PlayerType;
@@ -74,6 +75,15 @@ public class MillGame {
 
     public void removeOpponentPiece(Piece piece) throws RankedException {
         Player opponent = getOpponentPlayer();
+
+        if (piece == null) {
+            throw new NullPointerException("Trying to delete a null piece");
+        }
+
+        if(!opponent.hasPiece(piece)){
+            throw new RemoveOwnPieceError(piece);
+        }
+
         opponent.removePiece(piece);
     }
 

@@ -14,6 +14,6 @@ public class RemoveOwnPieceError extends RankedException{
     }
 
     public static String getErrorMessage(Piece piece) {
-        return piece + ": You can't remove your own piece";
+        return "You can't remove your own pieces: " + piece;
     }
 }
