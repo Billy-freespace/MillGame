@@ -326,7 +326,8 @@ class PlayerOperationTest {
 
         Position origin = board.getOrigin();
         Position position = new Position('a', -1);
-        player.placePiece(origin);
+        //player.placePiece(origin);
+        placeAllPieces();
         Piece piece = origin.getPiece();
 
         InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class,
@@ -337,7 +338,7 @@ class PlayerOperationTest {
     }
 
 //    Test for AC6.6
-    @Disabled
+    //@Disabled
     @Test
     public void movePieceNotOwnPieceTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
         Position origin = board.getOrigin();
@@ -349,6 +350,70 @@ class PlayerOperationTest {
                 () -> opponent.movePiece(origin.getPiece(), 'a', 4)
         );
         assertEquals(NotOwnPiece.getErrorMessage(origin.getPiece()), thrown.getMessage());
+    }
+
+    //@Disabled
+    @Test
+    public void flyPieceTest() throws RankedException {
+        Position endPosition = board.getOrigin();
+        Position startPosition = board.getPosition('e', 5);
+         int j = 2;
+        try {
+            // 3 fichas
+            for (char i = 'b'; i <= 'e';  i++, j++) {
+                if (i == 'd') continue;
+                player.placePiece(i, j);
+            }
+        } catch (NoPiecesError e){
+            // DONOTHING
+        }
+        Piece piece = startPosition.getPiece();
+        player.movePiece(piece, endPosition);
+        assertEquals(piece, endPosition.getPiece());
+        assertNull(startPosition.getPiece());
+    }
+
+    //@Disabled
+    @Test
+    public void flyPieceInvalidPositionTest() throws RankedException {
+        Position origin = board.getOrigin();
+        Position position = new Position('a', -1);
+         int j = 1;
+        try {
+            // 3 fichas
+            for (char i = 'a'; i <= 'e';  i+=2, j+=2) {
+                if (i == 'd') continue;
+                player.placePiece(i, j);
+            }
+        } catch (NoPiecesError e){
+            // DONOTHING
+        }
+        Piece piece = origin.getPiece();
+        InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class,
+                () -> player.movePiece(piece, position)
+        );
+
+        assertEquals(InvalidPositionCoordinate.getErrorMessage(position.getXLabel(), position.getYLabel()), thrown.getMessage());
+    }
+
+    //@Disabled
+    @Test
+    public void flyPieceNoEmptyTest() throws RankedException {
+        Position endPosition = board.getOrigin();
+        Position startPosition = board.getPosition('e', 5);
+         int j = 1;
+        try {
+            // 3 fichas
+            for (char i = 'a'; i <= 'e';  i+=2, j+=2) {
+                if (i == 'd') continue;
+                player.placePiece(i, j);
+            }
+        } catch (NoPiecesError e){
+            // DONOTHING
+        }
+        Piece piece = startPosition.getPiece();
+        NotEmptyPosition thrown = assertThrows(NotEmptyPosition.class,
+                () -> player.movePiece(piece, endPosition));
     }
 
     /*
