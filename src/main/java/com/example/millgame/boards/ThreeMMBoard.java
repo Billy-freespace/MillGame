@@ -7,9 +7,9 @@ import java.util.List;
 public class ThreeMMBoard extends BoardWithDiagonals {
     // COPIED FROM SixMMBoard (UPDATE)
     static final char MIN_XLABEL = 'a';
-    static final char MAX_XLABEL = 'e';
+    static final char MAX_XLABEL = 'c';
     static final int MIN_YLABEL = 1;
-    static final int MAX_YLABEL = 5;
+    static final int MAX_YLABEL = 3;
 
 
     public ThreeMMBoard(List<Color> playerColors) {
