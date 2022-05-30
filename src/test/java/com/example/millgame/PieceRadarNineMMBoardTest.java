@@ -470,7 +470,8 @@ public class PieceRadarNineMMBoardTest {
     @Test
     public void multiMillTest() throws RankedException{
         /*
-         * STATE: 2 white pieces was placed in a1 and a4, but no mill was formed
+         * STATE: 4 white pieces was placed in a1, a4, b4 and c4, but no mill was formed
+         * Placing a white piece in position a2, we will form two mills
          *
          * 7| W |   |   |---|   |   |---|
          * 6|   | B |   |---|   |---|   |
