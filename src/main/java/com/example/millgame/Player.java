@@ -1,3 +1,9 @@
+/*
+ * Abstracción de un jugador de NineMorris
+ * 
+ * 
+ */
+
 package com.example.millgame;
 
 import com.example.millgame.exceptions.*;
