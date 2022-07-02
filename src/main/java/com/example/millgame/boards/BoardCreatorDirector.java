@@ -22,19 +22,19 @@ public class BoardCreatorDirector {
             case FIVE_MEN_MORRIS:
                 board = new SixMMBoardBuilder()
                         .setPlayerColors(playerColors)
-                        .build();;
+                        .build();
                 break;
 
             case SEVEN_MEN_MORRIS:
                 board = new SevenMMBoardBuilder()
                         .setPlayerColors(playerColors)
-                        .build();;
+                        .build();
                 break;
 
             case NINE_MEN_MORRIS:
                 board = new NineMMBoardBuilder()
                         .setPlayerColors(playerColors)
-                        .build();;
+                        .build();
                 break;
 
             case ELEVEN_MEN_MORRIS:

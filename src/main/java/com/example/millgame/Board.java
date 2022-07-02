@@ -1,3 +1,11 @@
+/*
+ * Board
+ *
+ * Abtractraccion de un tablero de juego millgame
+ *
+ * Date: Jul 2 2022
+ */
+
 package com.example.millgame;
 
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
@@ -9,13 +17,11 @@ import com.example.millgame.misc.Color;
 import java.util.*;
 
 public abstract class Board implements BoardDimension {
+    public final BoardVariant variant;
     protected Position origin;
     protected Map<Character, Map<Integer, Position>> positions;
-    public final BoardVariant variant;
     protected Map<Color, List<Mill>> mills;
-
     protected PieceRadar radar;
-
     protected Map<Color, Integer> pieceCount;
 
     public Board (BoardVariant variant, List<Color> playerColors) {
@@ -30,6 +36,10 @@ public abstract class Board implements BoardDimension {
             pieceCount.put(color, 0);
         }
     }
+
+    /*
+     * Operacion de posiciones
+     */
 
     public ArrayList<Position> getEmptyPositions(){
         ArrayList<Position> emptyPositions = new ArrayList<Position>();
@@ -48,6 +58,58 @@ public abstract class Board implements BoardDimension {
 
         return emptyPositions;
     }
+
+    public int countPositions(){
+        int count =0;
+        for(Map<Integer, Position> inner : positions.values()){
+            count += inner.size();
+        }
+
+        return count;
+    }
+
+    public Position getPosition(char x, int y) throws InvalidPositionCoordinate {
+        if(!positions.containsKey(x)){
+            throw new InvalidPositionCoordinate(x, y);
+        }
+
+        Map<Integer, Position> inner = positions.get(x);
+        if(!inner.containsKey(y)){
+            throw new InvalidPositionCoordinate(x, y);
+        }
+
+        return inner.get(y);
+    }
+
+    public void setOrigin(Position origin){ this.origin = origin;}
+    public Position getOrigin(){ return origin; }
+    public void unmark(){
+        for(Character xLabel : positions.keySet()){
+            Map<Integer, Position> inner = positions.get(xLabel);
+            for(Integer yLabel : inner.keySet()){
+                Position position = inner.get(yLabel);
+                position.mark = false;
+            }
+        }
+    } // unmark all positions of board
+
+    public void addPosition(Position position){
+        char xLabel = position.getXLabel();
+        int yLabel = position.getYLabel();
+        Map<Integer, Position> inner;
+
+        if(!positions.containsKey(xLabel)){
+            inner = new HashMap<Integer, Position>();
+            positions.put(xLabel, inner);
+        }
+
+        inner = positions.get(xLabel);
+        inner.put(yLabel, position);
+    }
+
+    /*
+     * Operacion de piezas
+     */
 
     public void placePiece(Piece piece, char x, int y)
             throws NotEmptyPosition, InvalidPositionCoordinate {
@@ -97,26 +159,13 @@ public abstract class Board implements BoardDimension {
         pieceCount.put(piece.getColor(), count);
     }
 
-    public List<Mill> getMills(Color color){ return mills.get(color); }
-    public abstract List<Mill> getMills(Piece piece);
-    public BoardVariant getBoardVariant() {
-        return variant;
-    }
-
-    public Position getPosition(char x, int y) throws InvalidPositionCoordinate {
-        if(!positions.containsKey(x)){
-            throw new InvalidPositionCoordinate(x, y);
-        }
-
-        Map<Integer, Position> inner = positions.get(x);
-        if(!inner.containsKey(y)){
-            throw new InvalidPositionCoordinate(x, y);
-        }
-
-        return inner.get(y);
-    }
-
     public int getCount(Color color){ return pieceCount.get(color); }
+
+
+    /*
+     * Moviemientos
+     */
+
 
     // Override this method if fly is not allow in a specific board
     public List<Position> getPossibleMovements(Piece piece) {
@@ -149,40 +198,15 @@ public abstract class Board implements BoardDimension {
         return possibleMovements;
     }
 
-    public int countPositions(){
-        int count =0;
-        for(Map<Integer, Position> inner : positions.values()){
-            count += inner.size();
-        }
 
-        return count;
-    }
+    /*
+     * Operacion en molinos
+     */
 
-    public void setOrigin(Position origin){ this.origin = origin;}
-    public Position getOrigin(){ return origin; }
-    public void unmark(){
-        for(Character xLabel : positions.keySet()){
-            Map<Integer, Position> inner = positions.get(xLabel);
-            for(Integer yLabel : inner.keySet()){
-                Position position = inner.get(yLabel);
-                position.mark = false;
-            }
-        }
-    } // unmark all positions of board
-
-
-    public void addPosition(Position position){
-        char xLabel = position.getXLabel();
-        int yLabel = position.getYLabel();
-        Map<Integer, Position> inner;
-
-        if(!positions.containsKey(xLabel)){
-            inner = new HashMap<Integer, Position>();
-            positions.put(xLabel, inner);
-        }
-
-        inner = positions.get(xLabel);
-        inner.put(yLabel, position);
+    public List<Mill> getMills(Color color){ return mills.get(color); }
+    public abstract List<Mill> getMills(Piece piece);
+    public BoardVariant getBoardVariant() {
+        return variant;
     }
 
     public boolean inAnyMill(Piece piece){

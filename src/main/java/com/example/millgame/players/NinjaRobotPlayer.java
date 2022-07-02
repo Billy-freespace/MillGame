@@ -9,16 +9,16 @@ public class NinjaRobotPlayer extends RobotPlayer {
 
     @Override
     public void autoPlacePiece(){
-
+        // CODIGO PARA COLOCAR PIEZA (+ PENSADO)
     }
 
     @Override
     public void autoMovePiece(){
-
+        // CODIGO PARA MOVER PIEZA (+ PENSADO)
     }
 
     @Override
     public void autoRemovePiece(){
-
+        // CODIGO PARA REMOVER PIEZA (+ PENSADO)
     }
 }

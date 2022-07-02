@@ -1,0 +1,14 @@
+# METODOS MUY LARGOS:
+* Definicion de posiciones en constructors de tableros
+
+
+# EXPRESIONES COMPLJEAS:
+* ARCHIVO: boards/BoardPanel.java (lineas: 51-57)
+
+
+# Switch  o if-then-else que necesita ser reemplazado con polimorfismo
+* ARCHIVO: boards/BoardCreatorDirector.java (clase BoardCreatorDirector, metodo makeMMBoard)
+
+# Nombre de método o variable cuya intención no está clara
+* ARCHIVO: Board.java (clase: Board, methods: unmark [que desenmarca?], getCount [no se sabe que cuenta])
+
