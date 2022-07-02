@@ -47,7 +47,6 @@ public abstract class RobotPlayer extends Player {
         EventAction currentEventAction = game.getEventAction();
         TraceLogger.log(Level.INFO, "RobotPlayer.autoPlay method, currentEventAction: " + currentEventAction);
         try {
-            Thread.sleep(60);
             switch (currentEventAction.getActionType()) {
                 case POSITIONING:
                     autoPlacePiece();
