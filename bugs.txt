@@ -15,3 +15,13 @@
 ## Refactorización
 * ARCHIVO: MillGame.java (clase: MillGame, methods: getMapPlayerPieces [usar polimorfismo])
 
+#Warning: Posible duplicación -de código (clase: Player, metthods: placePiece, movePiece [https://refactoring.guru/preserve-whole-object])
+
+*{To do }: Definición de Pre yPost -Condiciones (Verificar si validaciones son necesarias) clase: Player, methods: placePiece, movePiece y removePiece
+
+* {To do }: renombramiento de nombres de variables no transparentes enclase: Player :
+variable: type -> playerType,  color -> playerColor,
+
+*{To do} Renombrar clase  Color (misc/Color.java [Genera problemas con clase Color de java])
+
+

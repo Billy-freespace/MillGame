@@ -2,6 +2,7 @@
  * Abstracción de un jugador de NineMorris
  * 
  * 
+ * Date: 2 de julio
  */
 
 package com.example.millgame;
@@ -18,15 +19,12 @@ import java.util.List;
 import java.util.logging.Level;
 
 public abstract class Player {
-    protected List<Piece> pieces;
     public final int gamePieces;
+    protected List<Piece> pieces;
     protected int placedPieces;
-
     protected PlayerType type;
-
     protected final Color color;
     protected final MillGame game;
-
     protected final Board board;
 
     public Player(PlayerType playerType, Color color, MillGame game) {
@@ -40,8 +38,10 @@ public abstract class Player {
         placedPieces = 0;
     }
 
-    public PlayerType getType(){ return type; }
-
+    
+    /*
+     * Operaciones sobre piezas
+     */
     public int getPlacedPieces(){ return placedPieces; }
 
     public Piece getPiece(char x, int y) throws InvalidPositionCoordinate, NotOwnPiece {
@@ -61,12 +61,6 @@ public abstract class Player {
 
     public void placePiece(char x, int y)
             throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
-        // raise NoPiecesError exception if the player
-        // has no piece to positioning in the POSITIONING game stage
-        //System.out.println(toString());
-        /*if(false) {
-            throw new InvalidPositionCoordinate(x, y);
-        }*/
 
         if(placedPieces >= gamePieces) {
             throw new NoPiecesError(color, MillGame.GameStage.POSITIONING, Level.WARNING);
@@ -82,8 +76,6 @@ public abstract class Player {
 
     public void placePiece(Position position)
             throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
-        // raise NoPiecesError exception if the player
-        // has no piece to positioning in the POSITIONING game stage
         char xLabel = position.getXLabel();
         int yLabel = position.getYLabel();
 
@@ -93,11 +85,7 @@ public abstract class Player {
     public void movePiece(Piece piece, char x, int y)
             throws NotOwnPiece, NotEmptyPosition,
                 InvalidPositionCoordinate, EmptyPositionError, InvalidMovement {
-        // this code was wrote just for testing MovingEventAction (REMOVE or REUSE)
-        // this code is not intended to handle all the possible cases, just to work
-        // NOTE: remove throws RankedException and specify the specific exceptions
-        //          and validate that the piece can only be moved to allowed positions (neighbours positions)
-        // BEGIN
+
         if (!hasPiece(piece)) {
             throw new NotOwnPiece(piece);
         }
@@ -110,7 +98,7 @@ public abstract class Player {
         }
 
         List<Position> possibleMovements = board.getPossibleMovements(piece);
-        System.out.println("POSSIBLE MOVEMENTS (" + piece + "): " + possibleMovements);
+        System.out.println("POSSIBLE MOVEMENTS (" + piece + "): " + possibleMovements);//
 
         if (!possibleMovements.contains(selectedPosition)) {
             throw new InvalidMovement(position, selectedPosition);
@@ -120,7 +108,6 @@ public abstract class Player {
         int pieceYLabel = position.getYLabel();
         board.removePiece(pieceXLabel, pieceYLabel);
         board.placePiece(piece, x, y);
-        //END
     }
 
     public void movePiece(Piece piece, Position position) throws RankedException{
@@ -148,6 +135,14 @@ public abstract class Player {
 
     }
 
+    /*
+     * Operaciones sobre piezas
+     */
+
+    public int countBoardPieces(){ return pieces.size(); }
+
+    public boolean hasPiece(Piece piece){ return pieces.contains(piece); }
+
     public boolean VerifyAllPiecesFormMills() {
         for (Piece piece: pieces) {
             if (!board.inAnyMill(piece))
@@ -156,11 +151,10 @@ public abstract class Player {
         return true;
     }
 
-    public int countBoardPieces(){ return pieces.size(); }
-
-    public Color getColor(){  return color; }
-
-    public boolean hasPiece(Piece piece){ return pieces.contains(piece); }
+    
+    /*
+     * Movimientos del jugador
+     */
 
     public boolean hasPossibleMovement(){
         boolean result = false;
@@ -174,6 +168,14 @@ public abstract class Player {
 
         return result;
     }
+
+    /*
+     * Metodos sobre el objeto player
+     */
+
+    public PlayerType getType(){ return type; }
+
+    public Color getColor(){  return color; }
 
     public ImageIcon getPieceIcon() {
         Piece piece = PieceFactory.create(color);
