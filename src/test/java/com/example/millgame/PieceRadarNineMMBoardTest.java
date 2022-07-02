@@ -1,5 +1,6 @@
 package com.example.millgame;
 
+import com.example.millgame.actions.EventAction;
 import com.example.millgame.exceptions.InvalidPositionCoordinate;
 import com.example.millgame.exceptions.NoPiecesError;
 import com.example.millgame.exceptions.NotEmptyPosition;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,11 +49,13 @@ public class PieceRadarNineMMBoardTest {
     }
 
     private void placePieces(List<BoardCoordinate> coordinates) throws RankedException{
-        Player player;
+        Board board = game.getBoard();
         for(BoardCoordinate coordinate : coordinates){
-            player = game.getActivePlayer();
-            player.placePiece(coordinate.getX(), coordinate.getY());
-            game.nextTurn();
+            Position position = board.getPosition(coordinate.getX(), coordinate.getY());
+
+            ActionEvent event = new ActionEvent(position, -1, "TESTING");
+            EventAction eventAction = game.getEventAction(); // PositioningEventAction
+            eventAction.actionPerformed(event);
         }
     }
 
@@ -466,7 +470,8 @@ public class PieceRadarNineMMBoardTest {
     @Test
     public void multiMillTest() throws RankedException{
         /*
-         * STATE: 2 white pieces was placed in a1 and a4, but no mill was formed
+         * STATE: 4 white pieces was placed in a1, a4, b4 and c4, but no mill was formed
+         * Placing a white piece in position a2, we will form two mills
          *
          * 7| W |   |   |---|   |   |---|
          * 6|   | B |   |---|   |---|   |

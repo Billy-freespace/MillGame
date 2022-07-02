@@ -1,13 +1,18 @@
 package com.example.millgame;
 
+import com.example.millgame.actions.EventAction;
+import com.example.millgame.actions.RemovingEventAction;
 import com.example.millgame.boards.NineMMBoard;
 import com.example.millgame.exceptions.*;
-import com.example.millgame.misc.Color;
-import com.example.millgame.players.PlayerFactory;
 
+import com.example.millgame.misc.BoardCoordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +23,9 @@ class PlayerOperationTest {
     private MillGame game;
     private NineMMBoard board;
     private Player player;
-    private Player player2;
+    private Player opponent;
+    private EventAction eventAction;
+    private ActionEvent event;
 
     //@Disabled
     @BeforeEach
@@ -53,6 +60,17 @@ class PlayerOperationTest {
             player.placePiece('c', 5);
         } catch (NoPiecesError e){
             // DONOTHING
+        }
+    }
+
+    private void placePieces(List<BoardCoordinate> coordinates) throws InvalidPositionCoordinate {
+        Board board = game.getBoard();
+        for(BoardCoordinate coordinate : coordinates){
+            Position position = board.getPosition(coordinate.getX(), coordinate.getY());
+
+            ActionEvent event = new ActionEvent(position, -1, "TESTING");
+            EventAction eventAction = game.getEventAction(); // PositioningEventAction
+            eventAction.actionPerformed(event);
         }
     }
 
@@ -142,8 +160,80 @@ class PlayerOperationTest {
 
 //    Test for AC5.1
     @Test
-    public void removePieceTest() {
+    public void removePieceTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
+        opponent = game.getOpponentPlayer();
 
+        /*
+         * STATE: 2 white pieces was already placed in b2 and b6 positions
+         * Placing a white piece in position b4, we will form a mill
+         * W: White, B: Black, *: position to be placed the white piece to form a mill
+         *
+         * 7|---|   |   |---|   |   |---|
+         * 6|   | W |   |---|   |---|   |
+         * 5|   |   | B |---| B |   |   |
+         * 4|---| * |---|   |---|---|---|
+         * 3|   |   |---|---|---|   |   |
+         * 2|   | W |   |---|   |---|   |
+         * 1|---|   |   |---|   |   |---|
+         *    a   b   c   d   e   f   g
+         */
+
+        List<BoardCoordinate> coordinates = new ArrayList<BoardCoordinate>();
+        coordinates.add(new BoardCoordinate('b', 2)); // first white piece placed
+        coordinates.add(new BoardCoordinate('c', 5)); // first black piece placed
+        coordinates.add(new BoardCoordinate('b', 6)); // second white piece placed
+        coordinates.add(new BoardCoordinate('e', 5)); // second black piece placed
+        coordinates.add(new BoardCoordinate('b', 4)); // third white piece placed
+        placePieces(coordinates);
+
+        Position position = board.getPosition('c', 5);
+        event = new ActionEvent(position, -1, "removePieceTest unit test: " + position);
+        eventAction = game.getEventAction();
+        eventAction.actionPerformed(event); // Remove piece of the opponent player in the origin position
+
+        assertNull(position.getPiece());
+        assertEquals(opponent, game.getActivePlayer());
+    }
+
+//    Test for AC5.2
+    @Disabled("Update TEST - STATE: FAILING")
+    @Test
+    public void removePieceInMillTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
+        /*
+         * W : TESTING (default color: WHITE, BLACK)
+         * CASO: B: a formado un molino [c5, d5, e5]
+         *       W: forma un molino [b2, b4, b6] -> REMOVER PIECE -> c5 (ERRROR: pieza en molino)
+         * MOVIMIETOS: (W: a1 - B: c5 - W: b6 - B: d5 - W: b4 - B: e5 (DELETE: a1) - W: b2 (DELETE: c5 - NO EVENT: MANUAL)
+         *
+         * NOTE: W#, B#: Pieza a eliminar
+         * 7|---|   |   |---|   |   |---|
+         * 6|   | W |   |---|   |---|   |
+         * 5|   |   | B#| B | B |   |   |
+         * 4|---| W |---|   |---|---|---|
+         * 3|   |   |---|---|---|   |   |
+         * 2|   | * |   |---|   |---|   |
+         * 1| W#|   |   |---|   |   |---|
+         *    a   b   c   d   e   f   g
+         */
+
+        opponent = game.getOpponentPlayer();
+        Position origin = board.getOrigin();
+        Position a4 = board.getPosition('a', 4);
+        Position a7 = board.getPosition('a', 7);
+        Position g1 = board.getPosition('g', 1);
+        opponent.placePiece(origin);
+        opponent.placePiece(a4);
+        opponent.placePiece(a7);
+        opponent.placePiece(g1);
+        game.changeEventAction(new RemovingEventAction());
+
+        event = new ActionEvent(origin, -1, "removePieceTest unit test: " + origin);
+        eventAction = game.getEventAction();
+
+        RemovePieceFromMillError thrown = assertThrows(RemovePieceFromMillError.class,
+                () -> eventAction.actionPerformed(event)
+        );
+        assertEquals(RemovePieceFromMillError.getMessageError(origin.getPiece()), thrown.getMessage());
     }
 
 //    Test for AC6.1
@@ -236,7 +326,8 @@ class PlayerOperationTest {
 
         Position origin = board.getOrigin();
         Position position = new Position('a', -1);
-        player.placePiece(origin);
+        //player.placePiece(origin);
+        placeAllPieces();
         Piece piece = origin.getPiece();
 
         InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class,
@@ -247,18 +338,82 @@ class PlayerOperationTest {
     }
 
 //    Test for AC6.6
-    @Disabled
+    //@Disabled
     @Test
     public void movePieceNotOwnPieceTest() throws NotEmptyPosition, NoPiecesError, InvalidPositionCoordinate {
         Position origin = board.getOrigin();
         player.placePiece(origin);
         game.nextTurn();
-        player2 = game.getActivePlayer();
+        opponent = game.getActivePlayer();
 
         NotOwnPiece thrown = assertThrows(NotOwnPiece.class,
-                () -> player2.movePiece(origin.getPiece(), 'a', 4)
+                () -> opponent.movePiece(origin.getPiece(), 'a', 4)
         );
         assertEquals(NotOwnPiece.getErrorMessage(origin.getPiece()), thrown.getMessage());
+    }
+
+    //@Disabled
+    @Test
+    public void flyPieceTest() throws RankedException {
+        Position endPosition = board.getOrigin();
+        Position startPosition = board.getPosition('e', 5);
+         int j = 2;
+        try {
+            // 3 fichas
+            for (char i = 'b'; i <= 'e';  i++, j++) {
+                if (i == 'd') continue;
+                player.placePiece(i, j);
+            }
+        } catch (NoPiecesError e){
+            // DONOTHING
+        }
+        Piece piece = startPosition.getPiece();
+        player.movePiece(piece, endPosition);
+        assertEquals(piece, endPosition.getPiece());
+        assertNull(startPosition.getPiece());
+    }
+
+    //@Disabled
+    @Test
+    public void flyPieceInvalidPositionTest() throws RankedException {
+        Position origin = board.getOrigin();
+        Position position = new Position('a', -1);
+         int j = 1;
+        try {
+            // 3 fichas
+            for (char i = 'a'; i <= 'e';  i+=2, j+=2) {
+                if (i == 'd') continue;
+                player.placePiece(i, j);
+            }
+        } catch (NoPiecesError e){
+            // DONOTHING
+        }
+        Piece piece = origin.getPiece();
+        InvalidPositionCoordinate thrown = assertThrows(InvalidPositionCoordinate.class,
+                () -> player.movePiece(piece, position)
+        );
+
+        assertEquals(InvalidPositionCoordinate.getErrorMessage(position.getXLabel(), position.getYLabel()), thrown.getMessage());
+    }
+
+    //@Disabled
+    @Test
+    public void flyPieceNoEmptyTest() throws RankedException {
+        Position endPosition = board.getOrigin();
+        Position startPosition = board.getPosition('e', 5);
+         int j = 1;
+        try {
+            // 3 fichas
+            for (char i = 'a'; i <= 'e';  i+=2, j+=2) {
+                if (i == 'd') continue;
+                player.placePiece(i, j);
+            }
+        } catch (NoPiecesError e){
+            // DONOTHING
+        }
+        Piece piece = startPosition.getPiece();
+        NotEmptyPosition thrown = assertThrows(NotEmptyPosition.class,
+                () -> player.movePiece(piece, endPosition));
     }
 
     /*
