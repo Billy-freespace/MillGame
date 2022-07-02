@@ -1,3 +1,11 @@
+/*
+ * MillGame
+ *
+ * Clase principal del juego Millgame
+ *
+ * Date 2 de Julio 2022
+ */
+
 package com.example.millgame;
 
 import com.example.millgame.actions.EventAction;
@@ -19,16 +27,13 @@ import java.util.Map;
 import java.util.logging.Level;
 
 public class MillGame {
+    private static final Map<GameVariant, Integer> gameVariant2PlayerPieces = MillGame.getMapPlayerPieces();
+    private final GameVariant variant;
+    private final int MAX_NUM_PLAYERS = 2;
     private TurnIterator turnIter;
     private Board board;
     private EventAction eventAction;
-
-    private GameVariant variant;
-
     private Player winner;
-
-    private static Map<GameVariant, Integer> gameVariant2PlayerPieces = MillGame.getMapPlayerPieces();
-
 
     public MillGame(GameVariant variant){ // useless constructor, to create a MillGame object use MillGameBuilder class
         turnIter = null;
@@ -38,13 +43,16 @@ public class MillGame {
         winner = null;
     }
 
+    /*
+     * Operaciones del iterador de turnos
+     */
+
     public void initTurnIterator(boolean randomTurn){
         turnIter = new TurnIterator(randomTurn);
     }
 
     public void addTurnListener(ActionListener listener){ turnIter.addTurnListener(listener); }
 
-    public int countPieces(Color color) { return board.getCount(color); }
     public Player nextTurn(){
         Player opponent = getOpponentPlayer();
 
@@ -58,13 +66,43 @@ public class MillGame {
 
         return turnIter.next();
     }
+
+    /*
+     * Métodos relacionados a las operaciones del jugador
+     */
     public Player getActivePlayer(){
         return turnIter.getIterationState();
     }
+
     public Player getOpponentPlayer(){
         Player opponent = turnIter.getNextPlayer();
         return opponent;
     }
+    public void addPlayer(Player player) throws RankedException{
+        if(turnIter.size() > MAX_NUM_PLAYERS){
+            throw new RankedException("Limit of players reached", Level.WARNING); // NOTE: write an exception for handle this case
+        }
+
+        Color color = player.getColor();
+        for(Player playerItr : turnIter.values()){
+            System.out.println("Player: " + playerItr);
+            if(color == playerItr.getColor()){
+                throw new RankedException("Color " + color + " was already taken by a player", Level.WARNING); // NOTE: write an exception for handle this case
+            }
+        }
+
+        turnIter.addPlayer(player);
+
+        if(player.getType() == PlayerType.ROBOT){
+            turnIter.addTurnListener(((RobotPlayer) player).getTurnListener());
+        }
+    }
+
+    /*
+     * Operaciones de piezas
+     */
+
+    public int countPieces(Color color) { return board.getCount(color); }
 
     public Piece getPiece(char x, int y) throws InvalidPositionCoordinate {
         Position position = board.getPosition(x, y);
@@ -87,9 +125,9 @@ public class MillGame {
         opponent.removePiece(piece);
     }
 
-    public GameVariant getVariant(){ return variant; }
     public int getNumberPlayerPieces(){ return MillGame.gameVariant2PlayerPieces.get(variant);}
 
+    // Refactorizar y usar polimorfismo
     private static Map<GameVariant, Integer> getMapPlayerPieces(){
         Map<GameVariant, Integer> playerPieces = new HashMap<GameVariant, Integer>();
         playerPieces.put(GameVariant.THREE_MEN_MORRIS, 3);
@@ -102,41 +140,35 @@ public class MillGame {
 
         return playerPieces;
     }
-    public boolean isGameOver(){ return winner != null; }
 
-    public Player getWinner(){ return winner; }
-
-    public List<Board.Mill> getMills(Piece piece) throws RankedException { return board.getMills(piece); }
-
-    public void addPlayer(Player player) throws RankedException{
-        if(turnIter.size() > 2){
-            throw new RankedException("Limit of players reached", Level.WARNING); // NOTE: write an exception for handle this case
-        }
-
-        Color color = player.getColor();
-        for(Player playerItr : turnIter.values()){
-            System.out.println("Player: " + playerItr);
-            if(color == playerItr.getColor()){
-                throw new RankedException("Color " + color + " was already taken by a player", Level.WARNING); // NOTE: write an exception for handle this case
-            }
-        }
-
-        turnIter.addPlayer(player);
-
-        if(player.getType() == PlayerType.ROBOT){
-            System.out.println("============== RESTRICT ZONE ==============");
-            System.out.println("PLAYER: " + player);
-            System.out.println("========================================================");
-            turnIter.addTurnListener(((RobotPlayer) player).getTurnListener());
-        }
-    }
-
-
+    /*
+     * Operaciones con el tablero
+     */
 
     public void setBoard(Board board){ this.board = board; }
+
     public Board getBoard(){ return board; }
 
     public BoardPanel getBoardPanel(){ return new BoardPanel(board); }
+
+    /*
+     * Operación sobre molinos
+     */
+
+    public List<Board.Mill> getMills(Piece piece) throws RankedException { return board.getMills(piece); }
+
+    /*
+     * Operaciones relacionadas al juego
+     */
+
+    @Override
+    public String toString() {
+        String out;
+
+        out = "MillGame(variant="+ variant +
+                ", board=" + board.getBoardVariant() + ")";
+        return out;
+    }
 
     public EventAction getEventAction() { return eventAction; }
 
@@ -151,14 +183,11 @@ public class MillGame {
         origin.setEventAction(eventAction);
     }
 
-    @Override
-    public String toString() {
-        String out;
+    public boolean isGameOver(){ return winner != null; }
 
-        out = "MillGame(variant="+ variant +
-                ", board=" + board.getBoardVariant() + ")";
-        return out;
-    }
+    public Player getWinner(){ return winner; }
+
+    public GameVariant getVariant(){ return variant; }
 
     /*
      * Inner enumerations
@@ -166,7 +195,8 @@ public class MillGame {
 
     public enum GameMode {
         HUMAN_HUMAN,
-        HUMAN_ROBOT
+        HUMAN_ROBOT;
+
     }
     public enum GameVariant {
         THREE_MEN_MORRIS,
@@ -175,7 +205,7 @@ public class MillGame {
         SEVEN_MEN_MORRIS,
         NINE_MEN_MORRIS,
         ELEVEN_MEN_MORRIS,
-        TWELVE_MEN_MORRIS
+        TWELVE_MEN_MORRIS;
     }
 
     public enum GameStage {

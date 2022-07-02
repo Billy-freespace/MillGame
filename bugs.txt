@@ -12,3 +12,6 @@
 # Nombre de método o variable cuya intención no está clara
 * ARCHIVO: Board.java (clase: Board, methods: unmark [que desenmarca?], getCount [no se sabe que cuenta])
 
+## Refactorización
+* ARCHIVO: MillGame.java (clase: MillGame, methods: getMapPlayerPieces [usar polimorfismo])
+
