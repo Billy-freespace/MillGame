@@ -36,6 +36,8 @@ public class PositioningEventAction extends EventAction {
                 // HIGHLIGHT POSSIBLE POSITIONS TO DELETE
                 TraceLogger.log(Level.INFO, "mills were formed: " + mills);
                 game.changeEventAction(new RemovingEventAction());
+                game.getBoardPanel().repaint();
+                game.notifyTurnPlayer();
             } else {
                 Player opponent = game.getOpponentPlayer();
                 int gamePieces = game.getNumberPlayerPieces();
@@ -46,8 +48,8 @@ public class PositioningEventAction extends EventAction {
                     // for the next play
                     game.changeEventAction(new MovingEventAction());
                 }
-                game.nextTurn();
             }
+            game.nextTurn();
 
         } catch (InvalidPositionCoordinate | NotEmptyPosition | GameOverError error) {
             TraceLogger.log(error, PositioningEventAction.class);

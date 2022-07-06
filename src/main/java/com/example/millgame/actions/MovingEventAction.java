@@ -63,6 +63,7 @@ public class MovingEventAction extends EventAction {
                         // HIGHLIGHT POSSIBLE POSITIONS TO DELETE
                         TraceLogger.log(Level.INFO, "mills were formed: " + mills);
                         game.changeEventAction(new RemovingEventAction());
+                        game.notifyTurnPlayer();
                     } else {
                         selectedPosition = null;
                         game.nextTurn();

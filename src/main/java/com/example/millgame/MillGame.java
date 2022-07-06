@@ -34,6 +34,7 @@ public class MillGame {
     private Board board;
     private EventAction eventAction;
     private Player winner;
+    private BoardPanel boardPanel = null;
 
     public MillGame(GameVariant variant){ // useless constructor, to create a MillGame object use MillGameBuilder class
         turnIter = null;
@@ -65,6 +66,10 @@ public class MillGame {
         }
 
         return turnIter.next();
+    }
+
+    public Player notifyTurnPlayer() {
+        return turnIter.notifyTurnPlayer();
     }
 
     /*
@@ -149,7 +154,12 @@ public class MillGame {
 
     public Board getBoard(){ return board; }
 
-    public BoardPanel getBoardPanel(){ return new BoardPanel(board); }
+    public BoardPanel getBoardPanel(){
+        if (boardPanel == null) {
+            boardPanel = new BoardPanel(board);
+        }
+        return boardPanel;
+    }
 
     /*
      * Operación sobre molinos

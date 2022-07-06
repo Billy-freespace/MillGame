@@ -77,9 +77,9 @@ public class NoobRobotPlayer extends RobotPlayer{
         List<Piece> opponentPieces = opponent.getBoardPieces();
 
         do{
-            randomIndex = random.nextInt();
+            randomIndex = random.nextInt(opponentPieces.size());
             piece = opponentPieces.get(randomIndex);
-        }while(!board.inAnyMill(piece));
+        }while(board.inAnyMill(piece));
 
         EventAction eventAction = game.getEventAction();
 

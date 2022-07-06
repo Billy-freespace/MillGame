@@ -35,6 +35,16 @@ public class TurnIterator extends CircularIterator<Player> {
         return player;
     }
 
+    public Player notifyTurnPlayer() {
+        Player player = getIterationState();
+
+        ActionEvent event = new ActionEvent(player, -1, "Active Player");
+        fireTurnListeners(event);
+
+        TraceLogger.log(Level.INFO, "Active turn: " + player);
+        return player;
+    }
+
     public Player getNextPlayer(){ // get the next iteration state but without moving the iterator position
         int nextIndex = iterationIndex +1;
 
