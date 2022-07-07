@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh './gradlew build --info --warning-mode=all'
+                sh './gradlew build --info --warning-mode=all -x pmdMain -x pmdTest'
             }
         }
 
