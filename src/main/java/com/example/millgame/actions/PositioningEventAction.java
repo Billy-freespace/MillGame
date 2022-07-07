@@ -5,6 +5,7 @@ import com.example.millgame.Player;
 import com.example.millgame.Position;
 import com.example.millgame.exceptions.*;
 import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.players.RobotPlayer;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -37,7 +38,11 @@ public class PositioningEventAction extends EventAction {
                 TraceLogger.log(Level.INFO, "mills were formed: " + mills);
                 game.changeEventAction(new RemovingEventAction());
                 game.getBoardPanel().repaint();
-                game.notifyTurnPlayer();
+                if (player.getClass().isInstance(RobotPlayer.class)) {
+                    System.out.println("Zona restringida");
+                    game.notifyTurnPlayer();
+                    game.nextTurn();
+                }
             } else {
                 Player opponent = game.getOpponentPlayer();
                 int gamePieces = game.getNumberPlayerPieces();
@@ -48,8 +53,8 @@ public class PositioningEventAction extends EventAction {
                     // for the next play
                     game.changeEventAction(new MovingEventAction());
                 }
+                game.nextTurn();
             }
-            game.nextTurn();
 
         } catch (InvalidPositionCoordinate | NotEmptyPosition | GameOverError error) {
             TraceLogger.log(error, PositioningEventAction.class);

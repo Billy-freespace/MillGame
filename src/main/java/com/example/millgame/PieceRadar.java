@@ -1,11 +1,13 @@
 package com.example.millgame;
 
+import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Direction;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 public  class PieceRadar {
     private Map<Direction, List<Piece>> pieces;
