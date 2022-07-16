@@ -17,6 +17,7 @@ import com.example.millgame.logging.TraceLogger;
 import com.example.millgame.misc.Color;
 import com.example.millgame.players.PlayerType;
 import com.example.millgame.players.RobotPlayer;
+import com.example.millgame.turns.CircularIterator;
 import com.example.millgame.turns.TurnIterator;
 
 
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-public class MillGame {
+public class MillGame implements Cloneable {
     private static final Map<GameVariant, Integer> gameVariant2PlayerPieces = MillGame.getMapPlayerPieces();
     private final GameVariant variant;
     private final int MAX_NUM_PLAYERS = 2;
@@ -198,6 +199,16 @@ public class MillGame {
     public Player getWinner(){ return winner; }
 
     public GameVariant getVariant(){ return variant; }
+
+    public MillGame clone() throws CloneNotSupportedException {
+        MillGame millGame = null;
+        try {
+            millGame = (MillGame) super.clone();
+        } catch(CloneNotSupportedException ex){
+            System.out.println(" no se puede duplicar");
+        }
+        return millGame;
+    }
 
     /*
      * Inner enumerations
