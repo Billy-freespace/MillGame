@@ -4,5 +4,5 @@ import com.example.millgame.MillGame;
 
 public class GameStep {
     private MillGame game;
-    private GameStepAction v;
+    private GameAction v;
 }

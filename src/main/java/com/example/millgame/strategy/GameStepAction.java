@@ -10,7 +10,7 @@ public abstract class GameStepAction {
     private MillGame nextGame;
 
     public MillGame process() {
-        ;
+        return null;
     }
     
 }
