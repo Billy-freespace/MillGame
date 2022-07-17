@@ -35,7 +35,7 @@ public class GameAnalysis {
     }
 
     private MillGame applyGameStep(GameStep step) {
-        ;
+        return null;
     }
 
     public void apply() {
