@@ -10,11 +10,8 @@ import java.awt.event.ActionEvent;
 public class PositioningGameAction extends GameAction {
     private ActionEvent actionEvent;
 
-    public PositioningGameAction(MillGame game, BoardCoordinate boardCoordinate) throws InvalidPositionCoordinate {
+    public PositioningGameAction(MillGame game, Position position) throws InvalidPositionCoordinate {
         super(game);
-        char x = boardCoordinate.getX();
-        int y = boardCoordinate.getY();
-        Position position = game.getBoard().getPosition(x, y);
         actionEvent = new ActionEvent(position, -1, "RobotPlayer.autoPlacePiece [" + position + "]");
     }
 
