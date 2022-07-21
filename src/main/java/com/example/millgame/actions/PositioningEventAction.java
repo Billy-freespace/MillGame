@@ -5,6 +5,7 @@ import com.example.millgame.Player;
 import com.example.millgame.Position;
 import com.example.millgame.exceptions.*;
 import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.players.PlayerType;
 import com.example.millgame.players.RobotPlayer;
 
 import java.awt.event.ActionEvent;
@@ -30,6 +31,10 @@ public class PositioningEventAction extends EventAction {
             }
 
             player.placePiece(position);
+            if (player.getType() == PlayerType.ROBOT)
+                TraceLogger.log(Level.INFO, "Placing piece - player type is robot");
+            else
+                TraceLogger.log(Level.INFO, "Placing piece - player is not robot");
 
             // CHECK IF A MILL WAS FORMED
             List<Board.Mill> mills = game.getMills(position.getPiece());
@@ -38,10 +43,12 @@ public class PositioningEventAction extends EventAction {
                 TraceLogger.log(Level.INFO, "mills were formed: " + mills);
                 game.changeEventAction(new RemovingEventAction());
                 game.getBoardPanel().repaint();
-                if (player.getClass().isInstance(RobotPlayer.class)) {
-                    System.out.println("Zona restringida");
+                if (player.getType() == PlayerType.ROBOT){
+                    TraceLogger.log(Level.INFO, "Robot player -> remove piece");
                     game.notifyTurnPlayer();
                     game.nextTurn();
+                } else {
+                    TraceLogger.log(Level.INFO, "player type is not robot");
                 }
             } else {
                 Player opponent = game.getOpponentPlayer();

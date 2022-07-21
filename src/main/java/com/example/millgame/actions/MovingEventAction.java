@@ -7,6 +7,7 @@ import com.example.millgame.Position;
 import com.example.millgame.exceptions.*;
 import com.example.millgame.exceptions.RankedException;
 import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.players.PlayerType;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
@@ -63,7 +64,13 @@ public class MovingEventAction extends EventAction {
                         // HIGHLIGHT POSSIBLE POSITIONS TO DELETE
                         TraceLogger.log(Level.INFO, "mills were formed: " + mills);
                         game.changeEventAction(new RemovingEventAction());
-                        game.notifyTurnPlayer();
+                        if (player.getType() == PlayerType.ROBOT){
+                            TraceLogger.log(Level.INFO, "Robot player -> remove piece");
+                            game.notifyTurnPlayer();
+                            game.nextTurn();
+                        } else {
+                            TraceLogger.log(Level.INFO, "player type is not robot");
+                        }
                     } else {
                         selectedPosition = null;
                         game.nextTurn();
