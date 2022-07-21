@@ -178,6 +178,7 @@ public class NineMMBoardBuilder extends BoardBuilder {
         // d3 neighbours
         Position e3 = new Position('e', 3);
 
+        d3.addNeighbour(d2);
         d3.addNeighbour(e3);
         d3.addNeighbour(c3);
 
