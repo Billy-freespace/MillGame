@@ -8,9 +8,9 @@ import com.example.millgame.misc.Color;
 
 public class HumanPlayerFactory extends PlayerFactory {
 
-    public Player create(Color color, MillGame game) {
-        return new HumanPlayer(color, game);
-    }
+  public Player create(Color color, MillGame game) {
+    return new HumanPlayer(color, game);
+  }
 
-    public Player createByLevel(Color color, MillGame game, RobotLevel level) { return create(color, game); }
+  public Player createByLevel(Color color, MillGame game, RobotLevel level) { return create(color, game); }
 }

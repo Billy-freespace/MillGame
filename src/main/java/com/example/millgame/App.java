@@ -16,69 +16,69 @@ import net.sourceforge.argparse4j.inf.Namespace;
 
 public class App {
 
-    // debug options
-    protected static String traceLoggerName;
-    protected static String logfile;
-    protected static TraceMode traceMode;
-    protected static boolean debug;
+  // debug options
+  protected static String traceLoggerName;
+  protected static String logfile;
+  protected static TraceMode traceMode;
+  protected static boolean debug;
 
-    public static void main(String[] args){
-        Runnable runner = new Runnable(){
-            @Override
-            public void run(){
-                ArgumentParser parser = CmdParser.debugArgumentParser();
+  public static void main(String[] args){
+    Runnable runner = new Runnable(){
+      @Override
+      public void run(){
+        ArgumentParser parser = CmdParser.debugArgumentParser();
 
-                try{
-                    parseCmdArguments(parser, args);
+        try{
+          parseCmdArguments(parser, args);
 
-                    GameGUI gameGUI = new GameGUI();
+          GameGUI gameGUI = new GameGUI();
 
-                } catch (ArgumentParserException error){
-                    parser.handleError(error);
-                    System.exit(1);
-                }catch (Exception error){
-                    System.err.println(error.getMessage());
-                    System.exit(1);
-                }
-            }
-        };
-
-        EventQueue.invokeLater(runner);
-    }
-
-    public static Namespace parseCmdArguments(ArgumentParser parser, String[] args) throws ArgumentParserException, IOException, RankedException {
-        Namespace ns = parser.parseArgs(args);
-
-        logfile = ns.getString("logfile");
-        debug = ns.getBoolean("debug");
-
-        int verboseLevel = ns.getInt("verbose");
-        switch (verboseLevel){
-            case 2:
-                traceMode = TraceMode.DEVELOPER;
-                break;
-            case 3:
-                traceMode = TraceMode.PARANOID;
-                break;
-            default:
-                traceMode = TraceMode.CURIOUS;
-                break;
+        } catch (ArgumentParserException error){
+          parser.handleError(error);
+          System.exit(1);
+        }catch (Exception error){
+          System.err.println(error.getMessage());
+          System.exit(1);
         }
+      }
+    };
 
-        traceLoggerName = ns.getString("traceLoggerName");
+    EventQueue.invokeLater(runner);
+  }
 
-        TraceLogger traceLogger = TraceLogger.initTraceLogger(traceLoggerName, logfile, debug);
-        traceLogger.setTraceMode(traceMode);
+  public static Namespace parseCmdArguments(ArgumentParser parser, String[] args) throws ArgumentParserException, IOException, RankedException {
+    Namespace ns = parser.parseArgs(args);
 
-        TraceMessage message = new TraceMessage(
-                Level.INFO,
-                "logfile: " + logfile +
-                        "\ndebug: " + debug +
-                        "\ntraceMode: " + traceMode +
-                        "\ntraceLoggerName: " + traceLoggerName +
-                        "\nverboseLevel: " + verboseLevel);
+    logfile = ns.getString("logfile");
+    debug = ns.getBoolean("debug");
 
-        TraceLogger.log(message);
-        return ns;
+    int verboseLevel = ns.getInt("verbose");
+    switch (verboseLevel){
+      case 2:
+        traceMode = TraceMode.DEVELOPER;
+        break;
+      case 3:
+        traceMode = TraceMode.PARANOID;
+        break;
+      default:
+        traceMode = TraceMode.CURIOUS;
+        break;
     }
+
+    traceLoggerName = ns.getString("traceLoggerName");
+
+    TraceLogger traceLogger = TraceLogger.initTraceLogger(traceLoggerName, logfile, debug);
+    traceLogger.setTraceMode(traceMode);
+
+    TraceMessage message = new TraceMessage(
+        Level.INFO,
+        "logfile: " + logfile +
+            "\ndebug: " + debug +
+            "\ntraceMode: " + traceMode +
+            "\ntraceLoggerName: " + traceLoggerName +
+            "\nverboseLevel: " + verboseLevel);
+
+    TraceLogger.log(message);
+    return ns;
+  }
 }

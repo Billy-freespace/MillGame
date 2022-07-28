@@ -13,274 +13,296 @@ import com.example.millgame.exceptions.NotEmptyPosition;
 import com.example.millgame.boards.BoardDimension;
 import com.example.millgame.exceptions.*;
 import com.example.millgame.logging.TraceLogger;
+import com.example.millgame.misc.BoardCoordinate;
 import com.example.millgame.misc.Color;
 import java.util.*;
 
 public abstract class Board implements BoardDimension {
-    public final BoardVariant variant;
-    protected Position origin;
-    protected Map<Character, Map<Integer, Position>> positions;
-    protected Map<Color, List<Mill>> mills;
-    protected PieceRadar radar;
-    protected Map<Color, Integer> pieceCount;
+  public final BoardVariant variant;
+  protected Position origin;
+  protected Map<Character, Map<Integer, Position>> positions;
+  protected Map<Color, List<Mill>> mills;
+  protected PieceRadar radar;
+  protected Map<Color, Integer> pieceCount;
 
-    public Board (BoardVariant variant, List<Color> playerColors) {
-        this.variant = variant;
-        this.positions = new HashMap<Character, Map<Integer, Position>>();
-        this.origin = null;
+  public Board (BoardVariant variant, List<Color> playerColors) {
+    this.variant = variant;
+    this.positions = new HashMap<Character, Map<Integer, Position>>();
+    this.origin = null;
 
-        mills =  new HashMap<Color, List<Mill>>();
-        pieceCount = new HashMap<Color, Integer>();
-        for(Color color : playerColors){
-            mills.put(color, new ArrayList<Mill>());
-            pieceCount.put(color, 0);
+    mills =  new HashMap<Color, List<Mill>>();
+    pieceCount = new HashMap<Color, Integer>();
+    for(Color color : playerColors){
+      mills.put(color, new ArrayList<Mill>());
+      pieceCount.put(color, 0);
+    }
+  }
+
+  /*
+   * Operacion de posiciones
+   */
+
+  public ArrayList<Position> getEmptyPositions(){
+    ArrayList<Position> emptyPositions = new ArrayList<Position>();
+    Position position;
+
+    for(Character x : positions.keySet()){
+      Map<Integer, Position> inner = positions.get(x);
+      for(Integer y : inner.keySet()){
+        position = inner.get(y);
+
+        if(!position.hasPiece()){
+          emptyPositions.add(position);
         }
+      }
     }
 
-    /*
-     * Operacion de posiciones
-     */
+    return emptyPositions;
+  }
 
-    public ArrayList<Position> getEmptyPositions(){
-        ArrayList<Position> emptyPositions = new ArrayList<Position>();
-        Position position;
-
-        for(Character x : positions.keySet()){
-            Map<Integer, Position> inner = positions.get(x);
-            for(Integer y : inner.keySet()){
-                position = inner.get(y);
-
-                if(!position.hasPiece()){
-                    emptyPositions.add(position);
-                }
-            }
-        }
-
-        return emptyPositions;
+  public int countPositions(){
+    int count =0;
+    for(Map<Integer, Position> inner : positions.values()){
+      count += inner.size();
     }
 
-    public int countPositions(){
-        int count =0;
-        for(Map<Integer, Position> inner : positions.values()){
-            count += inner.size();
-        }
+    return count;
+  }
 
-        return count;
+  public Position getPosition(char x, int y) throws InvalidPositionCoordinate {
+    if(!positions.containsKey(x)){ // pasar a cada uno de los tableros para validar (x, y) usando los limites definidos en cada tablero
+      throw new InvalidPositionCoordinate(x, y);
     }
 
-    public Position getPosition(char x, int y) throws InvalidPositionCoordinate {
-        if(!positions.containsKey(x)){
-            throw new InvalidPositionCoordinate(x, y);
-        }
-
-        Map<Integer, Position> inner = positions.get(x);
-        if(!inner.containsKey(y)){
-            throw new InvalidPositionCoordinate(x, y);
-        }
-
-        return inner.get(y);
+    Map<Integer, Position> inner = positions.get(x);
+    if(!inner.containsKey(y)){
+      throw new InvalidPositionCoordinate(x, y);
     }
 
-    public void setOrigin(Position origin){ this.origin = origin;}
-    public Position getOrigin(){ return origin; }
-    public void unmark(){
-        for(Character xLabel : positions.keySet()){
-            Map<Integer, Position> inner = positions.get(xLabel);
-            for(Integer yLabel : inner.keySet()){
-                Position position = inner.get(yLabel);
-                position.mark = false;
-            }
-        }
-    } // unmark all positions of board
+    return inner.get(y);
+  }
 
-    public void addPosition(Position position){
-        char xLabel = position.getXLabel();
-        int yLabel = position.getYLabel();
-        Map<Integer, Position> inner;
+  public void setOrigin(Position origin){ this.origin = origin;}
+  public Position getOrigin(){ return origin; }
+  public void unmark(){
+    for(Character xLabel : positions.keySet()){
+      Map<Integer, Position> inner = positions.get(xLabel);
+      for(Integer yLabel : inner.keySet()){
+        Position position = inner.get(yLabel);
+        position.mark = false;
+      }
+    }
+  } // unmark all positions of board
 
-        if(!positions.containsKey(xLabel)){
-            inner = new HashMap<Integer, Position>();
-            positions.put(xLabel, inner);
-        }
+  private void setPosition(char x, int y, Position position){
 
-        inner = positions.get(xLabel);
-        inner.put(yLabel, position);
+  }
+
+  public void addPosition(Position position){
+    char xLabel = position.getXLabel();
+    int yLabel = position.getYLabel();
+    Map<Integer, Position> inner;
+
+    if(!positions.containsKey(xLabel)){
+      inner = new HashMap<Integer, Position>();
+      positions.put(xLabel, inner);
     }
 
-    /*
-     * Operacion de piezas
-     */
+    inner = positions.get(xLabel);
+    inner.put(yLabel, position);
+  }
 
-    public void placePiece(Piece piece, char x, int y)
-            throws NotEmptyPosition, InvalidPositionCoordinate {
-        Position position = null;
-        
-        position = this.getPosition(x, y);
-
-        Piece positionPiece = position.getPiece();
-
-        if(positionPiece != null) {
-            throw new NotEmptyPosition(x, y);
-        }
-        position.setPiece(piece);
-        piece.setPosition(position);
-
-        int count = pieceCount.get(piece.getColor());
-        count += 1;
-        pieceCount.put(piece.getColor(), count);
-
-        List<Mill> pieceMills = getMills(piece);
-        List<Mill> colorMills = mills.get(piece.getColor());
-        colorMills.addAll(pieceMills);
+  public void addPosition(BoardCoordinate coordinate, List<BoardCoordinate> neighbours) throws  InvalidPositionCoordinate{
+    Position position = getPosition(coordinate.getX(), coordinate.getY());
+    if(position == null){
+      position = new Position(coordinate.getX(), coordinate.getY());
+      // positions[x][y] = position
     }
 
-    public void removePiece(char x, int y) throws InvalidPositionCoordinate, EmptyPositionError{
-        Position position = getPosition(x, y);
+    for(BoardCoordinate c : neighbours){
+      Position neighbourPosition = getPosition(c.getX(), c.getY());
+      if(neighbourPosition == null) {
+        neighbourPosition = new Position(c.getX(), c.getY());
+        //positions[c.getX()][c.getY()] = neighbourPosition
+      }
+      position.add(neighbourPosition);
+    }
+  }
 
-        Piece piece = position.getPiece();
-        if(piece == null){
-            throw new EmptyPositionError(position);
-        }
+  /*
+   * Operacion de piezas
+   */
 
-        // remove all mills where piece belongs
-        List<Mill> colorMills = mills.get(piece.getColor());
-        ArrayList<Mill> colorMillsCopy = new ArrayList<Mill>(colorMills); // making a copy
-        for(Mill mill : colorMillsCopy){
-            if(mill.hasPiece(piece)){
-                colorMills.remove(mill);
-            }
-        }
+  public void placePiece(Piece piece, char x, int y)
+      throws NotEmptyPosition, InvalidPositionCoordinate {
+    Position position = null;
 
-        //piece.setPosition(null);
-        position.setPiece(null);
+    position = this.getPosition(x, y);
 
-        int count = pieceCount.get(piece.getColor());
-        count -= 1;
-        pieceCount.put(piece.getColor(), count);
+    Piece positionPiece = position.getPiece();
+
+    if(positionPiece != null) {
+      throw new NotEmptyPosition(x, y);
+    }
+    position.setPiece(piece);
+    piece.setPosition(position);
+
+    int count = pieceCount.get(piece.getColor());
+    count += 1;
+    pieceCount.put(piece.getColor(), count);
+
+    List<Mill> pieceMills = getMills(piece);
+    List<Mill> colorMills = mills.get(piece.getColor());
+    colorMills.addAll(pieceMills);
+  }
+
+  public void removePiece(char x, int y) throws InvalidPositionCoordinate, EmptyPositionError{
+    Position position = getPosition(x, y);
+
+    Piece piece = position.getPiece();
+    if(piece == null){
+      throw new EmptyPositionError(position);
     }
 
-    public int getCount(Color color){ return pieceCount.get(color); }
+    // remove all mills where piece belongs
+    List<Mill> colorMills = mills.get(piece.getColor());
+    ArrayList<Mill> colorMillsCopy = new ArrayList<Mill>(colorMills); // making a copy
+    for(Mill mill : colorMillsCopy){
+      if(mill.hasPiece(piece)){
+        colorMills.remove(mill);
+      }
+    }
+
+    //piece.setPosition(null);
+    position.setPiece(null);
+
+    int count = pieceCount.get(piece.getColor());
+    count -= 1;
+    pieceCount.put(piece.getColor(), count);
+  }
+
+  public int getCount(Color color){ return pieceCount.get(color); }
 
 
-    /*
-     * Moviemientos
-     */
+  /*
+   * Moviemientos
+   */
 
 
-    // Override this method if fly is not allow in a specific board
-    public List<Position> getPossibleMovements(Piece piece) {
-        List<Position> possibleMovements = new ArrayList<Position>();
-        Position position = piece.getPosition();
+  // Override this method if fly is not allow in a specific board
+  public List<Position> getPossibleMovements(Piece piece) {
+    List<Position> possibleMovements = new ArrayList<Position>();
+    Position position = piece.getPosition();
 
-        try{
-            if(position == null){
-                throw new InvalidBoardPiece(piece);
-            }
+    try{
+      if(position == null){
+        throw new InvalidBoardPiece(piece);
+      }
 
-            Color color = piece.getColor();
-            int count = getCount(color);
+      Color color = piece.getColor();
+      int count = getCount(color);
 
-            if(count == 3){
-                possibleMovements.addAll(getEmptyPositions());
-            } else {
-                System.out.println("NEIGHBOURS: " + position.getNeighbours());
-                for(Position neighbour : position.getNeighbours()){
-                    if(!neighbour.hasPiece()){ // empty position
-                        possibleMovements.add(neighbour);
-                    }
-                }
-            }
-        } catch (InvalidBoardPiece error){
-            TraceLogger.log(error);
+      if(count == 3){
+        possibleMovements.addAll(getEmptyPositions());
+      } else {
+        System.out.println("NEIGHBOURS: " + position.getNeighbours());
+        for(Position neighbour : position.getNeighbours()){
+          if(!neighbour.hasPiece()){ // empty position
+            possibleMovements.add(neighbour);
+          }
         }
-
-
-        return possibleMovements;
+      }
+    } catch (InvalidBoardPiece error){
+      TraceLogger.log(error);
     }
 
 
-    /*
-     * Operacion en molinos
-     */
+    return possibleMovements;
+  }
 
-    public List<Mill> getMills(Color color){ return mills.get(color); }
-    public abstract List<Mill> getMills(Piece piece);
-    public BoardVariant getBoardVariant() {
-        return variant;
+
+  /*
+   * Operacion en molinos
+   */
+
+  public List<Mill> getMills(Color color){ return mills.get(color); }
+  public abstract List<Mill> getMills(Piece piece);
+  public BoardVariant getBoardVariant() {
+    return variant;
+  }
+
+  public boolean inAnyMill(Piece piece){
+    Color color = piece.getColor();
+
+    List<Mill> colorMills = mills.get(color);
+
+    boolean result = false;
+
+    for(Mill mill : colorMills){
+      if(mill.hasPiece(piece)){
+        result = true;
+        break;
+      }
     }
 
-    public boolean inAnyMill(Piece piece){
-        Color color = piece.getColor();
+    return result;
+  }
 
-        List<Mill> colorMills = mills.get(color);
+  public abstract Mill createMill(List<Piece> pieces);
 
-        boolean result = false;
+  /*
+   * inner classes
+   */
+  public abstract class Mill {
+    private List<Piece> pieces;
+    private Color color;
 
-        for(Mill mill : colorMills){
-            if(mill.hasPiece(piece)){
-                result = true;
-                break;
-            }
+    public Mill(List<Piece> pieces) throws InvalidMill, InvalidMillSize, InvalidMillColor {
+      if(pieces.size() != 3){
+        throw  new InvalidMillSize(pieces);
+      }
+
+      color = pieces.get(0).getColor();
+
+      for(Piece piece : pieces){
+        if(piece.getColor() != color){
+          throw new InvalidMillColor(pieces);
         }
+      }
 
-        return result;
+      if(!isValid(pieces)){
+        throw new InvalidMill(pieces);
+      }
+      this.pieces = pieces;
     }
 
-    public abstract Mill createMill(List<Piece> pieces);
+    protected abstract boolean isValid(List<Piece> pieces);
+    //public void addPiece(Piece piece) { pieces.add(piece); }
+    public boolean hasPiece (Piece piece) { return pieces.contains(piece); }
 
-    /*
-     * inner classes
-     */
-    public abstract class Mill {
-        private List<Piece> pieces;
-        private Color color;
+    @Override
+    public String toString() {
+      String out="";
 
-        public Mill(List<Piece> pieces) throws InvalidMill, InvalidMillSize, InvalidMillColor {
-            if(pieces.size() != 3){
-                throw  new InvalidMillSize(pieces);
-            }
+      out += "Mill(color=" + color + ", Positions=[";
+      for(Piece piece : pieces){
+        out += piece.getPosition() + ", ";
+      }
+      out += "])";
 
-            color = pieces.get(0).getColor();
-
-            for(Piece piece : pieces){
-                if(piece.getColor() != color){
-                    throw new InvalidMillColor(pieces);
-                }
-            }
-
-            if(!isValid(pieces)){
-                throw new InvalidMill(pieces);
-            }
-            this.pieces = pieces;
-        }
-
-        protected abstract boolean isValid(List<Piece> pieces);
-        //public void addPiece(Piece piece) { pieces.add(piece); }
-        public boolean hasPiece (Piece piece) { return pieces.contains(piece); }
-
-        @Override
-        public String toString() {
-            String out="";
-
-            out += "Mill(color=" + color + ", Positions=[";
-            for(Piece piece : pieces){
-                out += piece.getPosition() + ", ";
-            }
-            out += "])";
-
-            return out;
-        }
+      return out;
     }
+  }
 
-    /*
-     * Inner enumerations
-     */
+  /*
+   * Inner enumerations
+   */
 
-    public enum BoardVariant {
-        THREE_MEN_MORRIS,
-        SIX_MEN_MORRIS,
-        SEVEN_MEN_MORRIS,
-        NINE_MEN_MORRIS,
-        TWELVE_MEN_MORRIS
-    }
+  public enum BoardVariant {
+    THREE_MEN_MORRIS,
+    SIX_MEN_MORRIS,
+    SEVEN_MEN_MORRIS,
+    NINE_MEN_MORRIS,
+    TWELVE_MEN_MORRIS
+  }
 }

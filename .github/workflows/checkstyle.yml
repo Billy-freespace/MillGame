@@ -1,7 +1,7 @@
 name: checkstyle
 on: [push]
 jobs:
-  pmd:
+  checkstyle:
     runs-on: ubuntu-latest
   
 

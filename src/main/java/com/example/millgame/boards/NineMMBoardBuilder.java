@@ -1,16 +1,35 @@
 package com.example.millgame.boards;
 
 import com.example.millgame.Position;
+import com.example.millgame.exceptions.InvalidPositionCoordinate;
+import com.example.millgame.misc.BoardCoordinate;
+
+import java.util.Arrays;
 
 public class NineMMBoardBuilder extends BoardBuilder {
 
     public void reset() { board = new NineMMBoard(playerColors); }
+
+        /*
+    private void create_a1_g1_g7_a7() throws InvalidPositionCoordinate{
+        board.addPosition(new BoardCoordinate('a', 1),
+                Arrays.asList(
+                        new BoardCoordinate[] {
+                                new BoardCoordinate('a', 4),
+                                new BoardCoordinate('d', 1)
+                        })
+        );
+
+
+    }
+         */
 
     public void createPositions(){
         //board positions definition
         /*
          * square : a1-g1-g7-a7
          */
+
 
         Position a1 = new Position('a', 1);
 
@@ -24,6 +43,8 @@ public class NineMMBoardBuilder extends BoardBuilder {
         a1.addNeighbour(a4);
 
         board.addPosition(a1);
+        // CREACIONES DE POSICIONES
+        //Board.addPosition(BoardCoordinate, ArrayLists<BoardCoordinates> neighbours)
 
         // d1 neighbours
         Position d2 = new Position('d', 2);
@@ -179,7 +200,7 @@ public class NineMMBoardBuilder extends BoardBuilder {
         Position e3 = new Position('e', 3);
 
         d3.addNeighbour(e3);
-        d3.addNeighbour(c3);
+        d3.addNeighbour(c3);// add d2
 
         board.addPosition(d3);
 

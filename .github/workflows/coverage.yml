@@ -1,4 +1,4 @@
-name: Coverage-Workflow
+name: coverage
 on: [push]
 
 jobs:

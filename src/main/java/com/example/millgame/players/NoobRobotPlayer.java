@@ -15,80 +15,81 @@ import java.util.logging.Level;
 
 public class NoobRobotPlayer extends RobotPlayer{
 
-    public NoobRobotPlayer(Color color, MillGame game){super(color, game, RobotLevel.NOOB);}
+  public NoobRobotPlayer(Color color, MillGame game){super(color, game, RobotLevel.NOOB);}
 
-    @Override
-    public void autoPlacePiece(){
-        List<Position> emptyPositions = board.getEmptyPositions();
-        int index = random.nextInt(emptyPositions.size());
-        Object position = emptyPositions.get(index);
+  @Override
+  public void autoPlacePiece(){
+    List<Position> emptyPositions = board.getEmptyPositions();
+    int index = random.nextInt(emptyPositions.size());
+    Object position = emptyPositions.get(index);
 
-        TraceLogger.log(Level.INFO, "autoPlacePiece execution: "+ position, NoobRobotPlayer.class);
+    TraceLogger.log(Level.INFO, "autoPlacePiece execution: "+ position, NoobRobotPlayer.class);
 
-        EventAction eventAction = game.getEventAction();
+    EventAction eventAction = game.getEventAction();
 
-        if(eventAction.getActionType() == ActionType.POSITIONING){
-            ActionEvent event = new ActionEvent(position, -1, "RobotPlayer.autoPlacePiece ["+position + "]");
-            eventAction.actionPerformed(event);
-        }
+    if(eventAction.getActionType() == ActionType.POSITIONING){
+      ActionEvent event = new ActionEvent(position, -1, "RobotPlayer.autoPlacePiece ["+position + "]");
+      eventAction.actionPerformed(event);
     }
+  }
 
-    @Override
-    public void autoMovePiece(){
-        TraceLogger.log(Level.INFO, "executing autoMovePiece method", NoobRobotPlayer.class);
-        Player player = game.getActivePlayer();
+  @Override
+  public void autoMovePiece(){
+    TraceLogger.log(Level.INFO, "executing autoMovePiece method", NoobRobotPlayer.class);
+    Player player = game.getActivePlayer();
 
-        int randomIndex;
-        Piece piece;
-        List<Position> possibleMovements;
+    int randomIndex;
+    Piece piece;
+    List<Position> possibleMovements;
 
-        do {
-            randomIndex = random.nextInt(pieces.size());
-            piece = pieces.get(randomIndex);
-            possibleMovements = board.getPossibleMovements(piece);
-        } while (possibleMovements.size() == 0);
+    do {
+      randomIndex = random.nextInt(pieces.size());
+      piece = pieces.get(randomIndex);
+      possibleMovements = board.getPossibleMovements(piece);
+    } while (possibleMovements.size() == 0);
 
-        EventAction eventAction = game.getEventAction();
+    EventAction eventAction = game.getEventAction();
 
-        if(eventAction.getActionType() == ActionType.MOVING){
-            ActionEvent event;
+    if(eventAction.getActionType() == ActionType.MOVING){
+      ActionEvent event;
 
-            Position piecePosition = piece.getPosition();
-            event = new ActionEvent(piecePosition, -1,
-                    "RobotPlayer.autoMovePiece (First Selection): "+ piecePosition);
-            eventAction.actionPerformed(event);
+      Position piecePosition = piece.getPosition();
+      event = new ActionEvent(piecePosition, -1,
+          "RobotPlayer.autoMovePiece (First Selection): "+ piecePosition);
+      eventAction.actionPerformed(event);
 
-            randomIndex = random.nextInt(possibleMovements.size());
-            event = new ActionEvent(possibleMovements.get(randomIndex), -1,
-                    "RobotPlayer.autoMovePiece (Second Selection): "+ piecePosition);
+      randomIndex = random.nextInt(possibleMovements.size());
+      event = new ActionEvent(possibleMovements.get(randomIndex), -1,
+          "RobotPlayer.autoMovePiece (Second Selection): "+ piecePosition);
 
-            eventAction.actionPerformed(event);
-        }
+      eventAction.actionPerformed(event);
     }
+  }
 
-    @Override
-    public void autoRemovePiece(){
-        TraceLogger.log(Level.INFO, "executing autoRemovePiece method", NoobRobotPlayer.class);
+  @Override
+  public void autoRemovePiece(){
+    TraceLogger.log(Level.INFO, "executing autoRemovePiece method", NoobRobotPlayer.class);
 
-        Player opponent = game.getOpponentPlayer();
+    Player opponent = game.getOpponentPlayer();
 
-        int randomIndex;
-        Piece piece;
-        List<Piece> opponentPieces = opponent.getBoardPieces();
+    int randomIndex;
+    Piece piece;
+    List<Piece> opponentPieces = opponent.getBoardPieces();
 
-        do{
-            randomIndex = random.nextInt(opponentPieces.size());
-            piece = opponentPieces.get(randomIndex);
-        }while(board.inAnyMill(piece));
+    do{
+      randomIndex = random.nextInt(opponentPieces.size());
+      piece = opponentPieces.get(randomIndex);
+      TraceLogger.log(Level.INFO, "Selected random piece (DELETE): "+ piece);
+    }while(board.inAnyMill(piece));
 
-        EventAction eventAction = game.getEventAction();
+    EventAction eventAction = game.getEventAction();
 
-        if(eventAction.getActionType() == ActionType.REMOVING){
-            Position piecePosition = piece.getPosition();
-            ActionEvent event = new ActionEvent(piecePosition, -1,
-                    "RobotPlayer.autoRemovePiece : " + piecePosition);
+    if(eventAction.getActionType() == ActionType.REMOVING){
+      Position piecePosition = piece.getPosition();
+      ActionEvent event = new ActionEvent(piecePosition, -1,
+          "RobotPlayer.autoRemovePiece : " + piecePosition);
 
-            eventAction.actionPerformed(event);
-        }
+      eventAction.actionPerformed(event);
     }
+  }
 }

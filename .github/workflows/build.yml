@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: build
-        run: ./gradlew build -x pmdMain -x pmdTest
+        run: ./gradlew build -x pmdMain -x pmdTest -x checkstyleMain -x checkstyleTest
 
       - name: mvn-build
         run: mvn --batch-mode --no-transfer-progress compile test
