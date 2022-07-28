@@ -54,6 +54,7 @@ task minimal(type: JavaExec) {
 jacocoTestReport {
     reports {
         xml.required = true
+		html.required = true
     }
 }
 

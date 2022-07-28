@@ -12,12 +12,9 @@ jobs:
           java-version: 11
       - uses: gradle/gradle-build-action@v2
       - uses: actions/checkout@v3
-      
-      - name: Build
-        run: ./gradlew build -x pmdMain -x pmdTest
-      
+       
       - name: Coverage
-        run: ./gradlew jacocoTestReport
+        run: ./gradlew build jacocoTestReport -x check
       
       - uses: codecov/codecov-action@v2
         with:
