@@ -38,21 +38,45 @@ mvn compile exec:java -Dexec.mainClass=com.example.millgame.AppMinimal -Dexec.ar
 mvn compile exec:java -Dexec.mainClass=com.example.millgame.App
 ```
 
-#### Build game and run unit tests
+#### Run unit tests
 ```bash
-# include pmd static analysis tasks: pmdMain, pmdTest
+./gradlew test
+
+mvn test
+```
+
+#### Build Game
+
+```bash
+# include pmd and checkstyle tasks
 ./gradlew build
 
 # maven does not include pmd tasks yet
-mvn test
+mvn compile
 
-# exclude pmd tasks (only build game and run unit tests)
-./gradlew build -x pmdMain -x pmdTest
+
+# exclude pmd and checkstyle tasks (ONLY BUILD)
+./gradlew build -x check
 ```
 
-#### Static Analysis (pmd tasks)
+
+#### Static Analysis
+
+* PMD
 ```bash
-./gradlew check
+./gradlew pmdMain pmdTest
+```
+
+* Checkstyle (Google Code Style)
+```bash
+./gradlew checkstyleMain checkstyleTest
+```
+
+#### Code Coverage
+
+```bash
+# html and xml coverage reports are generated at build/reports/jacoco
+./gradlew jacocoTestReport
 ```
 
 ### Demo
